@@ -1,0 +1,34 @@
+---
+description: Cross-skill usage and write limits by phase (P0-P6) and Cursor role.
+alwaysApply: false
+---
+
+# Role cross-skill usage（工程横断）
+
+Cursor role は **工程に応じた主スキル** を持ち、読取系は横断利用可（`role-skill-catalog`）。
+
+## 原則
+
+1. **工程 P?** を `lifecycle-reference` で確認してから skill を選ぶ。
+2. **読取系**（`*-reference`, `lifecycle-reference`）は他工程でも共用可。
+3. **記録系**（`*-record`）は write 境界を守る。
+4. **実装**（`implement-conduct`）は P5・`builder` のみ。
+5. **レビュー**（`review-conduct`）は P6・`reviewer` のみ。
+6. PM: `prop.kit.role_execute_pm_only`。
+
+## 工程別の conduct 制限
+
+| P | 許可 conduct | 禁止例 |
+|---|--------------|--------|
+| P0–P3 | —（`design-record` は record） | `implement-conduct` |
+| P4 | —（`plan-record`） | `implement-conduct` |
+| P5 | `implement-conduct`, `patch-conduct` | 大規模を patch で |
+| P6 | `review-conduct` | PM 独力の長文レビュー |
+
+## 禁止
+
+- gate block 時の `plan-record` / `implement-conduct`
+- PM が router を飛ばして conduct / 編集
+- 運用証跡なしの応答終了
+
+Catalog: `role-skill-catalog` · tiers: `docs/CONTEXT_TIERS.md`

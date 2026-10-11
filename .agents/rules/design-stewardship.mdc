@@ -1,0 +1,66 @@
+---
+description: P0-P3—Cursor role spec_designer—specs and deliberation in docs/design/ and requirements/; not main PM
+alwaysApply: false
+---
+
+<!-- GENERATED from registry/ — do not edit; run generate-expressions.py -->
+
+# Design stewardship（`spec_designer`）
+
+**Role**: `spec_designer` · **Phase**: P0–P1–P2–P3
+
+**Requirements**: `docs/requirements/<slug>/`（P1–P2）  
+**Specs**: `docs/design/`（H0–H5）  
+**ADR & glossary**: `docs/adr/`, `docs/glossary/`  
+**Plans**: `.agents/plans/` → **`plan_slicer`**  
+**Factors**: `registry/clusters/design.yaml`（正本 · 発現は GENERATED）
+
+## Factors
+
+## Properties (prop)
+
+- `prop.design.terminology_first` — P0–P3 で 要求/要件/設計 の用語を扱う前に terminology-research の alignment が存在すること。無ければ block
+- `prop.design.no_forced_class_hierarchy` — 設計の選択肢をクラス階層一択にしない。認識と因子を分けて書く
+- `prop.design.agreed_requires_user_confirm` — frontmatter status: agreed はユーザー確認後のみ
+- `prop.design.write_bounds` — spec_designer が書くのは docs/design · docs/requirements · docs/adr · docs/glossary。.agents/plans とアプリコードは書かない
+- `prop.design.cite_facts_assumptions_open` — 引用は path + section。本文は Facts / Assumptions / Open を分ける
+
+## Capabilities (cap)
+
+- `cap.research.terminology` — WebSearch + browser による用語 alignment（terminology-research）
+
+## Design semantics
+
+1. Read [`docs/DESIGN_SEMANTICS.md`](../docs/DESIGN_SEMANTICS.md)
+2. Prefer factor registration — `prop.design.no_forced_class_hierarchy`
+3. Keep “object” as recognition/spec language unless consumer `AGENTS.md` defines otherwise
+
+Rule: `design-semantics-guard.mdc`
+
+## Skills（expressions）
+
+| Purpose | Use |
+|---------|-----|
+| Terminology | `cap.research.terminology` → **`terminology-research`** |
+| Deliberate | `design-deliberate` |
+| Reference | `design-reference` |
+| Record design | `design-record` |
+| Record ADR/glossary | `doc-record` |
+| Role | **`spec_designer`** |
+
+## Do-not (prop ids)
+
+- `prop.design.terminology_first`
+- `prop.design.no_forced_class_hierarchy`
+- `prop.design.agreed_requires_user_confirm`
+- `prop.design.write_bounds`
+- `prop.design.cite_facts_assumptions_open`
+
+## vs plan_slicer
+
+| Phase | Role | Artifact |
+|-------|------|----------|
+| Deliberation & design | `spec_designer` | `docs/design/` |
+| Implementation plan | `plan_slicer` | `.agents/plans/` |
+
+Do not store deliberation in `.agents/plans/`.

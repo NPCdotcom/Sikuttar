@@ -1,0 +1,46 @@
+<!-- GENERATED from registry/packages/*.yaml — do not edit; run generate-codenames.py -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<title>Codenames — Agent PDCA Kit</title>
+<style>
+  :root { --bg:#0f1419; --fg:#e7ecf1; --muted:#9aa7b5; --line:#2a3441; --accent:#6cb6ff; }
+  body { font-family: "Segoe UI", "Hiragino Sans", Meiryo, sans-serif; margin: 1.5rem; background: var(--bg); color: var(--fg); }
+  h1 { font-size: 1.25rem; font-weight: 600; }
+  p { color: var(--muted); max-width: 52rem; }
+  input { width: min(28rem, 100%); padding: .5rem .75rem; border: 1px solid var(--line); border-radius: 6px; background: #151c24; color: var(--fg); }
+  table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: .9rem; }
+  th, td { border-bottom: 1px solid var(--line); padding: .55rem .4rem; text-align: left; vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  code { color: var(--accent); }
+  .kind-procedure { color: #8fd19e; }
+  .kind-protocol { color: #f0b37a; }
+  .kind-operation { color: #d0a8ff; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<h1>Codenames</h1>
+<p>Human lookup for full-form triggers (<code>区分-固有名-番号</code>). Definitions live in <code>registry/packages/</code>. This page is generated — do not edit.</p>
+<p><input id="q" type="search" placeholder="Filter codename / id / definition…" autocomplete="off"/></p>
+<table>
+<thead>
+<tr><th>Codename</th><th>id</th><th>kind</th><th>category</th><th>definition</th><th>variants</th><th>inputs.required</th><th>then</th></tr>
+</thead>
+<tbody id="rows">
+<tr><td class='kind-procedure'>手順-スタートアップ-1</td><td><code>proc-startup</code></td><td class='kind-procedure'>procedure</td><td>launch</td><td>新規プロジェクトに .agents キット（プレーン）を配置し、verify まで通す</td><td>1: ./.agents が copy-kit で配置済み, 2: ゼロから。フォルダ作成 · git-init 込み</td><td>PROJECT_NAME, PROJECT_PATH</td><td>proc-polaris, proc-voyager</td></tr>
+</tbody>
+</table>
+<script>
+const q = document.getElementById('q');
+const rows = [...document.querySelectorAll('#rows tr')];
+q.addEventListener('input', () => {
+  const needle = q.value.trim().toLowerCase();
+  for (const tr of rows) {
+    tr.classList.toggle('hidden', needle && !tr.textContent.toLowerCase().includes(needle));
+  }
+});
+</script>
+</body>
+</html>

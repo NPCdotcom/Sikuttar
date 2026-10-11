@@ -1,0 +1,59 @@
+# Sikuttar — Agent Guide
+
+> Kit: [.agents/README.md](.agents/README.md) · Tiers: [.agents/docs/CONTEXT_TIERS.md](.agents/docs/CONTEXT_TIERS.md)
+
+## PM (IDE + external memory)
+
+**`prop.kit.no_subagent`** · Memory: `.agents/memory/`
+
+| Layer | Canonical |
+|-------|-----------|
+| L0 gate | `rules/secretary-gate` · `rules/no-subagents` |
+| Every turn | `act.pm.turn_chain` · [PM_ROUTING.md](.agents/docs/PM_ROUTING.md) · `nav.yaml` |
+| Loop2 | [PM_ROUTING.md](.agents/docs/PM_ROUTING.md) §Loop2 · `project-state.yaml` |
+| Git | [GIT_WORKFLOW.md](.agents/docs/GIT_WORKFLOW.md) · `git_policy` in `project-state.yaml` · skills `git-reference` / `git-record` |
+| Context select | [INDEX.yaml](.agents/docs/INDEX.yaml) — ≤1 L3 doc per turn by tags |
+| User ↔ agent | [COLLABORATION_CONTRACT.md](.agents/docs/COLLABORATION_CONTRACT.md) — user decides, agent proposes options + recommendation |
+
+Roles: [CURSOR_ROLES.md](.agents/docs/CURSOR_ROLES.md) · Catalog: `skills/role-skill-catalog`
+
+User chat: **Japanese** · Kit canon: **English** — [LANGUAGE_POLICY.md](.agents/docs/LANGUAGE_POLICY.md)
+
+
+
+---
+
+## Project
+
+| Field | Value |
+|-------|-------|
+| Name | **Sikuttar** |
+| Description | 共同開発プロジェクト（概要は P0 で確定） |
+| Stack | 未定（P0 以降で確定） |
+
+## Stack docs
+
+| Topic | Link |
+|-------|------|
+| Language / runtime | 未定 |
+| Framework | 未定 |
+| Style | 未定 |
+
+## Lifecycle
+
+[PROJECT_LIFECYCLE.md](docs/PROJECT_LIFECYCLE.md) · `docs/project-state.yaml` · `.agents/memory/index.yaml`
+
+## Principles
+
+キット既定のデザイン意味論に従う（製品固有原則は P0 以降）
+
+### Design semantics (kit default — do not override lightly)
+
+- **Object** = recognition / classification / spec (not mandatory `class`)
+- Minimal units = **function · action · property** (factors); extend by registration / combination
+- Class-centric OOP / GoF / inheritance = **optional references**, not required
+- Stack (language, engine) = **means**, not philosophy core
+- Canonical: [.agents/docs/DESIGN_SEMANTICS.md](.agents/docs/DESIGN_SEMANTICS.md)
+- Owner philosophy (when present): recall global `npcdotcom-philosophy`
+
+

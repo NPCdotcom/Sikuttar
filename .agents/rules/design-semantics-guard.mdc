@@ -1,0 +1,23 @@
+---
+description: P0–P5—Recognition vs factors; class OOP not mandatory; guard against design misreads
+globs: docs/design/**/*,docs/requirements/**/*,docs/adr/**/*,docs/glossary/**/*,.agents/plans/**/*,**/src/**/*,**/tests/**/*
+alwaysApply: false
+---
+
+# Design semantics guard
+
+**Canonical**: [`docs/DESIGN_SEMANTICS.md`](../docs/DESIGN_SEMANTICS.md) · global `npcdotcom-philosophy` when present
+
+## IF designing / planning / specifying THEN
+
+1. Separate **recognition (object)** from **factors (function · action · property)**
+2. Propose **factor registration / combination** first — not a class tree
+3. Treat GoF / inheritance / class OOP as **optional references**, never required
+4. Do not equate “object” with code `class`
+5. Do not treat language/stack (Rust, C++, …) as philosophy core
+
+## Misalignment → stop
+
+Recognition forced into inheritance · factors omitted · action equated only to “runtime” · stack elevated to core · image/terms unaligned before Do
+
+→ Realign with DESIGN_SEMANTICS + user `>` / dialogue before `*-conduct`

@@ -1,0 +1,100 @@
+# C9-bootstrap — kit placement factors (codename package proc-startup)
+status: registered
+meta:
+  cluster: C9-bootstrap
+  recognition: kit_maintainer
+  phase: [pre-P0]
+  factors_total: 13
+
+factors:
+
+  # ---------- prop ----------
+  - id: prop.bootstrap.no_whole_copy
+    kind: prop
+    text: "ホームキットを Explorer / Copy-Item -Recurse で丸ごと複製しない"
+    why: docs/BOOTSTRAP_MANIFEST.md
+
+  - id: prop.bootstrap.no_write_to_kit_home
+    kind: prop
+    text: "キット正本（~/.agents）にプロジェクト固有内容を書かない"
+    why: docs/BOOTSTRAP_PROMPT.md
+
+  - id: prop.bootstrap.no_learning_copy
+    kind: prop
+    text: "learning 横断トピック実体と memory/global/knowledge をプロジェクトへコピーしない"
+    why: docs/BOOTSTRAP_MANIFEST.md
+
+  - id: prop.bootstrap.no_p0_before_done
+    kind: prop
+    text: "P0 設計（charter）は bootstrap 完了（verify ISSUES=0）まで開始しない"
+    why: docs/BOOTSTRAP_PROMPT.md
+
+  # ---------- act ----------
+  - id: act.bootstrap.copy_kit
+    kind: act
+    text: "scripts/copy-kit で include/exclude に従い .agents を配置（-WhatIf で確認可）"
+    cost: 2
+    owner: skills/maintain-bootstrap/references/bootstrap-steps.md
+    why: docs/BOOTSTRAP_MANIFEST.md
+    requires: [prop.bootstrap.no_whole_copy, prop.bootstrap.no_learning_copy]
+
+  - id: act.bootstrap.git_init
+    kind: act
+    text: "git-init で main · .gitignore · 初回 commit（variant 2 必須 · remote は確認点）"
+    cost: 1
+    when: { variant: 2 }
+    owner: skills/maintain-bootstrap/references/bootstrap-steps.md
+    why: docs/GIT_WORKFLOW.md
+
+  - id: act.bootstrap.root_agents_md
+    kind: act
+    text: "AGENTS.md.template をルート AGENTS.md に展開しプレースホルダを埋める"
+    cost: 1
+    owner: skills/maintain-bootstrap/references/bootstrap-steps.md
+    why: docs/BOOTSTRAP_PROMPT.md
+
+  - id: act.bootstrap.docs_skeleton
+    kind: act
+    text: "docs 骨格を利用先 docs/ に配置（PROJECT_LIFECYCLE · project-state · README）"
+    cost: 1
+    owner: skills/maintain-bootstrap/references/docs-skeleton.md
+    why: docs/FIRST_PROJECT_START.md
+
+  - id: act.bootstrap.env_setup
+    kind: act
+    text: "env/bin/setup で Python venv を作成し agents-run を検証"
+    cost: 1
+    owner: skills/maintain-bootstrap/references/bootstrap-steps.md
+    why: docs/BOOTSTRAP_MANIFEST.md
+
+  - id: act.bootstrap.memory_live
+    kind: act
+    text: "memory example → live（index · nav · audit · episodes）· global README がポインタであること"
+    cost: 1
+    owner: skills/maintain-bootstrap/references/bootstrap-steps.md
+    why: docs/MEMORY_ARCHITECTURE.md
+    requires: [prop.bootstrap.no_learning_copy]
+
+  - id: act.bootstrap.link_cursor
+    kind: act
+    text: "link-cursor で .cursor/{rules,skills,hooks} junction と hooks.json を張る"
+    cost: 1
+    owner: skills/maintain-bootstrap/references/bootstrap-steps.md
+    why: docs/CURSOR_COMPAT.md
+
+  - id: act.bootstrap.state_init
+    kind: act
+    text: "project-state を P0/H0 初期値に · nav.yaml を live に置く"
+    cost: 1
+    owner: docs/FIRST_PROJECT_START.md
+    why: docs/FIRST_PROJECT_START.md
+
+  - id: act.bootstrap.verify
+    kind: act
+    text: "verify-bootstrap → ISSUES=0 と bootstrap-steps §8 チェックリストを報告"
+    cost: 1
+    owner: scripts/verify-bootstrap.ps1
+    why: docs/BOOTSTRAP_MANIFEST.md
+    requires: [prop.bootstrap.no_p0_before_done]
+
+edges: []

@@ -1,0 +1,53 @@
+# Factor index — id → file (no factor body here)
+version: 1
+updated: "2026-10-11"
+entries:
+  # kit (13)
+  - { id: prop.kit.no_subagent, file: kit.yaml }
+  - { id: act.pm.turn_chain, file: kit.yaml }
+  - { id: act.pm.codename_dispatch, file: kit.yaml }
+  - { id: prop.kit.role_execute_pm_only, file: kit.yaml }
+  - { id: prop.kit.control_plane_two_files, file: kit.yaml }
+  - { id: prop.memory.nav_update_every_turn, file: kit.yaml }
+  - { id: prop.memory.nav_missing_is_error, file: kit.yaml }
+  - { id: prop.memory.next_decay, file: kit.yaml }
+  - { id: prop.state.loop1_quote_loop2_sync, file: kit.yaml }
+  - { id: prop.state.gate_write_pm_confirm, file: kit.yaml }
+  - { id: prop.learning.no_project_state_write, file: kit.yaml }
+  - { id: prop.kit.docs_do_not_restate_factors, file: kit.yaml }
+  - { id: prop.kit.factors_do_not_carry_rationale, file: kit.yaml }
+  # shared (2) — also appear in clusters/design.yaml for C6a completeness
+  - { id: act.doc.frontmatter_validate, file: shared.yaml }
+  - { id: cap.research.terminology, file: shared.yaml }
+  # C6a-design (19 including the 2 shared above)
+  - { id: prop.design.terminology_first, file: clusters/design.yaml }
+  - { id: prop.design.agreed_requires_user_confirm, file: clusters/design.yaml }
+  - { id: prop.design.no_forced_class_hierarchy, file: clusters/design.yaml }
+  - { id: prop.design.write_bounds, file: clusters/design.yaml }
+  - { id: prop.design.cite_facts_assumptions_open, file: clusters/design.yaml }
+  - { id: act.design.search_prior, file: clusters/design.yaml }
+  - { id: act.design.identify_unfixed_h, file: clusters/design.yaml }
+  - { id: act.design.deliberate, file: clusters/design.yaml }
+  - { id: act.design.record, file: clusters/design.yaml }
+  - { id: act.design.update_index, file: clusters/design.yaml }
+  - { id: act.design.handoff_plan, file: clusters/design.yaml }
+  - { id: path.design.P0, file: clusters/design.yaml }
+  - { id: path.design.P1_P2, file: clusters/design.yaml }
+  - { id: path.design.P3, file: clusters/design.yaml }
+  - { id: path.design.infra, file: clusters/design.yaml }
+  - { id: template.design.deliberation, file: clusters/design.yaml }
+  - { id: template.design.record, file: clusters/design.yaml }
+  # C9-bootstrap (13)
+  - { id: prop.bootstrap.no_whole_copy, file: clusters/bootstrap.yaml }
+  - { id: prop.bootstrap.no_write_to_kit_home, file: clusters/bootstrap.yaml }
+  - { id: prop.bootstrap.no_learning_copy, file: clusters/bootstrap.yaml }
+  - { id: prop.bootstrap.no_p0_before_done, file: clusters/bootstrap.yaml }
+  - { id: act.bootstrap.copy_kit, file: clusters/bootstrap.yaml }
+  - { id: act.bootstrap.git_init, file: clusters/bootstrap.yaml }
+  - { id: act.bootstrap.root_agents_md, file: clusters/bootstrap.yaml }
+  - { id: act.bootstrap.docs_skeleton, file: clusters/bootstrap.yaml }
+  - { id: act.bootstrap.env_setup, file: clusters/bootstrap.yaml }
+  - { id: act.bootstrap.memory_live, file: clusters/bootstrap.yaml }
+  - { id: act.bootstrap.link_cursor, file: clusters/bootstrap.yaml }
+  - { id: act.bootstrap.state_init, file: clusters/bootstrap.yaml }
+  - { id: act.bootstrap.verify, file: clusters/bootstrap.yaml }

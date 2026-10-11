@@ -1,0 +1,7 @@
+<type>(<scope>): <summary ≤ 72 chars>
+
+<why — 1–3 lines>
+
+Plan: .agents/plans/<path>.md
+Criterion: AC-n
+Gate: <gate-id>

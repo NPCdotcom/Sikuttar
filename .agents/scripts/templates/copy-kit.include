@@ -1,0 +1,48 @@
+# copy-kit.include — paths relative to kit root to COPY into consumer ./.agents/
+# Lines: # comment · blank ignored · trailing / = directory tree
+# Synced with docs/BOOTSTRAP_MANIFEST.md
+
+skills/
+rules/
+hooks/
+hooks.json
+docs/
+plans/
+scripts/
+registry/
+automations/
+AGENTS.md.template
+mcp.json.template
+mcp.json
+README.md
+.gitignore
+handoffs/README.md
+
+# env — source only (venv excluded in copy-kit.exclude)
+env/README.md
+env/bin/
+env/python/lib/
+env/python/requirements.txt
+env/python/.python-version
+env/node/
+
+# memory — templates / README / examples only (see also selective rules in copy-kit.ps1)
+memory/README.md
+memory/index.yaml.example
+memory/state/nav.yaml.example
+memory/audit/audit-log.md.example
+memory/knowledge/_template.md
+memory/knowledge/alignment/README.md
+memory/knowledge/lessons/README.md
+memory/knowledge/philosophy/README.md
+memory/knowledge/preferences/README.md
+memory/history/_template.md
+memory/traces/README.md
+memory/evaluations/README.md
+memory/rewards/README.md
+# empty dirs (episodes/traces/evaluations/history/state/knowledge/…) created by copy-kit / bootstrap
+
+# learning — skeleton only
+learning/README.md
+learning/index.yaml.example
+learning/_template/

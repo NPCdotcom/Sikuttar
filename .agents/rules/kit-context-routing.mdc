@@ -1,0 +1,14 @@
+---
+description: Routes context—PM uses AGENTS.md, nav, pm-turn.
+alwaysApply: true
+---
+
+# Kit context routing
+
+**Canonical**: `docs/PM_ROUTING.md` · `docs/MANDATORY_PROCEDURES.md` · `AGENTS.md`
+
+Every turn: `act.pm.turn_chain` · Control plane（`prop.kit.control_plane_two_files`）: `nav.yaml` + `project-state.yaml`
+
+Context: ≤1 L3 doc via `docs/INDEX.yaml` · brief/trace → episode file · decisions → options + recommended (`docs/COLLABORATION_CONTRACT.md`)
+
+**Forbidden**: `prop.kit.no_subagent` · chat-only next_actions · Loop1 P/H re-inference

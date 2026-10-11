@@ -1,0 +1,18 @@
+# Shared factors — not owned by a single cluster (referenced from C6a-design etc.)
+status: registered
+meta:
+  cluster: shared
+factors:
+
+  - id: act.doc.frontmatter_validate
+    kind: act
+    text: "lib-doc-frontmatter の必須キーを検証"
+    cost: 1
+    owner: skills/lib-doc-frontmatter/SKILL.md
+    why: docs/COLLABORATION_CONTRACT.md
+
+  - id: cap.research.terminology
+    kind: cap
+    text: "WebSearch + browser による用語 alignment（terminology-research）"
+    provided_by: skills/terminology-research
+    why: docs/TERMINOLOGY_RESEARCH_POLICY.md

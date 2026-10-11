@@ -1,0 +1,23 @@
+# GENERATED from registry/packages/*.yaml — do not edit; run generate-codenames.py
+version: 1
+codename_regex: ^(手順|プロトコル|オペレーション)-[^\s\-]{2,8}-\d{1,2}$
+reserved_concepts_warn:
+- Hermes
+- Subagent
+- Task
+packages:
+- codename: 手順-スタートアップ-1
+  id: proc-startup
+  kind: procedure
+  category: launch
+  definition: 新規プロジェクトに .agents キット（プレーン）を配置し、verify まで通す
+  variants:
+  - 1
+  - 2
+  inputs_required:
+  - PROJECT_NAME
+  - PROJECT_PATH
+  then:
+  - proc-polaris
+  - proc-voyager
+  file: packages/proc-startup.yaml

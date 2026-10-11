@@ -1,0 +1,31 @@
+version: 1
+topic: "{{topic}}"
+status: exploring   # exploring | validating | promoted | archived
+scope: cross-project   # cross-project | project
+project_id: null    # scope=project 時のみ
+
+promotion_target: null   # global-lessons | project-lessons | docs-glossary | null
+
+objectives:
+  - ""
+
+constraints:
+  license: ""       # 教材・ソースのライセンス
+  disk_budget: ""   # 目安（例 10GB）
+  no_write:
+    - docs/
+    - skills/
+    - rules/
+
+sources: []
+#  - type: web | repo | local
+#    path: sources/
+#    license: ""
+#    note: ""
+
+env:
+  python: null      # 例 learning/{{topic}}/.venv
+  node: null
+
+created: ""
+updated: ""

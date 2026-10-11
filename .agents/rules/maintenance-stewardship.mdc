@@ -1,0 +1,46 @@
+---
+description: Cursor role kit_maintainer—.agents kit bootstrap and ad hoc updates; not main PM
+alwaysApply: false
+---
+
+# Maintenance stewardship（kit_maintainer）
+
+**Scope**: `.agents/` kit（rules, skills）と `AGENTS.md` / `docs/` 骨格 / `rules/local/`。**`agents/` は廃止済み**（`prop.kit.no_subagent`）。
+
+## When to use
+
+### Bootstrap（`maintain-bootstrap`）
+
+- `.agents/` を **`scripts/copy-kit`** で配置した直後（**丸ごとコピー禁止** · `docs/BOOTSTRAP_MANIFEST.md`）
+- `learning/` 横断トピックと `memory/global` knowledge はホーム正本に残す（利用先は global ポインタ MD のみ）
+- ルート `AGENTS.md` が未作成またはテンプレのまま
+- 検証: `scripts/verify-bootstrap.ps1 -AgentsDir .\.agents`
+
+### Ad hoc（`maintain-adhoc`）
+
+- Cursor role・スキル・ルールの追加・改名・廃止
+- `role-skill-catalog` と実体の乖離修正
+- **`agents/*.md` の再追加は禁止**
+
+## Skills
+
+| Purpose | Use |
+|---------|-----|
+| Context | `maintain-reference` |
+| Initial setup | `maintain-bootstrap` |
+| Incremental change | `maintain-adhoc` |
+| Write | `maintain-record` |
+| Role | **`kit_maintainer`** |
+
+## Boundaries
+
+| Need | Prefer |
+|------|--------|
+| 機能仕様・GDD | `spec_designer` |
+| 実装計画 | `plan_slicer` |
+| アプリ実装 | `builder` |
+| コードレビュー | `reviewer` |
+
+## vs main agent
+
+キット編集本体は **`kit_maintainer`** に任せる。PM: `prop.kit.role_execute_pm_only`。
