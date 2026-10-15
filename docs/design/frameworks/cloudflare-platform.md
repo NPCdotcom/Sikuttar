@@ -62,8 +62,8 @@ Cloudflare Worker (Hono)
 
 ## 境界・非目的
 
-- **含む**: Workers · D1（推奨）· Cookie ベース authorKey · reactions テーブル
-- **含まない**: 本番級 IdP · Vectorize / AI 本接続の確定（S3 以降）· マルチリージョン設計の深掘り
+- **含む**: Workers · D1（推奨）· Cookie ベース authorKey · reactions · D1 上の簡易類似（S3）
+- **含まない**: 本番級 IdP · Vectorize / AI 本接続（S3 では差し替えフックのみ）· マルチリージョン設計の深掘り
 
 ## エージェント提案
 

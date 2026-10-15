@@ -1,26 +1,26 @@
 # Session navigation (every turn): .agents/memory/state/nav.yaml — see docs/PM_ROUTING.md
 
 current_phase: P6
-phase_note: "S2 Go accepted 2026-10-15; S1 remains Conditional Go"
+phase_note: "S3 Go accepted 2026-10-15; S1 remains Conditional Go; S2 Go"
 
 scope_focus:
   level: H4
-  path: "docs/reviews/s2-reactions-p6.md"
+  path: "docs/reviews/s3-related-p6.md"
 
 active_pdca:
-  plan_path: ".agents/plans/programs/ui-reactions-on-feed.md"
+  plan_path: ".agents/plans/programs/ui-related-on-feed.md"
   scope_level: program
-  pdca_class: S2
+  pdca_class: S3
 
 gate_status:
   current: pass
   proposal: ""
-  last_decision: "P6-s2-reactions-go"
+  last_decision: "P6-s3-related-go"
   last_decided_at: "2026-10-15"
   conditions: []
   gate_keeper: user
 
-last_gate_passed: "P6-s2-reactions-go"
+last_gate_passed: "P6-s3-related-go"
 allowed_actions:
   - design-deliberate
   - design-record
@@ -39,8 +39,8 @@ lifecycle_plan:
   skipped_stages: []
   recommended_cursor_mode: "Agent"
   requirements_depth: "standard"
-  unit_scope: "docs/design/systems/reaction-signaling.md"
-  notes: "S2 Go on plan/s2-reactions. Next: merge to main, S3 RAG, or S1 Full Go via IT automation."
+  unit_scope: "docs/design/systems/related-retrieval.md"
+  notes: "S3 Go on plan/s3-related-failures. Next: merge to main, S4 display priority, or S1 Full Go."
 
 git_policy:
   enabled: true

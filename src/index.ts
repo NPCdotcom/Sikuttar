@@ -6,6 +6,7 @@ import {
   maskBadFromPublic,
 } from "./factors/countPublicReactions";
 import { ensureAccountSlot } from "./factors/ensureAccountSlot";
+import { findRelatedStories } from "./factors/findRelatedStories";
 import { listByCreatedAtDesc } from "./factors/listByCreatedAtDesc";
 import {
   persistReaction,
@@ -68,6 +69,30 @@ app.get("/stories", async (c) => {
     return { ...base, counts };
   });
   return c.json({ items });
+});
+
+app.get("/stories/:id/related", async (c) => {
+  const storyId = c.req.param("id");
+  try {
+    const hits = await findRelatedStories(c.env.DB, storyId, 3);
+    const countsMap = await countPublicReactions(
+      c.env.DB,
+      hits.map((h) => h.row.id),
+    );
+    const items = hits.map((hit) => {
+      const base = anonymizeForDisplay(hit.row);
+      const counts = maskBadFromPublic(
+        countsMap.get(hit.row.id) ?? { wakaru: 0, reference: 0 },
+      );
+      return { ...base, counts };
+    });
+    return c.json({ items });
+  } catch (err) {
+    if (err instanceof StoryNotFoundError) {
+      return c.json({ error: err.message }, 404);
+    }
+    throw err;
+  }
 });
 
 app.post("/stories/:id/reactions", async (c) => {
