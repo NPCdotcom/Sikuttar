@@ -1,61 +1,56 @@
-# Copy to docs/project-state.yaml in consumer repos. Update on gate pass / phase change.
 # Session navigation (every turn): .agents/memory/state/nav.yaml — see docs/PM_ROUTING.md
-# Filled neutral example: docs/_example/project-state.yaml (do not use example slugs in production).
-# Guide: docs/FIRST_PROJECT_START.md · Gate: docs/ROLES_AND_GOVERNANCE.md
 
-current_phase: P0   # P0|P1|P2|P3|P4|P5|P6
-phase_note: ""    # e.g. "P5 done; returning to P2 for new requirement auth-v2"
+current_phase: P6
+phase_note: "P6 — S1 MVP Conditional Go accepted by user 2026-10-15; IT automation optional for Full Go"
 
-scope_focus:      # which H level we are clarifying now
-  level: H0       # H0|H1|H2|H3|H4|H5
-  path: ""        # e.g. docs/design/product/charter.md
+scope_focus:
+  level: H4
+  path: "docs/reviews/s1-mvp-p6.md"
 
-active_pdca:      # primary S1 cycle (program or algorithm)
-  plan_path: ""   # e.g. .agents/plans/algorithms/sort-stable.md
+active_pdca:
+  plan_path: ".agents/plans/algorithms/ensure-account-slot.md"
   scope_level: algorithm
   pdca_class: S1
 
-# Stage-gate status (Gate Keeper = user). See docs/ROLES_AND_GOVERNANCE.md
 gate_status:
-  current: pending        # pending | passed | conditional | recycled | hold | killed
-  proposal: ""            # router/PM suggestion: Go | Conditional Go | Recycle | Hold | Kill | ""
-  last_decision: ""       # e.g. P4-plan-sort-stable-go, P2-req-auth-conditional
-  last_decided_at: ""     # ISO-8601 date optional, e.g. 2026-06-17
-  conditions: []          # strings — required before Conditional Go advances
-  gate_keeper: user       # fixed; PM proposes, user decides
+  current: conditional
+  proposal: ""
+  last_decision: "P6-s1-mvp-conditional-go"
+  last_decided_at: "2026-10-15"
+  conditions:
+    - "Prefer adding D1 round-trip IT when capacity allows (optional for Full Go)"
+  gate_keeper: user
 
-last_gate_passed: ""   # legacy shorthand; mirror last_decision when passed
-allowed_actions:       # router uses for gate hints
+last_gate_passed: "P6-s1-mvp-conditional-go"
+allowed_actions:
   - design-deliberate
   - design-record
-  # - plan-record          # uncomment when P3+H4/H5 ready
-  # - implement-conduct    # uncomment when plan agreed
+  - plan-record
+  - implement-conduct
+  - review-conduct
 
 open_blockers: []
 
-# Adaptive lifecycle (skill: adaptive-lifecycle-plan) — AI-DLC Workflow Planning 相当
 lifecycle_plan:
-  profile: ""              # hotfix | spike | standard | full | doc_only | custom
+  profile: ""
   brownfield: false
-  last_planned_at: ""      # ISO-8601
-  executed_phases: []      # e.g. [P1, P2, P4]
-  skipped_phases: []       # e.g. [P0]
-  skipped_stages: []       # optional AI-DLC stage labels for audit
-  recommended_cursor_mode: ""  # Ask | Plan | Agent | Debug | chain e.g. "Ask→Plan→Agent"
-  requirements_depth: ""   # minimal | standard | comprehensive — H-P4 · adaptive-lifecycle-plan
-  unit_scope: ""           # e.g. docs/design/programs/example.md (H4/H5 unit)
-  notes: ""
+  last_planned_at: "2026-10-15"
+  executed_phases: [P0, P1, P2, P3, P4, P5, P6]
+  skipped_phases: []
+  skipped_stages: []
+  recommended_cursor_mode: "Agent"
+  requirements_depth: "standard"
+  unit_scope: "docs/design/elements/anonymous-display.md"
+  notes: "S1 MVP Conditional Go. Next: S2 reactions, commit, or Full Go via IT automation."
 
-# Git（docs/GIT_WORKFLOW.md §4）— local Git required; GitHub optional
 git_policy:
   enabled: true
   default_branch: main
-  auto_commit: ask        # ask | criterion | off
-  auto_push: false        # push always needs explicit user request
-  remote: "github.com/NPCdotcom/Sikuttar"              # e.g. github.com/<owner>/<repo>
+  auto_commit: ask
+  auto_push: false
+  remote: "github.com/NPCdotcom/Sikuttar"
 
-# Optional — Linear（docs/LINEAR_PHASE_MAP.md）
 linear_sync:
-  issue_state: ""   # design-draft | plan-agreed | do-running | ...
+  issue_state: ""
   issue_id: ""
   map_doc: docs/LINEAR_PHASE_MAP.md

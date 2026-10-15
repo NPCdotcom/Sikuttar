@@ -51,3 +51,5 @@ apps/web/dist/
 apps/web/node_modules/
 __pycache__/
 *.pyc
+
+apps/web/tsconfig.tsbuildinfo
