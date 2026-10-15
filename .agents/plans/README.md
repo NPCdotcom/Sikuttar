@@ -42,6 +42,9 @@ Example（中立・削除可）: [_example/](_example/)
 | [algorithms/persist-reaction.md](algorithms/persist-reaction.md) | algorithm | agreed · Do done · Go | S2 · validate · persist reaction |
 | [algorithms/count-public-reactions.md](algorithms/count-public-reactions.md) | algorithm | agreed · Do done · Go | S2 · public counts · mask bad |
 
-**実行順**: scaffold → persist / list → ui ·（hotfix）ensure-account-slot · **S2** persist-reaction / count-public / ui-reactions（branch `plan/s2-reactions`）
+| [algorithms/find-related-stories.md](algorithms/find-related-stories.md) | algorithm | agreed · Do done · Go | S3 · Jaccard · top3 |
+| [programs/ui-related-on-feed.md](programs/ui-related-on-feed.md) | program | agreed · Do done · Go | S3 · 関連展開 UI |
+
+**実行順**: scaffold → persist / list → ui · S2 reactions · **S3** find-related / ui-related（branch `plan/s3-related-failures`）
 
 Rules: `planning`, `plans-content`, `project-lifecycle`

@@ -63,7 +63,7 @@ Semantics: [.agents/docs/DESIGN_SEMANTICS.md](../../../.agents/docs/DESIGN_SEMAN
 |-------|------|------|------|
 | S1 | E1 · E2 · E8（+ E7 データ枠） | FR1–FR4 · NFR1–2 | **Conditional Go** → [failure-story](failure-story.md) · [feed](feed.md) · [anonymous-display](anonymous-display.md) · H2: [failure-share-h2](../systems/failure-share-h2.md) |
 | S2 | E3 · E4（体験ガード） | FR5–FR7 | **Go** → [limited-reaction](limited-reaction.md) · [bad-signal](bad-signal.md) · H2: [reaction-signaling](../systems/reaction-signaling.md) · [review](../../reviews/s2-reactions-p6.md) |
-| S3 | E6 | FR10 | 後 |
+| S3 | E6 | FR10 | **Go** → [related-failure](related-failure.md) · H2: [related-retrieval](../systems/related-retrieval.md) · [review](../../reviews/s3-related-p6.md) |
 | S4 | E5 | FR9 | 後 |
 
 ## エージェント提案

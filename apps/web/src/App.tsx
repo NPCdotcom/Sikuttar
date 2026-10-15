@@ -22,6 +22,8 @@ export function App() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [reactingId, setReactingId] = useState<string | null>(null);
+  const [relatedById, setRelatedById] = useState<Record<string, PublicStory[]>>({});
+  const [relatedLoading, setRelatedLoading] = useState<string | null>(null);
 
   const renderFeed = useCallback(async () => {
     const res = await fetch("/stories", { credentials: "include" });
@@ -95,6 +97,38 @@ export function App() {
     }
   }
 
+  async function loadRelated(storyId: string) {
+    setError(null);
+    if (relatedById[storyId]) {
+      setRelatedById((prev) => {
+        const next = { ...prev };
+        delete next[storyId];
+        return next;
+      });
+      return;
+    }
+    setRelatedLoading(storyId);
+    try {
+      const res = await fetch(`/stories/${storyId}/related`, { credentials: "include" });
+      if (!res.ok) {
+        const payload = (await res.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(payload?.error ?? `関連の取得に失敗しました (${res.status})`);
+      }
+      const data = (await res.json()) as { items: PublicStory[] };
+      setRelatedById((prev) => ({
+        ...prev,
+        [storyId]: data.items.map((item) => ({
+          ...item,
+          counts: item.counts ?? { wakaru: 0, reference: 0 },
+        })),
+      }));
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "関連の取得に失敗しました");
+    } finally {
+      setRelatedLoading(null);
+    }
+  }
+
   return (
     <main className="shell">
       <h1>シクッター</h1>
@@ -153,7 +187,36 @@ export function App() {
                   >
                     参考になる · {item.counts.reference}
                   </button>
+                  <button
+                    type="button"
+                    className="related-toggle"
+                    disabled={relatedLoading === item.id}
+                    onClick={() => void loadRelated(item.id)}
+                  >
+                    {relatedLoading === item.id
+                      ? "関連を取得中…"
+                      : relatedById[item.id]
+                        ? "関連を閉じる"
+                        : "関連する失敗談"}
+                  </button>
                 </div>
+                {relatedById[item.id] ? (
+                  <div className="related" aria-label="関連する失敗談">
+                    {relatedById[item.id].length === 0 ? (
+                      <p className="empty">関連する投稿は見つかりませんでした。</p>
+                    ) : (
+                      <ul>
+                        {relatedById[item.id].map((rel) => (
+                          <li key={rel.id}>
+                            <p className="story-body">{rel.body}</p>
+                            {rel.situation ? <p className="meta">状況: {rel.situation}</p> : null}
+                            {rel.cause ? <p className="meta">原因: {rel.cause}</p> : null}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ) : null}
               </li>
             ))}
           </ul>
