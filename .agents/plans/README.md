@@ -11,8 +11,6 @@
 | `product/` | H0 | 通常しない（`pdca_eligible: false`） |
 | `elements/` | H1 | 通常しない |
 | `systems/` | H2 | 通常しない |
-| `elements/` | H1 | 通常しない |
-| `systems/` | H2 | 通常しない |
 | `frameworks/` | H3 | S0 スパイクのみ |
 | `programs/` | H4 | **主戦場** |
 | `algorithms/` | H5 | **主戦場** |
@@ -35,6 +33,15 @@ Example（中立・削除可）: [_example/](_example/)
 
 | Plan | scope_level | Status | Summary |
 |------|-------------|--------|---------|
-| *(add rows)* | | | |
+| [programs/s1-scaffold.md](programs/s1-scaffold.md) | program | agreed · Do done | S0 · Worker+Hono+D1+Vite 足場 |
+| [algorithms/persist-failure-story.md](algorithms/persist-failure-story.md) | algorithm | agreed · Do done | S1 · validate · authorKey · persist |
+| [algorithms/list-anonymized-feed.md](algorithms/list-anonymized-feed.md) | algorithm | agreed · Do done | S1 · list · anonymize |
+| [programs/ui-compose-and-feed.md](programs/ui-compose-and-feed.md) | program | agreed · Do done | S1 · 投稿フォーム+フィード UI |
+| [algorithms/ensure-account-slot.md](algorithms/ensure-account-slot.md) | algorithm | agreed · Do done | S1 · FR8 accounts 属性スロット |
+| [programs/ui-reactions-on-feed.md](programs/ui-reactions-on-feed.md) | program | agreed · Do done · Go | S2 · わかる／参考になる UI |
+| [algorithms/persist-reaction.md](algorithms/persist-reaction.md) | algorithm | agreed · Do done · Go | S2 · validate · persist reaction |
+| [algorithms/count-public-reactions.md](algorithms/count-public-reactions.md) | algorithm | agreed · Do done · Go | S2 · public counts · mask bad |
+
+**実行順**: scaffold → persist / list → ui ·（hotfix）ensure-account-slot · **S2** persist-reaction / count-public / ui-reactions（branch `plan/s2-reactions`）
 
 Rules: `planning`, `plans-content`, `project-lifecycle`

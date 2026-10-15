@@ -1,5 +1,5 @@
 ---
-title: H2 システム概要 — failure-share（S1 範囲）
+title: H2 システム概要 — failure-share（S1+S2）
 kind: design
 phase: P3
 scope_level: H2
@@ -8,21 +8,21 @@ agreed_at: "2026-10-15"
 related_product: docs/design/product/charter.md
 related_h1: docs/design/elements/failure-share-h1.md
 related_requirements: docs/requirements/failure-share/要件.md
-structure_ref: "charter §8 · S1 elements · §7 message-driven"
+structure_ref: "charter §8 · S1/S2 elements · §7 message-driven"
 created: "2026-10-15"
 updated: "2026-10-15"
 ---
 
-# H2 システム概要 — failure-share（S1）
+# H2 システム概要 — failure-share（S1+S2）
 
 Semantics: [.agents/docs/DESIGN_SEMANTICS.md](../../../.agents/docs/DESIGN_SEMANTICS.md)  
-親 H1: [failure-share-h1](../elements/failure-share-h1.md)（agreed）· S1 elements agreed
+親 H1: [failure-share-h1](../elements/failure-share-h1.md)（agreed）· S1/S2 elements
 
 > **構造ルール**: システムは charter §8 / H1 認識単位を **組み合わせる**。新しい製品語彙ツリーを立てない。スタックは手段（§7 Assumption）。
 
 ## 目的
 
-S1（投稿・閲覧・匿名）を、メッセージ境界でつながる最小システム群として固定する。
+S1（投稿・閲覧・匿名）に続き、S2（限定リアクション・BAD 内部）をメッセージ境界で追加する。
 
 ## Recognition（本スライスのシステム）
 
@@ -30,8 +30,9 @@ S1（投稿・閲覧・匿名）を、メッセージ境界でつながる最小
 |----|----------|------|-------------|
 | SYS1 | 失敗談投稿システム | 失敗談を受け取り永続化する | E1 · E7/E8（authorKey） |
 | SYS2 | フィード閲覧システム | 永続化済み失敗談を匿名化して一覧する | E2 · E8 |
+| SYS3 | リアクション信号システム | 限定リアクション付与と BAD 内部記録・公開マスク | E3 · E4 |
 
-S2 以降（リアクション · BAD · RAG · 表示優先度）は **別システムとして後から関数／購読を追加**する（今は境界だけ意識）。
+S3 以降（RAG · 表示優先度）は **別システムとして後から関数／購読を追加**する。
 
 ## 個別設計
 
@@ -39,6 +40,7 @@ S2 以降（リアクション · BAD · RAG · 表示優先度）は **別シ�
 |----------|------|
 | SYS1 失敗談投稿 | [story-posting.md](story-posting.md) |
 | SYS2 フィード閲覧 | [feed-reading.md](feed-reading.md) |
+| SYS3 リアクション信号 | [reaction-signaling.md](reaction-signaling.md) |
 
 ## データフロー（S1）
 
@@ -68,11 +70,14 @@ SYS2 フィード閲覧
 | 一覧する · 新着で並び替える | action / function | SYS2 |
 | 匿名化する | function | SYS2（E8） |
 | FailureStoryPersisted | message | SYS1 → Store / SYS2 購読可 |
+| わかる／参考になるを付与 · 公開件数 | action / function | SYS3（E3） |
+| BAD を内部記録 · 公開マスク | function | SYS3（E4） |
+| ReactionPersisted | message | SYS3 |
 
 ## 境界・非目的
 
-- **含む**: S1 の投稿→永続化→一覧→匿名表示
-- **含まない**: ログイン UI · コメントスレ · リアクション UI · BAD 公開 · RAG · 優先度スコア本実装
+- **含む**: S1 の投稿→永続化→一覧→匿名表示 · S2 の限定リアクションと BAD 内部記録
+- **含まない**: ログイン UI · コメントスレ · BAD 公開 UI/ランキング · RAG · 優先度スコア本実装
 - **スタック**: Browser + API + Store（Assumption: React / Hono / Cloudflare 系）。製品認識名にはしない
 
 ## エージェント提案
