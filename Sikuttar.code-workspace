@@ -1,0 +1,40 @@
+{
+  "folders": [
+    {
+      "name": "Sikuttar",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "files.exclude": {
+      "**/.wrangler": true,
+      "**/node_modules": true,
+      "**/.agents/memory": true,
+      "**/dist": true,
+      "**/__pycache__": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/.wrangler": true,
+      "**/.agents/memory": true,
+      "**/dist": true,
+      "**/package-lock.json": true
+    },
+    "files.watcherExclude": {
+      "**/node_modules/**": true,
+      "**/.wrangler/**": true,
+      "**/.agents/memory/**": true
+    },
+    "editor.formatOnSave": true,
+    "vitest.enable": true
+  },
+  "extensions": {
+    "recommendations": [
+      "cloudflare.cloudflare",
+      "vitest.explorer",
+      "dbaeumer.vscode-eslint"
+    ]
+  }
+}

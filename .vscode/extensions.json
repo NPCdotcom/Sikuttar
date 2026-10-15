@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "cloudflare.cloudflare",
+    "vitest.explorer",
+    "dbaeumer.vscode-eslint"
+  ]
+}
