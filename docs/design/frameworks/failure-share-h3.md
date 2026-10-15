@@ -29,9 +29,9 @@ S1（投稿→永続化→匿名一覧）と S2（限定リアクション）を
 
 | ID | フレームワーク | 一文 | 主に支える H2 |
 |----|----------------|------|----------------|
-| FW1 | Web UI（React） | ブラウザ上の投稿フォームとフィード描画・限定リアクション | SYS1 入力面 · SYS2/SYS3 表示面 |
-| FW2 | HTTP API（Hono） | 投稿受付・一覧取得・リアクション付与の境界 | SYS1 · SYS2 · SYS3 |
-| FW3 | エッジ実行基盤（Cloudflare） | ホスト · Store · セッション相当 | SYS1/SYS3 永続化 · authorKey |
+| FW1 | Web UI（React） | 投稿・フィード・リアクション・関連展開 | SYS1–SYS4 表示／入力 |
+| FW2 | HTTP API（Hono） | 投稿・一覧・リアクション・関連照会の境界 | SYS1–SYS4 |
+| FW3 | エッジ実行基盤（Cloudflare） | ホスト · Store · セッション相当 | 永続化 · authorKey · D1 類似 |
 
 言語 TypeScript は FW1–FW3 共通の記述手段（単独の「製品要素」にはしない）。
 
@@ -53,21 +53,22 @@ S1（投稿→永続化→匿名一覧）と S2（限定リアクション）を
         │
         ├─ POST 失敗談 → SYS1 factors → Store (FW3)
         ├─ GET  一覧   → SYS2+SYS3 → anonymize + public counts → JSON
-        └─ POST リアクション → SYS3 factors → Store (FW3)
+        ├─ POST リアクション → SYS3 factors → Store (FW3)
+        └─ GET  関連   → SYS4 findRelatedStories → JSON
 ```
 
 ## Factors（枠に載せるもの · 製品因子は H1/H2 正本）
 
 | 枠 | 載せる因子（参照） |
 |----|-------------------|
-| FW1 | 投稿する（UI）· 一覧を描画する · わかる／参考になるを付与する |
-| FW2 | 入力を受ける · 検証 · list · 匿名化 · validateReactionKind · persistReaction |
-| FW3 | 永続化する · authorKey · reactions テーブル |
+| FW1 | 投稿 · 一覧 · わかる／参考になる · 関連を展開する |
+| FW2 | validate · list · anonymize · reactions · findRelatedStories |
+| FW3 | 永続化 · authorKey · reactions · D1 走査（後段 Vectorize 差し替え可） |
 
 ## 境界・非目的
 
-- **含む**: S1+S2 を動かす FW1–FW3
-- **含まない**: RAG 専用サービス選定の確定 · 優先度計算ライブラリの本採用 · 本格 Auth SaaS · BAD 公開 UI
+- **含む**: S1–S3 を動かす FW1–FW3
+- **含まない**: Vectorize 本接続の必須化 · 優先度ライブラリ本採用 · 本格 Auth SaaS · BAD 公開 UI
 - **しない**: 「React コンポーネント階層 = 製品オブジェクト階層」への短絡
 
 ## エージェント提案

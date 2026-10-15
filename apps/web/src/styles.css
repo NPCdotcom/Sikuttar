@@ -132,6 +132,33 @@ h2 {
   cursor: not-allowed;
 }
 
+.related-toggle {
+  border-style: dashed !important;
+}
+
+.related {
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.4rem;
+  background: #f6f3ee;
+  border: 1px dashed #cfc3b0;
+}
+
+.related ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.related li {
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.35rem;
+  background: #fffdf9;
+  border: 1px solid #e8e0d4;
+}
+
 .empty {
   color: #8a8276;
 }
