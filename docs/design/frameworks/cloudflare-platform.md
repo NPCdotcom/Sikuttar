@@ -55,14 +55,14 @@ SYS1 の永続化と authorKey 保持、SYS2 の読み出しを載せる実行�
 
 ```text
 Cloudflare Worker (Hono)
-  ├─ env.DB (D1)     → persist / list
+  ├─ env.DB (D1)     → stories / accounts / reactions
   └─ Cookie session  → authorKey
 （任意）静的資産: Workers Assets / Pages で FW1 配信
 ```
 
 ## 境界・非目的
 
-- **含む**: Workers · D1（推奨）· Cookie ベース authorKey
+- **含む**: Workers · D1（推奨）· Cookie ベース authorKey · reactions テーブル
 - **含まない**: 本番級 IdP · Vectorize / AI 本接続の確定（S3 以降）· マルチリージョン設計の深掘り
 
 ## エージェント提案

@@ -109,6 +109,29 @@ h2 {
   font-size: 0.8rem;
 }
 
+.reactions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+}
+
+.reactions button {
+  padding: 0.35rem 0.7rem;
+  border: 1px solid #cfc3b0;
+  border-radius: 0.35rem;
+  background: #fffdf9;
+  color: #2f2a24;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.reactions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .empty {
   color: #8a8276;
 }

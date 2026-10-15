@@ -1,7 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { attachAuthorKey, readAuthorKeyFromCookie } from "../src/factors/attachAuthorKey";
 import { anonymizeForDisplay } from "../src/factors/anonymizeForDisplay";
+import { maskBadFromPublic } from "../src/factors/countPublicReactions";
 import { ValidationError, validateBody } from "../src/factors/validateBody";
+import {
+  ReactionValidationError,
+  validateReactionKind,
+} from "../src/factors/validateReactionKind";
 
 describe("validateBody", () => {
   it("requires body", () => {
@@ -54,5 +59,25 @@ describe("anonymizeForDisplay", () => {
     expect(publicStory).not.toHaveProperty("occupation");
     expect(publicStory).not.toHaveProperty("attributes");
     expect(publicStory).not.toHaveProperty("attributes_json");
+  });
+});
+
+describe("validateReactionKind", () => {
+  it("accepts wakaru, reference, and bad", () => {
+    expect(validateReactionKind({ kind: "wakaru" })).toBe("wakaru");
+    expect(validateReactionKind({ kind: "reference" })).toBe("reference");
+    expect(validateReactionKind({ kind: "bad" })).toBe("bad");
+  });
+
+  it("rejects other kinds", () => {
+    expect(() => validateReactionKind({ kind: "like" })).toThrow(ReactionValidationError);
+  });
+});
+
+describe("maskBadFromPublic", () => {
+  it("returns only wakaru and reference", () => {
+    const counts = maskBadFromPublic({ wakaru: 2, reference: 1 });
+    expect(counts).toEqual({ wakaru: 2, reference: 1 });
+    expect(counts).not.toHaveProperty("bad");
   });
 });
