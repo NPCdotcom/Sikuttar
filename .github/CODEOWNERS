@@ -1,0 +1,3 @@
+# Default owner — PR merges to protected branches require @NPCdotcom review
+# (with admin bypass allowed for the owner’s own changes).
+* @NPCdotcom
