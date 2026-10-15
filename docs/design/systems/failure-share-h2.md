@@ -31,8 +31,9 @@ S1（投稿・閲覧・匿名）に続き、S2（限定リアクション・BAD 
 | SYS1 | 失敗談投稿システム | 失敗談を受け取り永続化する | E1 · E7/E8（authorKey） |
 | SYS2 | フィード閲覧システム | 永続化済み失敗談を匿名化して一覧する | E2 · E8 |
 | SYS3 | リアクション信号システム | 限定リアクション付与と BAD 内部記録・公開マスク | E3 · E4 |
+| SYS4 | 関連失敗検索システム | 蓄積投稿からの類似／関連提示 | E6 |
 
-S3 以降（RAG · 表示優先度）は **別システムとして後から関数／購読を追加**する。
+S4（表示優先度）は **別システムとして後から関数／購読を追加**する。
 
 ## 個別設計
 
@@ -41,6 +42,7 @@ S3 以降（RAG · 表示優先度）は **別システムとして後から関�
 | SYS1 失敗談投稿 | [story-posting.md](story-posting.md) |
 | SYS2 フィード閲覧 | [feed-reading.md](feed-reading.md) |
 | SYS3 リアクション信号 | [reaction-signaling.md](reaction-signaling.md) |
+| SYS4 関連失敗検索 | [related-retrieval.md](related-retrieval.md) |
 
 ## データフロー（S1）
 
@@ -73,11 +75,13 @@ SYS2 フィード閲覧
 | わかる／参考になるを付与 · 公開件数 | action / function | SYS3（E3） |
 | BAD を内部記録 · 公開マスク | function | SYS3（E4） |
 | ReactionPersisted | message | SYS3 |
+| 類似を照会する · 提示する | function / action | SYS4（E6） |
+| RelatedRetrieved | message | SYS4 |
 
 ## 境界・非目的
 
-- **含む**: S1 の投稿→永続化→一覧→匿名表示 · S2 の限定リアクションと BAD 内部記録
-- **含まない**: ログイン UI · コメントスレ · BAD 公開 UI/ランキング · RAG · 優先度スコア本実装
+- **含む**: S1–S3（投稿・一覧・リアクション・関連失敗の簡易類似）
+- **含まない**: ログイン UI · コメントスレ · BAD 公開 UI/ランキング · Vectorize 本接続 · 優先度スコア本実装（E5）
 - **スタック**: Browser + API + Store（Assumption: React / Hono / Cloudflare 系）。製品認識名にはしない
 
 ## エージェント提案

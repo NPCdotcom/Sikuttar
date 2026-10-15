@@ -7,6 +7,14 @@ import {
   ReactionValidationError,
   validateReactionKind,
 } from "../src/factors/validateReactionKind";
+import {
+  applyWakaruBoost,
+  scoreStorySimilarity,
+} from "../src/factors/scoreStorySimilarity";
+import {
+  storyTextForSimilarity,
+  tokenizeForSimilarity,
+} from "../src/factors/tokenizeForSimilarity";
 
 describe("validateBody", () => {
   it("requires body", () => {
@@ -79,5 +87,36 @@ describe("maskBadFromPublic", () => {
     const counts = maskBadFromPublic({ wakaru: 2, reference: 1 });
     expect(counts).toEqual({ wakaru: 2, reference: 1 });
     expect(counts).not.toHaveProperty("bad");
+  });
+});
+
+describe("similarity factors", () => {
+  it("scores overlapping tokens higher", () => {
+    const q = tokenizeForSimilarity(
+      storyTextForSimilarity({
+        body: "デプロイ失敗でロールバックした",
+        situation: "本番",
+        cause: null,
+      }),
+    );
+    const close = tokenizeForSimilarity(
+      storyTextForSimilarity({
+        body: "デプロイ失敗で慌ててロールバック",
+        situation: "本番",
+        cause: null,
+      }),
+    );
+    const far = tokenizeForSimilarity(
+      storyTextForSimilarity({
+        body: "朝ごはんを食べ忘れた",
+        situation: null,
+        cause: null,
+      }),
+    );
+    expect(scoreStorySimilarity(q, close)).toBeGreaterThan(scoreStorySimilarity(q, far));
+  });
+
+  it("applies wakaru boost without introducing bad", () => {
+    expect(applyWakaruBoost(0.5, 2)).toBeCloseTo(0.54);
   });
 });

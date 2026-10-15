@@ -19,18 +19,18 @@ updated: "2026-10-15"
 # Framework — HTTP API（Hono）· FW2
 
 親: [failure-share-h3](failure-share-h3.md)  
-支える: SYS1 · SYS2 · SYS3 の HTTP 境界  
+支える: SYS1 · SYS2 · SYS3 · SYS4 の HTTP 境界  
 Assumption: Hono · TypeScript（charter §7）
 
 ## 目的
 
-投稿受付・一覧取得・リアクション付与を HTTP で公開し、製品因子を関数としてつなぐ。
+投稿受付・一覧取得・リアクション付与・関連失敗提示を HTTP で公開し、製品因子を関数としてつなぐ。
 
 ## Recognition
 
 | 認識単位 | 一文 |
 |----------|------|
-| HTTP API 枠 | SYS1/SYS2/SYS3 の入出力ポート（ブラウザ ↔ Store） |
+| HTTP API 枠 | SYS1–SYS4 の入出力ポート（ブラウザ ↔ Store） |
 
 ## Factors（API に載せる）
 
@@ -39,6 +39,7 @@ Assumption: Hono · TypeScript（charter §7）
 | 入力を受ける · 検証する · 永続化する | SYS1 | `POST /stories` |
 | 一覧を読み出す · 匿名化する · 公開件数 | SYS2+SYS3 | `GET /stories` |
 | リアクションを検証・永続化する | SYS3 | `POST /stories/:id/reactions` |
+| 関連失敗を照会する | SYS4 | `GET /stories/:id/related` |
 | authorKey を付与する | function | Cookie → SYS1/SYS3 |
 
 レスポンスの一覧項目から `authorKey` / 属性 / `bad` 件数を落とす。
@@ -48,17 +49,18 @@ Assumption: Hono · TypeScript（charter §7）
 ```text
 Hono app
   ├─ middleware: ensureAuthorKey
-  ├─ POST /stories              → validate → persist → 201
-  ├─ GET  /stories              → list → anonymize → public counts → 200
-  └─ POST /stories/:id/reactions → validateKind → persistReaction → 201
+  ├─ POST /stories               → validate → persist → 201
+  ├─ GET  /stories               → list → anonymize → public counts → 200
+  ├─ POST /stories/:id/reactions → validateKind → persistReaction → 201
+  └─ GET  /stories/:id/related   → findRelatedStories → anonymize → 200
 ```
 
-メッセージ `FailureStoryPersisted` / `ReactionPersisted` は同プロセス内の関数呼び出しフックとして残す。
+メッセージ `FailureStoryPersisted` / `ReactionPersisted` / `RelatedRetrieved` は同プロセス内フックとして残す。
 
 ## 境界・非目的
 
-- **含む**: S1 の 2 エンドポイント + S2 リアクション + authorKey
-- **含まない**: 認証プロバイダ本接続 · GraphQL 必須化 · BAD 公開エンドポイント · コメント API
+- **含む**: S1–S3 エンドポイント + authorKey
+- **含まない**: 認証プロバイダ本接続 · GraphQL 必須化 · BAD 公開エンドポイント · コメント API · Vectorize 専用 API
 
 ## エージェント提案
 
