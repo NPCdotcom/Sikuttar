@@ -1,0 +1,19 @@
+name: Feature request
+description: Propose a new capability or change
+title: "[feat] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What need does this address?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: Desired behavior or acceptance sketch
+    validations:
+      required: true

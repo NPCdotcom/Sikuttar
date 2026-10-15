@@ -25,6 +25,9 @@
 .agents/learning/**/node_modules/
 .agents/learning/**/__pycache__/
 
+# Local hook / continual-learning state
+.agents/hooks/state/
+
 # Secrets
 .env
 .env.*
@@ -39,3 +42,12 @@ Thumbs.db
 *~
 
 # --- Stack (appended by maintain-bootstrap from AGENTS.md stack docs) ---
+node_modules/
+dist/
+.wrangler/
+.dev.vars
+*.local
+apps/web/dist/
+apps/web/node_modules/
+__pycache__/
+*.pyc
