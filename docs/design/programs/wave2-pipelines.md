@@ -27,5 +27,5 @@ API 草案（実装時に確定）:
 
 - `GET /search?q=`
 - `GET /stories?tag=`
-- `POST /auth/callback` · `POST /auth/logout` · `PATCH /me/attributes`
+- `GET /auth/github` · `GET /auth/github/callback` · `POST /auth/logout` · `PATCH /me/attributes`（OAuth 契約: [oauth-github-setup](../../operations/wave2/oauth-github-setup.md)）
 - `POST /stories/:id/bookmarks` · `DELETE ...` · `GET /me/bookmarks`

@@ -32,3 +32,7 @@ wave2 で意味検索（厚い）を採用する。Workers AI（埋め込み）�
 - 日常開発はローカル完結 → デプロイ疲れと課金リスクを下げる
 - 初回公開は「まとめて動く」チェックリストが必要（README / 後続 plan に落とす）
 - Paid 契約は「Vectorize 本番オン」のゲートに紐づく
+
+## Operations
+
+運用チェックリスト: [docs/operations/wave2/](../operations/wave2/README.md)（デプロイ境界 · GitHub OAuth · Paid/Vectorize ゲート）

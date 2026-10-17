@@ -63,7 +63,7 @@ Cloudflare Worker (Hono)
 ## 境界・非目的
 
 - **含む**: Workers · D1（推奨）· Cookie ベース authorKey · reactions · D1 上の簡易類似（S3）
-- **wave2 提案**: Workers AI 埋め込み · Vectorize（Paid 要否確認）· 意味検索フラグ · OAuth subject 紐づけ。詳細: [ADR 0001](../../adr/0001-cloudflare-semantic-search-cost.md) · [semantic-search](../elements/semantic-search.md)
+- **wave2 提案**: Workers AI 埋め込み · Vectorize（Paid 要否確認）· 意味検索フラグ · OAuth subject 紐づけ。詳細: [ADR 0001](../../adr/0001-cloudflare-semantic-search-cost.md) · [semantic-search](../elements/semantic-search.md) · 運用: [operations/wave2](../../operations/wave2/README.md)
 - **含まない（S3 時点）**: Vectorize 本接続必須化。**wave2 で有効化を提案**（フォールバック必須）
 
 ## エージェント提案
