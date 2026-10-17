@@ -103,8 +103,9 @@ CI: `.github/workflows/ci.yml`（`main` への push / PR）
 | GET | `/auth/github/callback` | OAuth コールバック |
 | POST | `/auth/logout` | ログアウト（DB 紐づけは残す） |
 | GET | `/auth/session` | `{ loggedIn }`（IdP 識別子なし） |
-| GET | `/stories` | 一覧（匿名＋公開リアクション件数） |
-| POST | `/stories` | 投稿 |
+| GET | `/tags/recommended` | 分類タグ候補（FR17） |
+| GET | `/stories` | 一覧（匿名＋件数 · `tags` · `?tag=` 絞り込み） |
+| POST | `/stories` | 投稿（任意 `tags: string[]`） |
 | POST | `/stories/:id/reactions` | `wakaru` / `reference` /（内部）`bad` |
 | GET | `/stories/:id/related` | 関連失敗（D1 簡易類似） |
 
