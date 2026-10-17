@@ -10,7 +10,7 @@ export type PublicStory = {
   cause: string | null;
   createdAt: string;
   counts: PublicCounts;
-  tags?: string[];
+  tags: string[];
 };
 
 export type AppView = "feed" | "compose" | "detail";
@@ -21,5 +21,6 @@ export function withDefaultCounts(item: PublicStory): PublicStory {
   return {
     ...item,
     counts: item.counts ?? { wakaru: 0, reference: 0 },
+    tags: item.tags ?? [],
   };
 }
