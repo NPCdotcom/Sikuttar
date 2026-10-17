@@ -7,6 +7,8 @@ type Props = {
   showDetailLink?: boolean;
   onReact?: (kind: ReactionKind) => void;
   onOpenDetail?: () => void;
+  bookmarked?: boolean;
+  onBookmark?: () => void;
 };
 
 export function StoryCard({
@@ -16,6 +18,8 @@ export function StoryCard({
   showDetailLink = false,
   onReact,
   onOpenDetail,
+  bookmarked = false,
+  onBookmark,
 }: Props) {
   return (
     <article className="story-card">
@@ -35,6 +39,16 @@ export function StoryCard({
         {new Date(story.createdAt).toLocaleString("ja-JP")}
       </time>
       <div className="card-actions">
+        {onBookmark ? (
+          <button
+            type="button"
+            className="detail-link"
+            onClick={onBookmark}
+            aria-pressed={bookmarked}
+          >
+            {bookmarked ? "保存済み" : "保存"}
+          </button>
+        ) : null}
         {onReact ? (
           <div className="reactions" aria-label="限定リアクション">
             <button
