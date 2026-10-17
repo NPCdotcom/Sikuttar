@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import {
+  addBookmark,
+  fetchBookmarks,
   fetchRecommendedTags,
   fetchRelated,
   fetchSession,
@@ -7,9 +9,11 @@ import {
   logoutSession,
   postReaction,
   postStory,
+  removeBookmark,
 } from "./api";
 import { AppLayout } from "./components/AppLayout";
 import type { AppView, PublicStory, ReactionKind } from "./types";
+import { BookmarksView } from "./views/BookmarksView";
 import { ComposeView } from "./views/ComposeView";
 import { DetailView } from "./views/DetailView";
 import { FeedView } from "./views/FeedView";
@@ -28,6 +32,12 @@ export function App() {
   const [reactingId, setReactingId] = useState<string | null>(null);
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
   const [sessionError, setSessionError] = useState(false);
+  const [bookmarkedIds, setBookmarkedIds] = useState<ReadonlySet<string>>(
+    () => new Set(),
+  );
+  const [bookmarkItems, setBookmarkItems] = useState<PublicStory[]>([]);
+  const [bookmarksLoading, setBookmarksLoading] = useState(false);
+  const [bookmarksError, setBookmarksError] = useState<string | null>(null);
 
   const refreshSession = useCallback(async () => {
     setSessionError(false);
@@ -42,6 +52,36 @@ export function App() {
   useEffect(() => {
     void refreshSession();
   }, [refreshSession]);
+
+  const loadBookmarks = useCallback(async () => {
+    setBookmarksLoading(true);
+    setBookmarksError(null);
+    try {
+      const stories = await fetchBookmarks();
+      setBookmarkItems(stories);
+      setBookmarkedIds(new Set(stories.map((story) => story.id)));
+    } catch (err: unknown) {
+      setBookmarkItems([]);
+      setBookmarkedIds(new Set());
+      setBookmarksError(
+        err instanceof Error
+          ? err.message
+          : "ブックマーク一覧の取得に失敗しました",
+      );
+    } finally {
+      setBookmarksLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (loggedIn !== true) {
+      setBookmarkItems([]);
+      setBookmarkedIds(new Set());
+      setBookmarksError(null);
+      return;
+    }
+    void loadBookmarks();
+  }, [loggedIn, loadBookmarks]);
 
   const refreshFeed = useCallback(async (tag: string | null) => {
     const next = await fetchStories(tag);
@@ -66,7 +106,11 @@ export function App() {
   }, [feedTag, refreshFeed]);
 
   const detailStory =
-    detailId === null ? null : (items.find((item) => item.id === detailId) ?? null);
+    detailId === null
+      ? null
+      : (items.find((item) => item.id === detailId) ??
+        bookmarkItems.find((item) => item.id === detailId) ??
+        null);
 
   useEffect(() => {
     if (view !== "detail" || !detailId) {
@@ -127,6 +171,32 @@ export function App() {
     }
   }
 
+  async function handleBookmark(storyId: string) {
+    setError(null);
+    const isBookmarked = bookmarkedIds.has(storyId);
+    try {
+      if (isBookmarked) {
+        await removeBookmark(storyId);
+        setBookmarkedIds((prev) => {
+          const next = new Set(prev);
+          next.delete(storyId);
+          return next;
+        });
+        setBookmarkItems((prev) => prev.filter((item) => item.id !== storyId));
+      } else {
+        await addBookmark(storyId);
+        setBookmarkedIds((prev) => new Set(prev).add(storyId));
+        if (view === "bookmarks") {
+          await loadBookmarks();
+        }
+      }
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error ? err.message : "ブックマークの操作に失敗しました",
+      );
+    }
+  }
+
   async function handleCompose(input: {
     body: string;
     situation: string;
@@ -179,6 +249,8 @@ export function App() {
           onFilterTag={handleFilterTag}
           onReact={(storyId, kind) => void handleReact(storyId, kind)}
           onOpenDetail={openDetail}
+          bookmarkedIds={bookmarkedIds}
+          onBookmark={(storyId) => void handleBookmark(storyId)}
         />
       ) : null}
 
@@ -192,14 +264,28 @@ export function App() {
 
       {view === "profile" ? <ProfileView loggedIn={loggedIn} /> : null}
 
+      {view === "bookmarks" ? (
+        <BookmarksView
+          items={bookmarkItems}
+          loading={bookmarksLoading}
+          error={bookmarksError}
+          loggedIn={loggedIn}
+          bookmarkedIds={bookmarkedIds}
+          onOpenDetail={openDetail}
+          onBookmark={(storyId) => void handleBookmark(storyId)}
+        />
+      ) : null}
+
       {view === "detail" && detailStory ? (
         <DetailView
           story={detailStory}
           related={related}
           relatedLoading={relatedLoading}
           reacting={reactingId !== null}
+          bookmarked={bookmarkedIds.has(detailStory.id)}
           onBack={() => navigate("feed")}
           onReact={(kind) => void handleReact(detailStory.id, kind)}
+          onBookmark={() => void handleBookmark(detailStory.id)}
           onOpenRelated={openDetail}
         />
       ) : null}
