@@ -253,3 +253,79 @@ body {
 .empty {
   color: var(--faint);
 }
+
+.tag-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 0.75rem;
+}
+
+.tag-fieldset legend {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+
+.tag-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.tag {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  background: var(--card);
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.tag:hover {
+  border-color: var(--accent-line);
+  color: var(--ink);
+}
+
+.tag.selected {
+  background: var(--ink);
+  color: var(--card);
+  border-color: var(--ink);
+}
+
+.tag-display {
+  cursor: default;
+  list-style: none;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.8rem;
+}
+
+.tag-display:hover {
+  border-color: var(--line);
+  color: var(--muted);
+}
+
+.story-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.custom-tag {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.35rem;
+}
+
+.custom-tag input {
+  flex: 1 1 10rem;
+  min-width: 0;
+}
