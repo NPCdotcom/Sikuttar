@@ -103,6 +103,9 @@ CI: `.github/workflows/ci.yml`（`main` への push / PR）
 | GET | `/auth/github/callback` | OAuth コールバック |
 | POST | `/auth/logout` | ログアウト（DB 紐づけは残す） |
 | GET | `/auth/session` | `{ loggedIn }`（IdP 識別子なし） |
+| PATCH | `/me/attributes` | 属性更新（リンク済みのみ · 公開 JSON には出さない） |
+| GET | `/me/bookmarks` | 自分のブックマーク一覧（認証必須） |
+| POST/DELETE | `/stories/:id/bookmarks` | ブックマーク追加／解除（認証必須） |
 | GET | `/tags/recommended` | 分類タグ候補（FR17） |
 | GET | `/stories` | 一覧（匿名＋件数 · `tags` · `?tag=` 絞り込み） |
 | POST | `/stories` | 投稿（任意 `tags: string[]`） |

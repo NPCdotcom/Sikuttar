@@ -108,6 +108,36 @@ describe("anonymizeForDisplay", () => {
     expect(publicStory).not.toHaveProperty("attributes");
     expect(publicStory).not.toHaveProperty("attributes_json");
   });
+
+  it("内部属性を公開JSONに含めない", () => {
+    const internalStory = {
+      id: "story-123",
+      body: "失敗した話",
+      situation: null,
+      cause: null,
+      created_at: "2026-10-17T00:00:00Z",
+      author_key: "secret-author",
+      occupation: "学生",
+      attributes_json: '{"experience":"初心者"}',
+      auth_subject: "github:12345",
+    };
+
+    const publicStory = anonymizeForDisplay(internalStory);
+
+    expect(publicStory).toEqual({
+      id: "story-123",
+      body: "失敗した話",
+      situation: null,
+      cause: null,
+      createdAt: "2026-10-17T00:00:00Z",
+    });
+
+    expect(publicStory).not.toHaveProperty("author_key");
+    expect(publicStory).not.toHaveProperty("occupation");
+    expect(publicStory).not.toHaveProperty("attributes_json");
+    expect(publicStory).not.toHaveProperty("auth_subject");
+  });
+
 });
 
 describe("validateReactionKind", () => {
