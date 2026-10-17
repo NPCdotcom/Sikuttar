@@ -10,7 +10,7 @@ export type PersistedStory = {
 
 export async function persistFailureStory(
   db: D1Database,
-  input: ValidatedStoryInput,
+  input: Pick<ValidatedStoryInput, "body" | "situation" | "cause">,
   authorKey: string,
 ): Promise<PersistedStory> {
   const id = crypto.randomUUID();

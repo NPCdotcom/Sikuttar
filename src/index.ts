@@ -5,6 +5,7 @@ import {
   createAuthorKey,
 } from "./factors/attachAuthorKey";
 import { anonymizeForDisplay } from "./factors/anonymizeForDisplay";
+import { attachTags } from "./factors/attachTags";
 import {
   countPublicReactions,
   maskBadFromPublic,
@@ -21,6 +22,9 @@ import {
   linkAuthSubject,
 } from "./factors/linkAuthSubject";
 import { listByCreatedAtDesc } from "./factors/listByCreatedAtDesc";
+import { listByTag } from "./factors/listByTag";
+import { listRecommendedTags } from "./factors/listRecommendedTags";
+import { loadTagsByStoryIds } from "./factors/loadTagsByStoryIds";
 import {
   createOAuthState,
   oauthStateClearCookie,
@@ -161,6 +165,10 @@ app.get("/auth/session", async (c) => {
   return jsonWithCookies({ loggedIn }, 200, cookies);
 });
 
+app.get("/tags/recommended", (c) => {
+  return c.json({ items: listRecommendedTags() });
+});
+
 app.post("/stories", async (c) => {
   let payload: unknown;
   try {
@@ -182,24 +190,33 @@ app.post("/stories", async (c) => {
   const { authorKey, setCookie } = attachAuthorKey(c.req.header("Cookie"));
   await ensureAccountSlot(c.env.DB, authorKey);
   const story = await persistFailureStory(c.env.DB, validated, authorKey);
+  await attachTags(c.env.DB, story.id, validated.tags);
   if (setCookie) {
     c.header("Set-Cookie", setCookie);
   }
-  return c.json(story, 201);
+  return c.json({ ...story, tags: validated.tags }, 201);
 });
 
 app.get("/stories", async (c) => {
-  const rows = await listByCreatedAtDesc(c.env.DB);
-  const countsMap = await countPublicReactions(
-    c.env.DB,
-    rows.map((r) => r.id),
-  );
+  const tag = c.req.query("tag")?.trim();
+  const rows = tag
+    ? await listByTag(c.env.DB, tag, 50)
+    : await listByCreatedAtDesc(c.env.DB, 50);
+
+  const ids = rows.map((r) => r.id);
+  const countsMap = await countPublicReactions(c.env.DB, ids);
+  const tagsMap = await loadTagsByStoryIds(c.env.DB, ids);
+
   const items = rows.map((row) => {
     const base = anonymizeForDisplay(row);
     const counts = maskBadFromPublic(
       countsMap.get(row.id) ?? { wakaru: 0, reference: 0 },
     );
-    return { ...base, counts };
+    return {
+      ...base,
+      counts,
+      tags: tagsMap.get(row.id) ?? [],
+    };
   });
   return c.json({ items });
 });
@@ -208,16 +225,19 @@ app.get("/stories/:id/related", async (c) => {
   const storyId = c.req.param("id");
   try {
     const hits = await findRelatedStories(c.env.DB, storyId, 3);
-    const countsMap = await countPublicReactions(
-      c.env.DB,
-      hits.map((h) => h.row.id),
-    );
+    const ids = hits.map((h) => h.row.id);
+    const countsMap = await countPublicReactions(c.env.DB, ids);
+    const tagsMap = await loadTagsByStoryIds(c.env.DB, ids);
     const items = hits.map((hit) => {
       const base = anonymizeForDisplay(hit.row);
       const counts = maskBadFromPublic(
         countsMap.get(hit.row.id) ?? { wakaru: 0, reference: 0 },
       );
-      return { ...base, counts };
+      return {
+        ...base,
+        counts,
+        tags: tagsMap.get(hit.row.id) ?? [],
+      };
     });
     return c.json({ items });
   } catch (err) {

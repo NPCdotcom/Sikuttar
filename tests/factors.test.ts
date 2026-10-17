@@ -26,7 +26,47 @@ describe("validateBody", () => {
       body: "failed",
       situation: null,
       cause: null,
+      tags: [],
     });
+  });
+
+  it("accepts tags and removes duplicates", () => {
+    const result = validateBody({
+      body: "デプロイに失敗した",
+      tags: ["デプロイ", " テスト ", "デプロイ"],
+    });
+    expect(result.tags).toEqual(["デプロイ", "テスト"]);
+  });
+
+  it("rejects invalid tags", () => {
+    expect(() =>
+      validateBody({
+        body: "失敗した",
+        tags: "デプロイ",
+      }),
+    ).toThrow("tags must be an array of strings");
+  });
+});
+
+describe("normalizeTags", () => {
+  it("returns empty for undefined", async () => {
+    const { normalizeTags } = await import("../src/factors/normalizeTags");
+    expect(normalizeTags(undefined)).toEqual([]);
+  });
+
+  it("enforces max length", async () => {
+    const { normalizeTags } = await import("../src/factors/normalizeTags");
+    expect(() => normalizeTags(["x".repeat(31)])).toThrow(ValidationError);
+  });
+});
+
+describe("listRecommendedTags", () => {
+  it("includes agreed vocabulary", async () => {
+    const { listRecommendedTags } = await import(
+      "../src/factors/listRecommendedTags"
+    );
+    expect(listRecommendedTags()).toContain("デプロイ");
+    expect(listRecommendedTags()).toContain("テスト");
   });
 });
 
