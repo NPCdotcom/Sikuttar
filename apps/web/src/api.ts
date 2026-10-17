@@ -69,3 +69,16 @@ export async function fetchRelated(storyId: string): Promise<PublicStory[]> {
   const data = (await res.json()) as { items: PublicStory[] };
   return data.items.map(withDefaultCounts);
 }
+
+export async function fetchSession(): Promise<boolean> {
+  const res = await fetch("/auth/session", {
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    throw new Error("ログイン状態の取得に失敗しました");
+  }
+
+  const data = (await res.json()) as { loggedIn: boolean };
+  return data.loggedIn;
+}
