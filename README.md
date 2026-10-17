@@ -107,6 +107,7 @@ CI: `.github/workflows/ci.yml`（`main` への push / PR）
 | GET | `/me/bookmarks` | 自分のブックマーク一覧（認証必須） |
 | POST/DELETE | `/stories/:id/bookmarks` | ブックマーク追加／解除（認証必須） |
 | GET | `/tags/recommended` | 分類タグ候補（FR17） |
+| GET | `/search?q=` | 意味検索（既定 Jaccard · `SEMANTIC_SEARCH=vectorize` 時は Vectorize） |
 | GET | `/stories` | 一覧（匿名＋件数 · `tags` · `?tag=` 絞り込み） |
 | POST | `/stories` | 投稿（任意 `tags: string[]`） |
 | POST | `/stories/:id/reactions` | `wakaru` / `reference` /（内部）`bad` |
