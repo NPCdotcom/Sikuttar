@@ -65,6 +65,7 @@ Semantics: [.agents/docs/DESIGN_SEMANTICS.md](../../../.agents/docs/DESIGN_SEMAN
 | S2 | E3 · E4（体験ガード） | FR5–FR7 | **Go** → [limited-reaction](limited-reaction.md) · [bad-signal](bad-signal.md) · H2: [reaction-signaling](../systems/reaction-signaling.md) · [review](../../reviews/s2-reactions-p6.md) |
 | S3 | E6 | FR10 | **Go** → [related-failure](related-failure.md) · H2: [related-retrieval](../systems/related-retrieval.md) · [review](../../reviews/s3-related-p6.md) |
 | S4 | E5 | FR9 | 後 |
+| wave2 | E9–E11 · E7′ | FR11–FR19 | **agreed** → [capability-wave2-deliberation](../product/capability-wave2-deliberation.md) · [要求-wave2](../../requirements/failure-share/要求-wave2.md) · [要件-wave2](../../requirements/failure-share/要件-wave2.md) |
 
 ## エージェント提案
 

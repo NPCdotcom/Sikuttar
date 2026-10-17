@@ -1,26 +1,26 @@
 # Session navigation (every turn): .agents/memory/state/nav.yaml — see docs/PM_ROUTING.md
 
-current_phase: P6
-phase_note: "S3 Go accepted 2026-10-15; S1 remains Conditional Go; S2 Go"
+current_phase: P3
+phase_note: "wave2 requirements+design agreed 2026-10-17; implementation not started; CF deploy only at public-ready gate"
 
 scope_focus:
-  level: H4
-  path: "docs/reviews/s3-related-p6.md"
+  level: H2
+  path: "docs/design/systems/wave2-discovery.md"
 
 active_pdca:
-  plan_path: ".agents/plans/programs/ui-related-on-feed.md"
-  scope_level: program
-  pdca_class: S3
+  plan_path: ""
+  scope_level: system
+  pdca_class: wave2
 
 gate_status:
   current: pass
   proposal: ""
-  last_decision: "P6-s3-related-go"
-  last_decided_at: "2026-10-15"
+  last_decision: "wave2-requirements-design-agree"
+  last_decided_at: "2026-10-17"
   conditions: []
   gate_keeper: user
 
-last_gate_passed: "P6-s3-related-go"
+last_gate_passed: "wave2-requirements-design-agree"
 allowed_actions:
   - design-deliberate
   - design-record
@@ -33,14 +33,14 @@ open_blockers: []
 lifecycle_plan:
   profile: ""
   brownfield: false
-  last_planned_at: "2026-10-15"
+  last_planned_at: "2026-10-17"
   executed_phases: [P0, P1, P2, P3, P4, P5, P6]
   skipped_phases: []
   skipped_stages: []
   recommended_cursor_mode: "Agent"
   requirements_depth: "standard"
-  unit_scope: "docs/design/systems/related-retrieval.md"
-  notes: "S3 Go on plan/s3-related-failures. Next: merge to main, S4 display priority, or S1 Full Go."
+  unit_scope: "docs/design/systems/wave2-discovery.md"
+  notes: "Next: P4 plans for wave2 and/or S4 display priority. Auth=GitHub OAuth. CF deploy at public-ready bundle only."
 
 git_policy:
   enabled: true
