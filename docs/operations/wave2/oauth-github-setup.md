@@ -30,6 +30,8 @@ subject 形式（実装時）: `github:<numeric_user_id>`
 
 API が別ポートのときは、実際に Listen している origin に合わせて Callback と `GITHUB_OAUTH_REDIRECT_URI` を揃える。
 
+**ホストは `127.0.0.1` に統一**（`localhost` と混在させない）。Cookie が別ホスト扱いになり、OAuth 後もログインが繋がらなくなる。Vite は `apps/web/vite.config.ts` で `host: "127.0.0.1"` を指定済み。
+
 ## GitHub 上の手順（NPC）
 
 1. GitHub → **Settings** → **Developer settings** → **OAuth Apps** → **New OAuth App**

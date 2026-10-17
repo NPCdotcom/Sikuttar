@@ -46,14 +46,14 @@ npx wrangler d1 migrations apply sikuttar --local
 # API — 通常 http://127.0.0.1:8787（空きがなければ別ポート）
 npm run dev:api
 
-# Web — http://localhost:5173 （/stories · /health を API へ proxy）
+# Web — http://127.0.0.1:5173 （/stories · /auth · /tags を API へ proxy）
 npm run dev:web
 ```
 
 確認:
 
 - `curl http://127.0.0.1:8787/health` → `{"ok":true}`
-- ブラウザで `http://localhost:5173`（フィード／投稿／詳細をヘッダから切替）
+- ブラウザで `http://127.0.0.1:5173`（フィード／投稿／詳細をヘッダから切替 · OAuth もこのホストに揃える）
 
 ## デモ手順
 
