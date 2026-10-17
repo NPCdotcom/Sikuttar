@@ -24,7 +24,7 @@ restored_note: "2026-10-15 kit-refresh で空テンプレ上書き → 合意本
 | キャッチコピー | しくじったら、シクッター。 |
 | 一言ジャンル | 失敗談共有 × 集合知（学習向け SNS 的 Web） |
 | 想定リポジトリ | https://github.com/NPCdotcom/Sikuttar |
-| 共同者 | NPC(NPCdotcom), rako(takarakostar-code) |
+| 共同者 | NPC(NPCdotcom), rako(takarakostar-code), hiroto(fca2506060002-coder) |
 | 開発環境 | TypeScript · React · Hono · Cloudflare（Assumption · §7） |
 | 配布形態 | Webアプリ。利用者はブラウザのみ（Fact） |
 | 公開範囲 | パブリック（ハッカソン作品としての公開 · 共同者方針） |

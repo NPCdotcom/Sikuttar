@@ -5,19 +5,16 @@ H0–H5 design docs. See [PROJECT_LIFECYCLE.md](../PROJECT_LIFECYCLE.md).
 | Level | Path | Status |
 |-------|------|--------|
 | H0 | [product/charter.md](product/charter.md) | agreed |
-| H1 overview | [elements/failure-share-h1.md](elements/failure-share-h1.md) | agreed |
-| H1 S1 | [failure-story](elements/failure-story.md) · [feed](elements/feed.md) · [anonymous-display](elements/anonymous-display.md) | agreed |
-| H1 S2 | [limited-reaction](elements/limited-reaction.md) · [bad-signal](elements/bad-signal.md) | agreed |
-| H1 S3 | [related-failure](elements/related-failure.md) | agreed |
-| H2 overview | [systems/failure-share-h2.md](systems/failure-share-h2.md) | agreed |
-| H2 SYS1/SYS2 | [story-posting](systems/story-posting.md) · [feed-reading](systems/feed-reading.md) | agreed |
-| H2 SYS3 | [reaction-signaling](systems/reaction-signaling.md) | agreed |
-| H2 SYS4 | [related-retrieval](systems/related-retrieval.md) | agreed |
-| H3 overview | [frameworks/failure-share-h3.md](frameworks/failure-share-h3.md) | agreed |
-| H3 FW1–FW3 | [react-ui](frameworks/react-ui.md) · [hono-api](frameworks/hono-api.md) · [cloudflare-platform](frameworks/cloudflare-platform.md) | agreed |
-| H4 programs | [story-posting-pipeline](programs/story-posting-pipeline.md) · [feed-reading-pipeline](programs/feed-reading-pipeline.md) · [browser-shell](programs/browser-shell.md) · [reaction-pipeline](programs/reaction-pipeline.md) · [related-pipeline](programs/related-pipeline.md) | agreed |
+| H0 wave2 | [product/capability-wave2-deliberation.md](product/capability-wave2-deliberation.md) | **agreed** |
+| H1 overview | [elements/failure-share-h1.md](elements/failure-share-h1.md) | agreed · wave2 行追加 |
+| H1 S1–S3 | failure-story · feed · anonymous-display · limited-reaction · bad-signal · related-failure | agreed / Go |
+| H1 wave2 | [semantic-search](elements/semantic-search.md) · [classification-tag](elements/classification-tag.md) · [bookmark](elements/bookmark.md) · [persistent-account](elements/persistent-account.md) | **agreed** |
+| H2 | SYS1–SYS4 agreed · [wave2-discovery](systems/wave2-discovery.md)（SYS5–SYS8）**agreed** |
+| H3 | FW1–FW3 agreed · cloudflare-platform に wave2 注記 |
+| H4 | S1–S3 programs agreed · [wave2-pipelines](programs/wave2-pipelines.md) **agreed**（下地） |
+| ADR | [0001-cloudflare-semantic-search-cost](../adr/0001-cloudflare-semantic-search-cost.md) | **accepted** |
 
-**Constraint**: P3+ design follows charter recognition units (§8), build order, and §7 stance — stack is means, not product taxonomy.
+**Constraint**: P3+ design follows charter recognition units (§8), extend by factors—not a parallel SNS taxonomy.
 
 **P4 plans**: [.agents/plans/README.md](../../.agents/plans/README.md)  
-**P6 reviews**: [s1-mvp-p6](../reviews/s1-mvp-p6.md)（conditional）· [s2-reactions-p6](../reviews/s2-reactions-p6.md)（Go）· [s3-related-p6](../reviews/s3-related-p6.md)（**Go**）
+**P6 reviews**: [s1-mvp-p6](../reviews/s1-mvp-p6.md) · [s2-reactions-p6](../reviews/s2-reactions-p6.md) · [s3-related-p6](../reviews/s3-related-p6.md)

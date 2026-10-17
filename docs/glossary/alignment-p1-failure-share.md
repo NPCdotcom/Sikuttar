@@ -21,6 +21,10 @@ updated: "2026-10-15"
 | RAG | 因子（後段提示）・スタック手段 | 蓄積失敗談の検索・類似提示。MVP 必須ではない。生成より「関連失敗の提示」が当面の価値 | Retrieval-Augmented Generation: 検索した非パラメトリック記憶を生成に条件付ける手法（Lewis et al. 2020） | [arXiv:2005.11401](https://arxiv.org/abs/2005.11401) |
 | 匿名表示 | 認識（表示方針） | 画面上は身元を出さない。職業等の属性は内部保持しうる | （製品方針）表示上の匿名とアカウント属性の分離 | charter §4 |
 | オブジェクト | 認識 | 仕様上の包含・分類単位（≠ コードの class） | キット意味論: recognition unit | [DESIGN_SEMANTICS.md](../../.agents/docs/DESIGN_SEMANTICS.md) |
+| 意味検索 | 認識（E9） | クエリ埋め込み＋ベクトル近傍で失敗談を返す。未設定時は D1 フォールバック | Vector search / semantic retrieval | [Vectorize pricing](https://developers.cloudflare.com/vectorize/platform/pricing/) |
+| 分類タグ | 認識（E10） | 失敗談の索引ラベル（通称ハッシュタグ）。炎上話題タグではなく学びの類型 | Hashtag / taxonomy label（製品では分類に限定） | wave2 要求 |
+| 個人保存 | 認識（E11） | 認証利用者の非公開ブックマーク | Bookmark / save-for-later | wave2 要求 |
+| 持続アカウント紐づけ | 認識（E7′） | 認証 subject を accounts 行に結ぶ。公開プロフィールは作らない | Account linking / federated identity | wave2 要求 |
 
 ### ズレ・リスク
 
