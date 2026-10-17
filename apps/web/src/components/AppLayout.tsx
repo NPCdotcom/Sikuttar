@@ -4,10 +4,20 @@ import type { AppView } from "../types";
 type Props = {
   view: AppView;
   onNavigate: (view: AppView) => void;
+  loggedIn: boolean | null;
+  sessionError: boolean;
+  onLogout: () => void;
   children: ReactNode;
 };
 
-export function AppLayout({ view, onNavigate, children }: Props) {
+export function AppLayout({
+  view,
+  onNavigate,
+  loggedIn,
+  sessionError,
+  onLogout,
+  children,
+}: Props) {
   return (
     <div className="app">
       <header className="topbar">
@@ -23,7 +33,9 @@ export function AppLayout({ view, onNavigate, children }: Props) {
           <nav className="nav" aria-label="メイン">
             <button
               type="button"
-              className={view === "feed" || view === "detail" ? "nav-link active" : "nav-link"}
+              className={
+                view === "feed" || view === "detail" ? "nav-link active" : "nav-link"
+              }
               onClick={() => onNavigate("feed")}
             >
               フィード
@@ -35,6 +47,30 @@ export function AppLayout({ view, onNavigate, children }: Props) {
             >
               投稿
             </button>
+            <button
+              type="button"
+              className={view === "profile" ? "nav-link active" : "nav-link"}
+              onClick={() => onNavigate("profile")}
+            >
+              属性設定
+            </button>
+            {sessionError ? (
+              <span className="nav-muted">ログイン状態を確認できません</span>
+            ) : loggedIn === null ? (
+              <span className="nav-muted">確認中…</span>
+            ) : loggedIn ? (
+              <button type="button" className="nav-link" onClick={onLogout}>
+                ログアウト
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="nav-link"
+                onClick={() => window.location.assign("/auth/github")}
+              >
+                GitHubでログイン
+              </button>
+            )}
           </nav>
         </div>
       </header>

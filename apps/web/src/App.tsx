@@ -2,7 +2,9 @@ import { useCallback, useEffect, useState } from "react";
 import {
   fetchRecommendedTags,
   fetchRelated,
+  fetchSession,
   fetchStories,
+  logoutSession,
   postReaction,
   postStory,
 } from "./api";
@@ -11,6 +13,7 @@ import type { AppView, PublicStory, ReactionKind } from "./types";
 import { ComposeView } from "./views/ComposeView";
 import { DetailView } from "./views/DetailView";
 import { FeedView } from "./views/FeedView";
+import { ProfileView } from "./views/ProfileView";
 
 export function App() {
   const [view, setView] = useState<AppView>("feed");
@@ -23,6 +26,22 @@ export function App() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [reactingId, setReactingId] = useState<string | null>(null);
+  const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
+  const [sessionError, setSessionError] = useState(false);
+
+  const refreshSession = useCallback(async () => {
+    setSessionError(false);
+    try {
+      setLoggedIn(await fetchSession());
+    } catch {
+      setLoggedIn(null);
+      setSessionError(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    void refreshSession();
+  }, [refreshSession]);
 
   const refreshFeed = useCallback(async (tag: string | null) => {
     const next = await fetchStories(tag);
@@ -98,6 +117,16 @@ export function App() {
     setFeedTag(tag);
   }
 
+  async function handleLogout() {
+    setError(null);
+    try {
+      await logoutSession();
+      setLoggedIn(false);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "ログアウトに失敗しました");
+    }
+  }
+
   async function handleCompose(input: {
     body: string;
     situation: string;
@@ -132,7 +161,13 @@ export function App() {
   }
 
   return (
-    <AppLayout view={view} onNavigate={navigate}>
+    <AppLayout
+      view={view}
+      onNavigate={navigate}
+      loggedIn={loggedIn}
+      sessionError={sessionError}
+      onLogout={() => void handleLogout()}
+    >
       {error ? <p className="error" role="alert">{error}</p> : null}
 
       {view === "feed" ? (
@@ -154,6 +189,8 @@ export function App() {
           onSubmit={handleCompose}
         />
       ) : null}
+
+      {view === "profile" ? <ProfileView loggedIn={loggedIn} /> : null}
 
       {view === "detail" && detailStory ? (
         <DetailView

@@ -13,8 +13,7 @@ export type PublicStory = {
   tags: string[];
 };
 
-export type AppView = "feed" | "compose" | "detail";
-
+export type AppView = "feed" | "compose" | "detail" | "profile";
 export type ReactionKind = "wakaru" | "reference";
 
 export function withDefaultCounts(item: PublicStory): PublicStory {
