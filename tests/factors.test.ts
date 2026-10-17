@@ -90,6 +90,68 @@ describe("maskBadFromPublic", () => {
   });
 });
 
+describe("githubSubject", () => {
+  it("formats github:<id>", async () => {
+    const { githubSubjectFromUserId } = await import("../src/factors/githubSubject");
+    expect(githubSubjectFromUserId(42)).toBe("github:42");
+    expect(() => githubSubjectFromUserId("abc")).toThrow();
+  });
+});
+
+describe("buildGitHubAuthorizeUrl", () => {
+  it("includes client_id, redirect, state", async () => {
+    const { buildGitHubAuthorizeUrl } = await import(
+      "../src/factors/exchangeGitHubOAuth"
+    );
+    const url = buildGitHubAuthorizeUrl(
+      {
+        clientId: "cid",
+        clientSecret: "sec",
+        redirectUri: "http://127.0.0.1:8787/auth/github/callback",
+      },
+      "state-1",
+    );
+    const parsed = new URL(url);
+    expect(parsed.origin + parsed.pathname).toBe(
+      "https://github.com/login/oauth/authorize",
+    );
+    expect(parsed.searchParams.get("client_id")).toBe("cid");
+    expect(parsed.searchParams.get("state")).toBe("state-1");
+    expect(parsed.searchParams.get("redirect_uri")).toContain("/auth/github/callback");
+  });
+});
+
+describe("exchangeGitHubCodeForSubject", () => {
+  it("returns opaque subject without leaking login", async () => {
+    const { exchangeGitHubCodeForSubject } = await import(
+      "../src/factors/exchangeGitHubOAuth"
+    );
+    const fetchImpl: typeof fetch = async (input) => {
+      const url = String(input);
+      if (url.includes("access_token")) {
+        return new Response(JSON.stringify({ access_token: "t" }), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+      return new Response(JSON.stringify({ id: 99, login: "someone" }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    };
+    const subject = await exchangeGitHubCodeForSubject(
+      {
+        clientId: "cid",
+        clientSecret: "sec",
+        redirectUri: "http://127.0.0.1:8787/auth/github/callback",
+      },
+      "code",
+      fetchImpl,
+    );
+    expect(subject).toBe("github:99");
+  });
+});
+
 describe("similarity factors", () => {
   it("scores overlapping tokens higher", () => {
     const q = tokenizeForSimilarity(
