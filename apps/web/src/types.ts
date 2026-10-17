@@ -10,6 +10,7 @@ export type PublicStory = {
   cause: string | null;
   createdAt: string;
   counts: PublicCounts;
+  tags?: string[];
 };
 
 export type AppView = "feed" | "compose" | "detail";
