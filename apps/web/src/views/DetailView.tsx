@@ -6,8 +6,10 @@ type Props = {
   related: PublicStory[] | null;
   relatedLoading: boolean;
   reacting: boolean;
+  bookmarked: boolean;
   onBack: () => void;
   onReact: (kind: ReactionKind) => void;
+  onBookmark: () => void;
   onOpenRelated: (storyId: string) => void;
 };
 
@@ -16,8 +18,10 @@ export function DetailView({
   related,
   relatedLoading,
   reacting,
+  bookmarked,
   onBack,
   onReact,
+  onBookmark,
   onOpenRelated,
 }: Props) {
   return (
@@ -26,7 +30,13 @@ export function DetailView({
         ← フィードに戻る
       </button>
       <h2>詳細</h2>
-      <StoryCard story={story} reacting={reacting} onReact={onReact} />
+      <StoryCard
+        story={story}
+        reacting={reacting}
+        bookmarked={bookmarked}
+        onReact={onReact}
+        onBookmark={onBookmark}
+      />
 
       <div className="related-block">
         <h3>関連する失敗談</h3>

@@ -105,3 +105,41 @@ export async function patchAttributes(input: {
     throw new Error(await readError(res, "属性の保存に失敗しました"));
   }
 }
+
+export async function addBookmark(storyId: string): Promise<void> {
+  const res = await fetch(
+    `/stories/${encodeURIComponent(storyId)}/bookmarks`,
+    { method: "POST", credentials: "include" },
+  );
+  if (res.status === 401) {
+    throw new Error("ブックマークするには GitHub ログインが必要です");
+  }
+  if (!res.ok) {
+    throw new Error(await readError(res, "ブックマークの保存に失敗しました"));
+  }
+}
+
+export async function removeBookmark(storyId: string): Promise<void> {
+  const res = await fetch(
+    `/stories/${encodeURIComponent(storyId)}/bookmarks`,
+    { method: "DELETE", credentials: "include" },
+  );
+  if (res.status === 401) {
+    throw new Error("ブックマークを解除するには GitHub ログインが必要です");
+  }
+  if (!res.ok) {
+    throw new Error(await readError(res, "ブックマークの解除に失敗しました"));
+  }
+}
+
+export async function fetchBookmarks(): Promise<PublicStory[]> {
+  const res = await fetch("/me/bookmarks", { credentials: "include" });
+  if (res.status === 401) {
+    throw new Error("ブックマークを見るには GitHub ログインが必要です");
+  }
+  if (!res.ok) {
+    throw new Error(await readError(res, "ブックマーク一覧の取得に失敗しました"));
+  }
+  const data = (await res.json()) as { items: PublicStory[] };
+  return data.items.map(withDefaultCounts);
+}

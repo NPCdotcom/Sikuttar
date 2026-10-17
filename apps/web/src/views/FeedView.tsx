@@ -9,6 +9,8 @@ type Props = {
   onFilterTag: (tag: string | null) => void;
   onReact: (storyId: string, kind: ReactionKind) => void;
   onOpenDetail: (storyId: string) => void;
+  bookmarkedIds: ReadonlySet<string>;
+  onBookmark: (storyId: string) => void;
 };
 
 export function FeedView({
@@ -19,6 +21,8 @@ export function FeedView({
   onFilterTag,
   onReact,
   onOpenDetail,
+  bookmarkedIds,
+  onBookmark,
 }: Props) {
   return (
     <section className="view feed" aria-label="失敗談フィード">
@@ -62,6 +66,8 @@ export function FeedView({
                 showDetailLink
                 onReact={(kind) => onReact(item.id, kind)}
                 onOpenDetail={() => onOpenDetail(item.id)}
+                bookmarked={bookmarkedIds.has(item.id)}
+                onBookmark={() => onBookmark(item.id)}
               />
             </li>
           ))}
