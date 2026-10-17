@@ -4,6 +4,7 @@ import {
   authorKeySetCookie,
   createAuthorKey,
 } from "./factors/attachAuthorKey";
+import { addBookmark } from "./factors/addBookmark";
 import { anonymizeForDisplay } from "./factors/anonymizeForDisplay";
 import { attachTags } from "./factors/attachTags";
 import {
@@ -21,7 +22,9 @@ import {
   accountHasSubject,
   linkAuthSubject,
 } from "./factors/linkAuthSubject";
+import { listBookmarks } from "./factors/listBookmarks";
 import { listByCreatedAtDesc } from "./factors/listByCreatedAtDesc";
+import type { StoryRow } from "./factors/listByCreatedAtDesc";
 import { listByTag } from "./factors/listByTag";
 import { listRecommendedTags } from "./factors/listRecommendedTags";
 import { loadTagsByStoryIds } from "./factors/loadTagsByStoryIds";
@@ -42,6 +45,13 @@ import {
   oauthSuccessRedirect,
   readGitHubOAuthConfig,
 } from "./factors/readGitHubOAuthConfig";
+import { removeBookmark } from "./factors/removeBookmark";
+import {
+  requireLinkedAuthorKey,
+  UnauthorizedError,
+} from "./factors/requireLinkedAuthorKey";
+import { updateAccountAttributes } from "./factors/updateAccountAttributes";
+import { validateAccountAttributes } from "./factors/validateAccountAttributes";
 import { ValidationError, validateBody } from "./factors/validateBody";
 import {
   ReactionValidationError,
@@ -69,6 +79,23 @@ function jsonWithCookies(
     headers.append("Set-Cookie", cookie);
   }
   return new Response(JSON.stringify(body), { status, headers });
+}
+
+async function toPublicItems(db: D1Database, rows: StoryRow[]) {
+  const ids = rows.map((r) => r.id);
+  const countsMap = await countPublicReactions(db, ids);
+  const tagsMap = await loadTagsByStoryIds(db, ids);
+  return rows.map((row) => {
+    const base = anonymizeForDisplay(row);
+    const counts = maskBadFromPublic(
+      countsMap.get(row.id) ?? { wakaru: 0, reference: 0 },
+    );
+    return {
+      ...base,
+      counts,
+      tags: tagsMap.get(row.id) ?? [],
+    };
+  });
 }
 
 app.get("/health", async (c) => {
@@ -169,6 +196,67 @@ app.get("/tags/recommended", (c) => {
   return c.json({ items: listRecommendedTags() });
 });
 
+/** Internal attributes only — never returned on public story JSON (FR13). */
+app.patch("/me/attributes", async (c) => {
+  let linked;
+  try {
+    linked = await requireLinkedAuthorKey(c.env.DB, c.req.header("Cookie"));
+  } catch (err) {
+    if (err instanceof UnauthorizedError) {
+      return c.json({ error: err.message }, 401);
+    }
+    throw err;
+  }
+
+  let payload: unknown;
+  try {
+    payload = await c.req.json();
+  } catch {
+    return c.json({ error: "invalid JSON" }, 400);
+  }
+
+  let patch;
+  try {
+    patch = validateAccountAttributes(payload);
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      return c.json({ error: err.message }, 400);
+    }
+    throw err;
+  }
+
+  const updated = await updateAccountAttributes(
+    c.env.DB,
+    linked.authorKey,
+    patch,
+  );
+  if (linked.setCookie) {
+    c.header("Set-Cookie", linked.setCookie);
+  }
+  if (!updated) {
+    return c.json({ error: "account not linked or nothing to update" }, 404);
+  }
+  return c.body(null, 204);
+});
+
+app.get("/me/bookmarks", async (c) => {
+  let linked;
+  try {
+    linked = await requireLinkedAuthorKey(c.env.DB, c.req.header("Cookie"));
+  } catch (err) {
+    if (err instanceof UnauthorizedError) {
+      return c.json({ error: err.message }, 401);
+    }
+    throw err;
+  }
+  const rows = await listBookmarks(c.env.DB, linked.authorKey, 50);
+  const items = await toPublicItems(c.env.DB, rows);
+  if (linked.setCookie) {
+    c.header("Set-Cookie", linked.setCookie);
+  }
+  return c.json({ items });
+});
+
 app.post("/stories", async (c) => {
   let payload: unknown;
   try {
@@ -202,22 +290,7 @@ app.get("/stories", async (c) => {
   const rows = tag
     ? await listByTag(c.env.DB, tag, 50)
     : await listByCreatedAtDesc(c.env.DB, 50);
-
-  const ids = rows.map((r) => r.id);
-  const countsMap = await countPublicReactions(c.env.DB, ids);
-  const tagsMap = await loadTagsByStoryIds(c.env.DB, ids);
-
-  const items = rows.map((row) => {
-    const base = anonymizeForDisplay(row);
-    const counts = maskBadFromPublic(
-      countsMap.get(row.id) ?? { wakaru: 0, reference: 0 },
-    );
-    return {
-      ...base,
-      counts,
-      tags: tagsMap.get(row.id) ?? [],
-    };
-  });
+  const items = await toPublicItems(c.env.DB, rows);
   return c.json({ items });
 });
 
@@ -225,20 +298,10 @@ app.get("/stories/:id/related", async (c) => {
   const storyId = c.req.param("id");
   try {
     const hits = await findRelatedStories(c.env.DB, storyId, 3);
-    const ids = hits.map((h) => h.row.id);
-    const countsMap = await countPublicReactions(c.env.DB, ids);
-    const tagsMap = await loadTagsByStoryIds(c.env.DB, ids);
-    const items = hits.map((hit) => {
-      const base = anonymizeForDisplay(hit.row);
-      const counts = maskBadFromPublic(
-        countsMap.get(hit.row.id) ?? { wakaru: 0, reference: 0 },
-      );
-      return {
-        ...base,
-        counts,
-        tags: tagsMap.get(hit.row.id) ?? [],
-      };
-    });
+    const items = await toPublicItems(
+      c.env.DB,
+      hits.map((h) => h.row),
+    );
     return c.json({ items });
   } catch (err) {
     if (err instanceof StoryNotFoundError) {
@@ -246,6 +309,51 @@ app.get("/stories/:id/related", async (c) => {
     }
     throw err;
   }
+});
+
+app.post("/stories/:id/bookmarks", async (c) => {
+  let linked;
+  try {
+    linked = await requireLinkedAuthorKey(c.env.DB, c.req.header("Cookie"));
+  } catch (err) {
+    if (err instanceof UnauthorizedError) {
+      return c.json({ error: err.message }, 401);
+    }
+    throw err;
+  }
+  try {
+    const bookmarked = await addBookmark(
+      c.env.DB,
+      linked.authorKey,
+      c.req.param("id"),
+    );
+    if (linked.setCookie) {
+      c.header("Set-Cookie", linked.setCookie);
+    }
+    return c.json(bookmarked, 201);
+  } catch (err) {
+    if (err instanceof StoryNotFoundError) {
+      return c.json({ error: err.message }, 404);
+    }
+    throw err;
+  }
+});
+
+app.delete("/stories/:id/bookmarks", async (c) => {
+  let linked;
+  try {
+    linked = await requireLinkedAuthorKey(c.env.DB, c.req.header("Cookie"));
+  } catch (err) {
+    if (err instanceof UnauthorizedError) {
+      return c.json({ error: err.message }, 401);
+    }
+    throw err;
+  }
+  await removeBookmark(c.env.DB, linked.authorKey, c.req.param("id"));
+  if (linked.setCookie) {
+    c.header("Set-Cookie", linked.setCookie);
+  }
+  return c.body(null, 204);
 });
 
 app.post("/stories/:id/reactions", async (c) => {
