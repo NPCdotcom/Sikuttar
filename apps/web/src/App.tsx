@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { fetchRelated, fetchStories, postReaction, postStory } from "./api";
+import {
+  fetchRecommendedTags,
+  fetchRelated,
+  fetchStories,
+  postReaction,
+  postStory,
+} from "./api";
 import { AppLayout } from "./components/AppLayout";
 import type { AppView, PublicStory, ReactionKind } from "./types";
 import { ComposeView } from "./views/ComposeView";
@@ -9,6 +15,8 @@ import { FeedView } from "./views/FeedView";
 export function App() {
   const [view, setView] = useState<AppView>("feed");
   const [items, setItems] = useState<PublicStory[]>([]);
+  const [recommendedTags, setRecommendedTags] = useState<string[]>([]);
+  const [feedTag, setFeedTag] = useState<string | null>(null);
   const [detailId, setDetailId] = useState<string | null>(null);
   const [related, setRelated] = useState<PublicStory[] | null>(null);
   const [relatedLoading, setRelatedLoading] = useState(false);
@@ -16,17 +24,27 @@ export function App() {
   const [busy, setBusy] = useState(false);
   const [reactingId, setReactingId] = useState<string | null>(null);
 
-  const refreshFeed = useCallback(async () => {
-    const next = await fetchStories();
+  const refreshFeed = useCallback(async (tag: string | null) => {
+    const next = await fetchStories(tag);
     setItems(next);
     return next;
   }, []);
 
   useEffect(() => {
-    void refreshFeed().catch((err: unknown) => {
+    void fetchRecommendedTags()
+      .then(setRecommendedTags)
+      .catch((err: unknown) => {
+        setError(
+          err instanceof Error ? err.message : "タグ候補の取得に失敗しました",
+        );
+      });
+  }, []);
+
+  useEffect(() => {
+    void refreshFeed(feedTag).catch((err: unknown) => {
       setError(err instanceof Error ? err.message : "一覧の取得に失敗しました");
     });
-  }, [refreshFeed]);
+  }, [feedTag, refreshFeed]);
 
   const detailStory =
     detailId === null ? null : (items.find((item) => item.id === detailId) ?? null);
@@ -75,16 +93,23 @@ export function App() {
     setView("detail");
   }
 
+  function handleFilterTag(tag: string | null) {
+    setError(null);
+    setFeedTag(tag);
+  }
+
   async function handleCompose(input: {
     body: string;
     situation: string;
     cause: string;
+    tags: string[];
   }) {
     setError(null);
     setBusy(true);
     try {
       await postStory(input);
-      await refreshFeed();
+      setFeedTag(null);
+      await refreshFeed(null);
       navigate("feed");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "投稿に失敗しました");
@@ -98,7 +123,7 @@ export function App() {
     setReactingId(`${storyId}:${kind}`);
     try {
       await postReaction(storyId, kind);
-      await refreshFeed();
+      await refreshFeed(feedTag);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "リアクションに失敗しました");
     } finally {
@@ -113,14 +138,21 @@ export function App() {
       {view === "feed" ? (
         <FeedView
           items={items}
+          recommendedTags={recommendedTags}
+          selectedTag={feedTag}
           reactingId={reactingId}
+          onFilterTag={handleFilterTag}
           onReact={(storyId, kind) => void handleReact(storyId, kind)}
           onOpenDetail={openDetail}
         />
       ) : null}
 
       {view === "compose" ? (
-        <ComposeView busy={busy} onSubmit={handleCompose} />
+        <ComposeView
+          busy={busy}
+          recommendedTags={recommendedTags}
+          onSubmit={handleCompose}
+        />
       ) : null}
 
       {view === "detail" && detailStory ? (

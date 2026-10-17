@@ -22,6 +22,15 @@ export function StoryCard({
       <p className={clamp ? "story-body clamp" : "story-body"}>{story.body}</p>
       {story.situation ? <p className="meta">状況: {story.situation}</p> : null}
       {story.cause ? <p className="meta">原因: {story.cause}</p> : null}
+      {story.tags.length > 0 ? (
+        <ul className="story-tags" aria-label="分類タグ">
+          {story.tags.map((tag) => (
+            <li key={tag} className="tag tag-display">
+              {tag}
+            </li>
+          ))}
+        </ul>
+      ) : null}
       <time dateTime={story.createdAt}>
         {new Date(story.createdAt).toLocaleString("ja-JP")}
       </time>
