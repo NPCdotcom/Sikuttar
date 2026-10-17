@@ -1,22 +1,23 @@
-import { useEffect, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import type { AppView } from "../types";
-import { fetchSession } from "../api";
 
 type Props = {
   view: AppView;
   onNavigate: (view: AppView) => void;
+  loggedIn: boolean | null;
+  sessionError: boolean;
+  onLogout: () => void;
   children: ReactNode;
 };
 
-export function AppLayout({ view, onNavigate, children }: Props) {
-  const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
-  const [sessionError, setSessionError] = useState(false);
-
-  useEffect(() => {
-    fetchSession()
-      .then(setLoggedIn)
-      .catch(() => setSessionError(true));
-  }, []);
+export function AppLayout({
+  view,
+  onNavigate,
+  loggedIn,
+  sessionError,
+  onLogout,
+  children,
+}: Props) {
   return (
     <div className="app">
       <header className="topbar">
@@ -32,7 +33,9 @@ export function AppLayout({ view, onNavigate, children }: Props) {
           <nav className="nav" aria-label="メイン">
             <button
               type="button"
-              className={view === "feed" || view === "detail" ? "nav-link active" : "nav-link"}
+              className={
+                view === "feed" || view === "detail" ? "nav-link active" : "nav-link"
+              }
               onClick={() => onNavigate("feed")}
             >
               フィード
@@ -52,28 +55,11 @@ export function AppLayout({ view, onNavigate, children }: Props) {
               属性設定
             </button>
             {sessionError ? (
-              <span className="nav-link">ログイン状態を確認できません</span>
+              <span className="nav-muted">ログイン状態を確認できません</span>
             ) : loggedIn === null ? (
-              <span className="nav-link">確認中...</span>
+              <span className="nav-muted">確認中…</span>
             ) : loggedIn ? (
-              <button
-                type="button"
-                className="nav-link"
-                onClick={async () => {
-                  try {
-                    const res = await fetch("/auth/logout", {
-                      method: "POST",
-                      credentials: "include",
-                    });
-                    if (!res.ok) {
-                      throw new Error("ログアウトに失敗しました");
-                    }
-                    setLoggedIn(false);
-                  } catch (error) {
-                    alert(error instanceof Error ? error.message : "ログアウトに失敗しました");
-                  }
-                }}
-              >
+              <button type="button" className="nav-link" onClick={onLogout}>
                 ログアウト
               </button>
             ) : (

@@ -84,6 +84,18 @@ body {
   color: var(--ink);
 }
 
+.nav-muted {
+  padding: 0.4rem 0.5rem;
+  color: var(--faint);
+  font-size: 0.85rem;
+}
+
+.hint {
+  margin: 0 0 0.85rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .shell {
   max-width: 42rem;
   margin: 0 auto;
@@ -116,7 +128,8 @@ body {
 }
 
 .compose textarea,
-.compose input {
+.compose input,
+.compose select {
   width: 100%;
   box-sizing: border-box;
   padding: 0.5rem 0.6rem;
