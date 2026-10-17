@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { ProfileView } from "./views/ProfileView";
 import {
   fetchRecommendedTags,
   fetchRelated,
@@ -153,6 +154,10 @@ export function App() {
           recommendedTags={recommendedTags}
           onSubmit={handleCompose}
         />
+      ) : null}
+
+      {view === "profile" ? (
+        <ProfileView />
       ) : null}
 
       {view === "detail" && detailStory ? (
