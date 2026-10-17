@@ -2,7 +2,13 @@
 
 失敗談共有 × 集合知 — 「しくじったら、シクッター。」
 
-共同開発（[NPCdotcom/Sikuttar](https://github.com/NPCdotcom/Sikuttar)）。共同者: NPC · rako。`main` への反映は PR レビュー（Code Owners: NPCdotcom）前提です。
+共同開発（[NPCdotcom/Sikuttar](https://github.com/NPCdotcom/Sikuttar)）。`main` への反映は PR レビュー（Code Owners: NPCdotcom）前提です。
+
+| 役割 | 担当 |
+|------|------|
+| フロント | rako ([takarakostar-code](https://github.com/takarakostar-code)) · NPC ([NPCdotcom](https://github.com/NPCdotcom)) |
+| バック | hiroto ([fca2506060002-coder](https://github.com/fca2506060002-coder)) · NPC |
+| インフラ・プロジェクト進行（全体） | NPC |
 
 ## いま動くもの
 
