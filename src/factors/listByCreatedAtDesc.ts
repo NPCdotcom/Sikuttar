@@ -20,5 +20,6 @@ export async function listByCreatedAtDesc(
     )
     .bind(limit)
     .all<StoryRow>();
+
   return result.results ?? [];
 }
