@@ -1,0 +1,9 @@
+# Copy to .dev.vars (gitignored). Never commit real secrets.
+# See docs/operations/wave2/oauth-github-setup.md
+
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+GITHUB_OAUTH_REDIRECT_URI=http://127.0.0.1:8787/auth/github/callback
+
+# fallback | vectorize — keep fallback until Paid/Vectorize gate
+SEMANTIC_SEARCH=fallback

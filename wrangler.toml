@@ -2,8 +2,20 @@ name = "sikuttar"
 main = "src/index.ts"
 compatibility_date = "2024-11-01"
 
+[vars]
+# fallback until docs/operations/wave2/vectorize-paid-gate.md passes
+SEMANTIC_SEARCH = "fallback"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "sikuttar"
 database_id = "00000000-0000-0000-0000-000000000001"
 migrations_dir = "migrations"
+
+# --- wave2 placeholders (do not enable until Paid/Vectorize gate) ---
+# [[vectorize]]
+# binding = "VECTORIZE"
+# index_name = "sikuttar-stories"
+#
+# [ai]
+# binding = "AI"
