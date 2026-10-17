@@ -143,3 +143,18 @@ export async function fetchBookmarks(): Promise<PublicStory[]> {
   const data = (await res.json()) as { items: PublicStory[] };
   return data.items.map(withDefaultCounts);
 }
+
+export async function fetchSearch(q: string): Promise<PublicStory[]> {
+  const query = q.trim();
+  if (!query) {
+    return [];
+  }
+  const res = await fetch(`/search?q=${encodeURIComponent(query)}`, {
+    credentials: "include",
+  });
+  if (!res.ok) {
+    throw new Error(await readError(res, "検索に失敗しました"));
+  }
+  const data = (await res.json()) as { items: PublicStory[] };
+  return data.items.map(withDefaultCounts);
+}
