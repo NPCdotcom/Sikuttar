@@ -49,6 +49,13 @@ export function AppLayout({
             </button>
             <button
               type="button"
+              className={view === "search" ? "nav-link active" : "nav-link"}
+              onClick={() => onNavigate("search")}
+            >
+              検索
+            </button>
+            <button
+              type="button"
               className={view === "bookmarks" ? "nav-link active" : "nav-link"}
               onClick={() => onNavigate("bookmarks")}
             >
