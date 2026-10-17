@@ -50,7 +50,9 @@ import {
   requireLinkedAuthorKey,
   UnauthorizedError,
 } from "./factors/requireLinkedAuthorKey";
+import { searchStories } from "./factors/searchStories";
 import { updateAccountAttributes } from "./factors/updateAccountAttributes";
+import { upsertStoryEmbedding } from "./factors/upsertStoryEmbedding";
 import { validateAccountAttributes } from "./factors/validateAccountAttributes";
 import { ValidationError, validateBody } from "./factors/validateBody";
 import {
@@ -196,6 +198,14 @@ app.get("/tags/recommended", (c) => {
   return c.json({ items: listRecommendedTags() });
 });
 
+/** Free-text semantic search (Vectorize when bound, else Jaccard). */
+app.get("/search", async (c) => {
+  const q = c.req.query("q")?.trim() ?? "";
+  const rows = await searchStories(c.env, q, 20);
+  const items = await toPublicItems(c.env.DB, rows);
+  return c.json({ items });
+});
+
 /** Internal attributes only — never returned on public story JSON (FR13). */
 app.patch("/me/attributes", async (c) => {
   let linked;
@@ -279,6 +289,16 @@ app.post("/stories", async (c) => {
   await ensureAccountSlot(c.env.DB, authorKey);
   const story = await persistFailureStory(c.env.DB, validated, authorKey);
   await attachTags(c.env.DB, story.id, validated.tags);
+  try {
+    await upsertStoryEmbedding(c.env, {
+      id: story.id,
+      body: story.body,
+      situation: story.situation,
+      cause: story.cause,
+    });
+  } catch {
+    // Indexing must not fail the post (NFR7 / FR12).
+  }
   if (setCookie) {
     c.header("Set-Cookie", setCookie);
   }
