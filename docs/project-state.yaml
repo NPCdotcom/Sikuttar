@@ -1,7 +1,7 @@
 # Session navigation (every turn): .agents/memory/state/nav.yaml — see docs/PM_ROUTING.md
 
 current_phase: P3
-phase_note: "wave2 requirements+design agreed 2026-10-17; implementation not started; CF deploy only at public-ready gate"
+phase_note: "wave2 #11 ops scaffolding on plan/wave2-infra; OAuth routes fixed; CF deploy only at public-ready gate"
 
 scope_focus:
   level: H2
@@ -40,7 +40,7 @@ lifecycle_plan:
   recommended_cursor_mode: "Agent"
   requirements_depth: "standard"
   unit_scope: "docs/design/systems/wave2-discovery.md"
-  notes: "Next: P4 plans for wave2 and/or S4 display priority. Auth=GitHub OAuth. CF deploy at public-ready bundle only."
+  notes: "#11 ops docs+env contract in progress (OAuth GET /auth/github(+callback)). BE #3 unblocked for App setup. CF deploy / Vectorize still deferred."
 
 git_policy:
   enabled: true

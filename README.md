@@ -71,6 +71,18 @@ npm run build -w apps/web
 
 CI: `.github/workflows/ci.yml`（`main` への push / PR）
 
+## Wave2 インフラ
+
+ローカルで足りる間は **Cloudflare へ頻繁にデプロイしない**（公開デモ一式が揃ってからまとめて）。詳細: [docs/operations/wave2/](docs/operations/wave2/README.md)
+
+| 項目 | 場所 |
+|------|------|
+| デプロイ境界 | [deploy-boundary.md](docs/operations/wave2/deploy-boundary.md) |
+| GitHub OAuth | [oauth-github-setup.md](docs/operations/wave2/oauth-github-setup.md) · `.dev.vars.example` を `.dev.vars` にコピー |
+| Paid / Vectorize | [vectorize-paid-gate.md](docs/operations/wave2/vectorize-paid-gate.md)（本番オン直前まで保留） |
+
+`SEMANTIC_SEARCH` 既定は `fallback`（[`wrangler.toml`](wrangler.toml)）。
+
 ## ドキュメント
 
 | 用途 | 場所 |
@@ -78,6 +90,7 @@ CI: `.github/workflows/ci.yml`（`main` への push / PR）
 | 製品チャーター | [docs/design/product/charter.md](docs/design/product/charter.md) |
 | 要求・要件 | [docs/requirements/failure-share/](docs/requirements/failure-share/) |
 | 設計（H0–H4） | [docs/design/README.md](docs/design/README.md) |
+| Wave2 運用 | [docs/operations/wave2/](docs/operations/wave2/README.md) |
 | 実装プラン | [.agents/plans/README.md](.agents/plans/README.md) |
 | エージェント向け | [AGENTS.md](AGENTS.md) |
 
