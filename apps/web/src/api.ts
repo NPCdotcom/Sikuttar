@@ -69,3 +69,39 @@ export async function fetchRelated(storyId: string): Promise<PublicStory[]> {
   const data = (await res.json()) as { items: PublicStory[] };
   return data.items.map(withDefaultCounts);
 }
+
+export async function fetchSession(): Promise<boolean> {
+  const res = await fetch("/auth/session", { credentials: "include" });
+  if (!res.ok) {
+    throw new Error(await readError(res, "ログイン状態の取得に失敗しました"));
+  }
+  const data = (await res.json()) as { loggedIn: boolean };
+  return data.loggedIn;
+}
+
+export async function logoutSession(): Promise<void> {
+  const res = await fetch("/auth/logout", {
+    method: "POST",
+    credentials: "include",
+  });
+  if (!res.ok) {
+    throw new Error(await readError(res, "ログアウトに失敗しました"));
+  }
+}
+
+export async function patchAttributes(input: {
+  occupation?: string | null;
+}): Promise<void> {
+  const res = await fetch("/me/attributes", {
+    method: "PATCH",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(input),
+  });
+  if (res.status === 401) {
+    throw new Error("属性を保存するには GitHub ログインが必要です");
+  }
+  if (!res.ok && res.status !== 204) {
+    throw new Error(await readError(res, "属性の保存に失敗しました"));
+  }
+}
