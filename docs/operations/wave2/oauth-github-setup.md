@@ -56,6 +56,7 @@ cp .dev.vars.example .dev.vars
 | `GITHUB_CLIENT_ID` | OAuth App Client ID |
 | `GITHUB_CLIENT_SECRET` | Client Secret（ローカルのみ） |
 | `GITHUB_OAUTH_REDIRECT_URI` | Callback と完全一致させる |
+| `OAUTH_SUCCESS_REDIRECT` | 成功後の Web 戻り先（既定 `http://127.0.0.1:5173`） |
 
 `.dev.vars` は [`.gitignore`](../../../.gitignore) 済み。コミットするのは `.dev.vars.example` のみ。
 
