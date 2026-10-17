@@ -99,6 +99,10 @@ CI: `.github/workflows/ci.yml`（`main` への push / PR）
 | Method | Path | 用途 |
 |--------|------|------|
 | GET | `/health` | 疎通 |
+| GET | `/auth/github` | GitHub OAuth 開始 |
+| GET | `/auth/github/callback` | OAuth コールバック |
+| POST | `/auth/logout` | ログアウト（DB 紐づけは残す） |
+| GET | `/auth/session` | `{ loggedIn }`（IdP 識別子なし） |
 | GET | `/stories` | 一覧（匿名＋公開リアクション件数） |
 | POST | `/stories` | 投稿 |
 | POST | `/stories/:id/reactions` | `wakaru` / `reference` /（内部）`bad` |

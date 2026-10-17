@@ -4,6 +4,8 @@
 GITHUB_CLIENT_ID=
 GITHUB_CLIENT_SECRET=
 GITHUB_OAUTH_REDIRECT_URI=http://127.0.0.1:8787/auth/github/callback
+# Browser landing after OAuth success (web app)
+OAUTH_SUCCESS_REDIRECT=http://127.0.0.1:5173
 
 # fallback | vectorize — keep fallback until Paid/Vectorize gate
 SEMANTIC_SEARCH=fallback
