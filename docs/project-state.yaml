@@ -1,7 +1,7 @@
 # Session navigation (every turn): .agents/memory/state/nav.yaml — see docs/PM_ROUTING.md
 
 current_phase: P3
-phase_note: "wave2 #11 ops scaffolding on plan/wave2-infra; OAuth routes fixed; CF deploy only at public-ready gate"
+phase_note: "wave2 #3 OAuth+accounts on plan/wave2-oauth; #11 ops on plan/wave2-infra (PR); CF deploy deferred"
 
 scope_focus:
   level: H2
