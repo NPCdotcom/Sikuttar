@@ -5,8 +5,21 @@ async function readError(res: Response, fallback: string): Promise<string> {
   return payload?.error ?? `${fallback} (${res.status})`;
 }
 
-export async function fetchStories(): Promise<PublicStory[]> {
-  const res = await fetch("/stories", { credentials: "include" });
+export async function fetchRecommendedTags(): Promise<string[]> {
+  const res = await fetch("/tags/recommended", { credentials: "include" });
+  if (!res.ok) {
+    throw new Error(await readError(res, "タグ候補の取得に失敗しました"));
+  }
+  const data = (await res.json()) as { items: string[] };
+  return data.items ?? [];
+}
+
+export async function fetchStories(tag?: string | null): Promise<PublicStory[]> {
+  const url =
+    tag && tag.trim()
+      ? `/stories?tag=${encodeURIComponent(tag.trim())}`
+      : "/stories";
+  const res = await fetch(url, { credentials: "include" });
   if (!res.ok) {
     throw new Error(await readError(res, "一覧の取得に失敗しました"));
   }
@@ -18,6 +31,7 @@ export async function postStory(input: {
   body: string;
   situation?: string;
   cause?: string;
+  tags?: string[];
 }): Promise<void> {
   const res = await fetch("/stories", {
     method: "POST",
@@ -27,6 +41,7 @@ export async function postStory(input: {
       body: input.body,
       situation: input.situation || undefined,
       cause: input.cause || undefined,
+      tags: input.tags?.length ? input.tags : undefined,
     }),
   });
   if (!res.ok) {
