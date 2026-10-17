@@ -4,6 +4,7 @@ import {
   fetchBookmarks,
   fetchRecommendedTags,
   fetchRelated,
+  fetchSearch,
   fetchSession,
   fetchStories,
   logoutSession,
@@ -18,6 +19,7 @@ import { ComposeView } from "./views/ComposeView";
 import { DetailView } from "./views/DetailView";
 import { FeedView } from "./views/FeedView";
 import { ProfileView } from "./views/ProfileView";
+import { SearchView } from "./views/SearchView";
 
 export function App() {
   const [view, setView] = useState<AppView>("feed");
@@ -38,6 +40,10 @@ export function App() {
   const [bookmarkItems, setBookmarkItems] = useState<PublicStory[]>([]);
   const [bookmarksLoading, setBookmarksLoading] = useState(false);
   const [bookmarksError, setBookmarksError] = useState<string | null>(null);
+  const [searchResults, setSearchResults] = useState<PublicStory[]>([]);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const refreshSession = useCallback(async () => {
     setSessionError(false);
@@ -110,6 +116,7 @@ export function App() {
       ? null
       : (items.find((item) => item.id === detailId) ??
         bookmarkItems.find((item) => item.id === detailId) ??
+        searchResults.find((item) => item.id === detailId) ??
         null);
 
   useEffect(() => {
@@ -197,6 +204,20 @@ export function App() {
     }
   }
 
+  async function handleSearch(q: string) {
+    setSearchError(null);
+    setHasSearched(true);
+    setSearchLoading(true);
+    try {
+      setSearchResults(await fetchSearch(q));
+    } catch (err: unknown) {
+      setSearchResults([]);
+      setSearchError(err instanceof Error ? err.message : "検索に失敗しました");
+    } finally {
+      setSearchLoading(false);
+    }
+  }
+
   async function handleCompose(input: {
     body: string;
     situation: string;
@@ -259,6 +280,21 @@ export function App() {
           busy={busy}
           recommendedTags={recommendedTags}
           onSubmit={handleCompose}
+        />
+      ) : null}
+
+      {view === "search" ? (
+        <SearchView
+          results={searchResults}
+          loading={searchLoading}
+          error={searchError}
+          hasSearched={hasSearched}
+          reactingId={reactingId}
+          bookmarkedIds={bookmarkedIds}
+          onSearch={(q) => void handleSearch(q)}
+          onReact={(storyId, kind) => void handleReact(storyId, kind)}
+          onOpenDetail={openDetail}
+          onBookmark={(storyId) => void handleBookmark(storyId)}
         />
       ) : null}
 
