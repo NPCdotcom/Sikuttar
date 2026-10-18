@@ -1,7 +1,7 @@
 # Session navigation (every turn): .agents/memory/state/nav.yaml — see docs/PM_ROUTING.md
 
-current_phase: P3
-phase_note: "wave2 local acceptance Pass (2026-10-18); #11 pre-deploy ops done; CF deploy / Paid deferred until explicit Go"
+current_phase: P6
+phase_note: "CF Free first deploy Pass (方針 A) 2026-10-18 · https://sikuttar.npcdotcom.workers.dev; Paid/Vectorize/gen-LLM next gates; GitHub OAuth production Callback pending user"
 
 scope_focus:
   level: H2
@@ -15,12 +15,12 @@ active_pdca:
 gate_status:
   current: pass
   proposal: ""
-  last_decision: "wave2-local-acceptance"
+  last_decision: "cf-free-first-deploy-go"
   last_decided_at: "2026-10-18"
   conditions: []
   gate_keeper: user
 
-last_gate_passed: "wave2-local-acceptance"
+last_gate_passed: "cf-free-first-deploy-go"
 allowed_actions:
   - design-deliberate
   - design-record
@@ -40,7 +40,7 @@ lifecycle_plan:
   recommended_cursor_mode: "Agent"
   requirements_depth: "standard"
   unit_scope: "docs/design/systems/wave2-discovery.md"
-  notes: "wave2 #2–#10 closed; local demo acceptance Pass; #11 scaffolding complete; CF first deploy / Vectorize Paid remain next gate (no wrangler deploy yet)."
+  notes: "Free first deploy Pass (workers.dev + D1 + secrets); add GitHub OAuth production Callback; Workers Paid / Vectorize / gen-LLM gates remain closed."
 
 git_policy:
   enabled: true

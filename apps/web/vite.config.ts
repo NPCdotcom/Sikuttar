@@ -11,6 +11,7 @@ export default defineConfig({
       "/stories": "http://127.0.0.1:8787",
       "/tags": "http://127.0.0.1:8787",
       "/search": "http://127.0.0.1:8787",
+      "/assistant": "http://127.0.0.1:8787",
       "/me": "http://127.0.0.1:8787",
       "/auth": "http://127.0.0.1:8787",
       "/health": "http://127.0.0.1:8787",

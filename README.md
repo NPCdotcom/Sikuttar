@@ -72,17 +72,26 @@ npm run build -w apps/web
 
 CI: `.github/workflows/ci.yml`（`main` への push / PR）
 
-## Wave2 インフラ
+## 本番デプロイ（Cloudflare Free）
 
-ローカルデモ一式（認証・検索 fallback・タグ・ブックマーク）は受け入れ済み。**初回 CF デプロイと Vectorize / Paid は次ゲート**（ユーザー明示の Go まで上げない）。詳細: [docs/operations/wave2/](docs/operations/wave2/README.md)
+同一 Worker で API + SPA（課金なし · Jaccard · 質問テンプレ）:
+
+```bash
+npm run deploy
+```
+
+公開: **https://sikuttar.npcdotcom.workers.dev** · 共同者スモーク: [prod-smoke.md](docs/operations/wave2/prod-smoke.md) · OAuth: [oauth-github-setup.md](docs/operations/wave2/oauth-github-setup.md)
+
+Workers Paid / Vectorize / 生成 LLM は **次ゲート**（契約・オンしない）。詳細: [docs/operations/wave2/](docs/operations/wave2/README.md)
 
 | 項目 | 場所 |
 |------|------|
 | デプロイ境界 | [deploy-boundary.md](docs/operations/wave2/deploy-boundary.md) |
 | GitHub OAuth | [oauth-github-setup.md](docs/operations/wave2/oauth-github-setup.md) · `.dev.vars.example` を `.dev.vars` にコピー |
-| Paid / Vectorize | [vectorize-paid-gate.md](docs/operations/wave2/vectorize-paid-gate.md)（本番オン直前まで保留） |
+| Paid / Vectorize | [vectorize-paid-gate.md](docs/operations/wave2/vectorize-paid-gate.md) |
+| 生成 LLM | [gen-llm-gate.md](docs/operations/wave2/gen-llm-gate.md) |
 
-`SEMANTIC_SEARCH` 既定は `fallback`（[`wrangler.toml`](wrangler.toml)）。
+`SEMANTIC_SEARCH=fallback` · `SECRETARY_QA=on`（[`wrangler.toml`](wrangler.toml)）。
 
 ## ドキュメント
 
@@ -106,9 +115,11 @@ CI: `.github/workflows/ci.yml`（`main` への push / PR）
 | GET | `/auth/session` | `{ loggedIn }`（IdP 識別子なし） |
 | PATCH | `/me/attributes` | 属性更新（リンク済みのみ · 公開 JSON には出さない） |
 | GET | `/me/bookmarks` | 自分のブックマーク一覧（認証必須） |
+| GET | `/me/stories` | 自分の投稿一覧（認証必須 · プロフィール用） |
 | POST/DELETE | `/stories/:id/bookmarks` | ブックマーク追加／解除（認証必須） |
 | GET | `/tags/recommended` | 分類タグ候補（FR17） |
 | GET | `/search?q=` | 意味検索（既定 Jaccard · `SEMANTIC_SEARCH=vectorize` 時は Vectorize） |
+| POST | `/assistant/ask` | 質問（UI 名）/ 秘書照会 E12（`SECRETARY_QA=on` · テンプレ応答 · `{ question, seed_story_id? }`） |
 | GET | `/stories` | 一覧（匿名＋件数 · `tags` · `?tag=` 絞り込み） |
 | POST | `/stories` | 投稿（任意 `tags: string[]`） |
 | POST | `/stories/:id/reactions` | `wakaru` / `reference` /（内部）`bad` |

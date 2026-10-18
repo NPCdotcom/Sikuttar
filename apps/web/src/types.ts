@@ -14,13 +14,47 @@ export type PublicStory = {
 };
 
 export type AppView =
+  | "dashboard"
   | "feed"
   | "compose"
   | "detail"
   | "profile"
   | "bookmarks"
-  | "search";
+  | "search"
+  | "assistant";
+
+export type SecretaryEvidence = {
+  id: string;
+  body: string;
+  role: "corpus" | "bookmark";
+  tags: string[];
+};
+
+export type SecretaryAskResult = {
+  answer: string;
+  evidence: SecretaryEvidence[];
+  attribute_hint?: string;
+};
 export type ReactionKind = "wakaru" | "reference";
+
+export type TopicTag = {
+  name: string;
+  count: number;
+};
+
+export type DashboardPayload = {
+  stats: {
+    totalStories: number;
+    last24hStories: number;
+    totalWakaru: number;
+  };
+  recent: PublicStory[];
+  topics: {
+    day: TopicTag[];
+    week: TopicTag[];
+    month: TopicTag[];
+  };
+};
 
 export function withDefaultCounts(item: PublicStory): PublicStory {
   return {
