@@ -28,6 +28,11 @@ import { listMyStories } from "./factors/listMyStories";
 import type { StoryRow } from "./factors/listByCreatedAtDesc";
 import { listByTag } from "./factors/listByTag";
 import { listRecommendedTags } from "./factors/listRecommendedTags";
+import { listUsedTags } from "./factors/listUsedTags";
+import {
+  deleteOwnStory,
+  StoryForbiddenError,
+} from "./factors/deleteOwnStory";
 import { loadTagsByStoryIds } from "./factors/loadTagsByStoryIds";
 import {
   createOAuthState,
@@ -201,6 +206,12 @@ app.get("/tags/recommended", (c) => {
   return c.json({ items: listRecommendedTags() });
 });
 
+/** Tags actually used on stories (feed filter · hashtag-style). */
+app.get("/tags", async (c) => {
+  const items = await listUsedTags(c.env.DB);
+  return c.json({ items });
+});
+
 /** Free-text semantic search (Vectorize when bound, else Jaccard). */
 app.get("/search", async (c) => {
   const q = c.req.query("q")?.trim() ?? "";
@@ -365,6 +376,27 @@ app.get("/stories", async (c) => {
     : await listByCreatedAtDesc(c.env.DB, 50);
   const items = await toPublicItems(c.env.DB, rows);
   return c.json({ items });
+});
+
+/** Delete own story (author_key must match cookie). */
+app.delete("/stories/:id", async (c) => {
+  const storyId = c.req.param("id");
+  const { authorKey, setCookie } = attachAuthorKey(c.req.header("Cookie"));
+  try {
+    await deleteOwnStory(c.env.DB, storyId, authorKey);
+  } catch (err) {
+    if (err instanceof StoryNotFoundError) {
+      return c.json({ error: "not found" }, 404);
+    }
+    if (err instanceof StoryForbiddenError) {
+      return c.json({ error: "forbidden" }, 403);
+    }
+    throw err;
+  }
+  if (setCookie) {
+    c.header("Set-Cookie", setCookie);
+  }
+  return c.body(null, 204);
 });
 
 app.get("/stories/:id/related", async (c) => {

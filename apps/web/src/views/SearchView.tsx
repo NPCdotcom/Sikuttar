@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
+import { formatHashtag } from "../formatTag";
 import { StoryCard } from "../components/StoryCard";
 import type { PublicStory, ReactionKind } from "../types";
 
@@ -7,11 +8,15 @@ type Props = {
   loading: boolean;
   error: string | null;
   hasSearched: boolean;
+  /** Prefill + auto-search when opened from a hashtag. */
+  initialQuery?: string;
+  hashtagMode?: boolean;
   reactingId: string | null;
   bookmarkedIds: ReadonlySet<string>;
   onSearch: (q: string) => void;
   onReact: (storyId: string, kind: ReactionKind) => void;
   onOpenDetail: (storyId: string) => void;
+  onHashtag: (tag: string) => void;
   onBookmark: (storyId: string) => void;
 };
 
@@ -20,14 +25,21 @@ export function SearchView({
   loading,
   error,
   hasSearched,
+  initialQuery = "",
+  hashtagMode = false,
   reactingId,
   bookmarkedIds,
   onSearch,
   onReact,
   onOpenDetail,
+  onHashtag,
   onBookmark,
 }: Props) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery);
+
+  useEffect(() => {
+    setQuery(initialQuery);
+  }, [initialQuery]);
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -39,9 +51,15 @@ export function SearchView({
   }
 
   return (
-    <section className="view" aria-label="意味検索">
+    <section className="view" aria-label="検索">
       <h2>検索</h2>
-      <p className="hint">近い失敗談を探します。結果に属性や身元は出ません。</p>
+      {hashtagMode && initialQuery ? (
+        <p className="hint">
+          ハッシュタグ {formatHashtag(initialQuery)} の投稿
+        </p>
+      ) : (
+        <p className="hint">近い失敗談を探します。結果に属性や身元は出ません。</p>
+      )}
 
       <form className="compose" onSubmit={handleSubmit}>
         <label htmlFor="search-q">
@@ -52,7 +70,7 @@ export function SearchView({
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="例: デプロイに失敗した"
+            placeholder="例: デプロイに失敗した / #デプロイ"
             disabled={loading}
             autoComplete="off"
           />
@@ -73,7 +91,11 @@ export function SearchView({
       ) : null}
 
       {hasSearched && !loading && !error && results.length === 0 ? (
-        <p className="empty">近い投稿は見つかりませんでした。</p>
+        <p className="empty">
+          {hashtagMode
+            ? "このハッシュタグの投稿はまだありません。"
+            : "近い投稿は見つかりませんでした。"}
+        </p>
       ) : null}
 
       {results.length > 0 ? (
@@ -87,6 +109,7 @@ export function SearchView({
                 showDetailLink
                 onReact={(kind) => onReact(item.id, kind)}
                 onOpenDetail={() => onOpenDetail(item.id)}
+                onHashtag={onHashtag}
                 bookmarked={bookmarkedIds.has(item.id)}
                 onBookmark={() => onBookmark(item.id)}
               />

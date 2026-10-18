@@ -14,6 +14,7 @@ export type PublicStory = {
 };
 
 export type AppView =
+  | "dashboard"
   | "feed"
   | "compose"
   | "detail"
