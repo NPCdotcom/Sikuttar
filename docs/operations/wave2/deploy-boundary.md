@@ -4,7 +4,7 @@ kind: operations
 slice: wave2
 related_adr: docs/adr/0001-cloudflare-semantic-search-cost.md
 created: "2026-10-17"
-updated: "2026-10-17"
+updated: "2026-10-18"
 ---
 
 # Cloudflare デプロイ境界（運用）
@@ -24,9 +24,17 @@ updated: "2026-10-17"
 | GitHub OAuth · タグ · ブックマーク · 意味検索本番経路がデモ可能 | **Go（初回公開）** | D1 remote · バインディング · OAuth 本番 Callback をまとめて設定してデプロイ |
 | 意味検索を本番フラグでオンにする直前 | **Paid ゲート** | [vectorize-paid-gate.md](./vectorize-paid-gate.md) |
 
+## ローカル受け入れゲート（2026-10-18）
+
+| 項目 | 判定 |
+|------|------|
+| #2–#10 相当がローカルでデモ可能（認証・検索 fallback・タグ・ブックマーク） | **Pass** |
+| CF デプロイ判定 | まだ **No-Go**（ローカルで足りる · ユーザー明示の Go まで上げない） |
+| 次アクション | 初回公開前チェックの残り（本番 Callback · remote D1 実 ID 等）を満たしてからまとめて deploy |
+
 ## 初回公開前チェック（まとめて Go のとき）
 
-- [ ] #2–#10 相当がローカルでデモできる
+- [x] #2–#10 相当がローカルでデモできる（2026-10-18 受け入れ）
 - [ ] OAuth 本番 Callback URL を GitHub App に追加済み
 - [ ] remote D1 `database_id` が実値（プレースホルダではない）
 - [ ] `SEMANTIC_SEARCH` 初期値は当面 `fallback` でも可（Vectorize オンは別ゲート）

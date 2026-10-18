@@ -74,7 +74,7 @@ CI: `.github/workflows/ci.yml`（`main` への push / PR）
 
 ## Wave2 インフラ
 
-ローカルで足りる間は **Cloudflare へ頻繁にデプロイしない**（公開デモ一式が揃ってからまとめて）。詳細: [docs/operations/wave2/](docs/operations/wave2/README.md)
+ローカルデモ一式（認証・検索 fallback・タグ・ブックマーク）は受け入れ済み。**初回 CF デプロイと Vectorize / Paid は次ゲート**（ユーザー明示の Go まで上げない）。詳細: [docs/operations/wave2/](docs/operations/wave2/README.md)
 
 | 項目 | 場所 |
 |------|------|
