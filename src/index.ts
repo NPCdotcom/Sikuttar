@@ -24,6 +24,7 @@ import {
 } from "./factors/linkAuthSubject";
 import { listBookmarks } from "./factors/listBookmarks";
 import { listByCreatedAtDesc } from "./factors/listByCreatedAtDesc";
+import { listMyStories } from "./factors/listMyStories";
 import type { StoryRow } from "./factors/listByCreatedAtDesc";
 import { listByTag } from "./factors/listByTag";
 import { listRecommendedTags } from "./factors/listRecommendedTags";
@@ -293,6 +294,25 @@ app.get("/me/bookmarks", async (c) => {
     throw err;
   }
   const rows = await listBookmarks(c.env.DB, linked.authorKey, 50);
+  const items = await toPublicItems(c.env.DB, rows);
+  if (linked.setCookie) {
+    c.header("Set-Cookie", linked.setCookie);
+  }
+  return c.json({ items });
+});
+
+/** Own posts for private profile (FR13: public JSON still anonymized). */
+app.get("/me/stories", async (c) => {
+  let linked;
+  try {
+    linked = await requireLinkedAuthorKey(c.env.DB, c.req.header("Cookie"));
+  } catch (err) {
+    if (err instanceof UnauthorizedError) {
+      return c.json({ error: err.message }, 401);
+    }
+    throw err;
+  }
+  const rows = await listMyStories(c.env.DB, linked.authorKey, 50);
   const items = await toPublicItems(c.env.DB, rows);
   if (linked.setCookie) {
     c.header("Set-Cookie", linked.setCookie);

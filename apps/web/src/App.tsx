@@ -3,6 +3,7 @@ import {
   addBookmark,
   askSecretary,
   fetchBookmarks,
+  fetchMyStories,
   fetchRecommendedTags,
   fetchRelated,
   fetchSearch,
@@ -16,7 +17,6 @@ import {
 import { AppLayout } from "./components/AppLayout";
 import type { AppView, PublicStory, ReactionKind } from "./types";
 import { AssistantView } from "./views/AssistantView";
-import { BookmarksView } from "./views/BookmarksView";
 import { ComposeView } from "./views/ComposeView";
 import { DetailView } from "./views/DetailView";
 import { FeedView } from "./views/FeedView";
@@ -42,6 +42,9 @@ export function App() {
   const [bookmarkItems, setBookmarkItems] = useState<PublicStory[]>([]);
   const [bookmarksLoading, setBookmarksLoading] = useState(false);
   const [bookmarksError, setBookmarksError] = useState<string | null>(null);
+  const [myStories, setMyStories] = useState<PublicStory[]>([]);
+  const [myStoriesLoading, setMyStoriesLoading] = useState(false);
+  const [myStoriesError, setMyStoriesError] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<PublicStory[]>([]);
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
@@ -86,15 +89,35 @@ export function App() {
     }
   }, []);
 
+  const loadMyStories = useCallback(async () => {
+    setMyStoriesLoading(true);
+    setMyStoriesError(null);
+    try {
+      setMyStories(await fetchMyStories());
+    } catch (err: unknown) {
+      setMyStories([]);
+      setMyStoriesError(
+        err instanceof Error
+          ? err.message
+          : "自分の投稿一覧の取得に失敗しました",
+      );
+    } finally {
+      setMyStoriesLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (loggedIn !== true) {
       setBookmarkItems([]);
       setBookmarkedIds(new Set());
       setBookmarksError(null);
+      setMyStories([]);
+      setMyStoriesError(null);
       return;
     }
     void loadBookmarks();
-  }, [loggedIn, loadBookmarks]);
+    void loadMyStories();
+  }, [loggedIn, loadBookmarks, loadMyStories]);
 
   const refreshFeed = useCallback(async (tag: string | null) => {
     const next = await fetchStories(tag);
@@ -123,6 +146,7 @@ export function App() {
       ? null
       : (items.find((item) => item.id === detailId) ??
         bookmarkItems.find((item) => item.id === detailId) ??
+        myStories.find((item) => item.id === detailId) ??
         searchResults.find((item) => item.id === detailId) ??
         assistantEvidenceStories.find((item) => item.id === detailId) ??
         null);
@@ -166,7 +190,8 @@ export function App() {
       setAssistantSeedId(null);
       setAssistantQuestion("");
     }
-    setView(next);
+    // Bookmarks live inside profile (X-like); keep legacy view id mapped.
+    setView(next === "bookmarks" ? "profile" : next);
   }
 
   function openAssistantFromStory(story: PublicStory) {
@@ -342,14 +367,15 @@ export function App() {
         />
       ) : null}
 
-      {view === "profile" ? <ProfileView loggedIn={loggedIn} /> : null}
-
-      {view === "bookmarks" ? (
-        <BookmarksView
-          items={bookmarkItems}
-          loading={bookmarksLoading}
-          error={bookmarksError}
+      {view === "profile" ? (
+        <ProfileView
           loggedIn={loggedIn}
+          myStories={myStories}
+          myStoriesLoading={myStoriesLoading}
+          myStoriesError={myStoriesError}
+          bookmarkItems={bookmarkItems}
+          bookmarksLoading={bookmarksLoading}
+          bookmarksError={bookmarksError}
           bookmarkedIds={bookmarkedIds}
           onOpenDetail={openDetail}
           onBookmark={(storyId) => void handleBookmark(storyId)}

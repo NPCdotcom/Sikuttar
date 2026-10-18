@@ -149,6 +149,18 @@ export async function fetchBookmarks(): Promise<PublicStory[]> {
   return data.items.map(withDefaultCounts);
 }
 
+export async function fetchMyStories(): Promise<PublicStory[]> {
+  const res = await fetch("/me/stories", { credentials: "include" });
+  if (res.status === 401) {
+    throw new Error("自分の投稿を見るには GitHub ログインが必要です");
+  }
+  if (!res.ok) {
+    throw new Error(await readError(res, "自分の投稿一覧の取得に失敗しました"));
+  }
+  const data = (await res.json()) as { items: PublicStory[] };
+  return data.items.map(withDefaultCounts);
+}
+
 export async function fetchSearch(q: string): Promise<PublicStory[]> {
   const query = q.trim();
   if (!query) {

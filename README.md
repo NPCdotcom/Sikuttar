@@ -106,6 +106,7 @@ CI: `.github/workflows/ci.yml`（`main` への push / PR）
 | GET | `/auth/session` | `{ loggedIn }`（IdP 識別子なし） |
 | PATCH | `/me/attributes` | 属性更新（リンク済みのみ · 公開 JSON には出さない） |
 | GET | `/me/bookmarks` | 自分のブックマーク一覧（認証必須） |
+| GET | `/me/stories` | 自分の投稿一覧（認証必須 · プロフィール用） |
 | POST/DELETE | `/stories/:id/bookmarks` | ブックマーク追加／解除（認証必須） |
 | GET | `/tags/recommended` | 分類タグ候補（FR17） |
 | GET | `/search?q=` | 意味検索（既定 Jaccard · `SEMANTIC_SEARCH=vectorize` 時は Vectorize） |
