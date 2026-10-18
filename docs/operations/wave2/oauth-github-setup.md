@@ -4,7 +4,7 @@ kind: operations
 slice: wave2
 related_issue_be: "https://github.com/NPCdotcom/Sikuttar/issues/3"
 created: "2026-10-17"
-updated: "2026-10-17"
+updated: "2026-10-18"
 ---
 
 # GitHub OAuth App セットアップ
@@ -26,18 +26,20 @@ subject 形式（実装時）: `github:<numeric_user_id>`
 | 環境 | URL |
 |------|-----|
 | ローカル | `http://127.0.0.1:8787/auth/github/callback` |
-| CF 公開後 | `https://<worker-host>/auth/github/callback`（初回デプロイ時に追記） |
+| CF Free 公開 | `https://sikuttar.npcdotcom.workers.dev/auth/github/callback`（同一 origin · SPA + API） |
 
 API が別ポートのときは、実際に Listen している origin に合わせて Callback と `GITHUB_OAUTH_REDIRECT_URI` を揃える。
 
-**ホストは `127.0.0.1` に統一**（`localhost` と混在させない）。Cookie が別ホスト扱いになり、OAuth 後もログインが繋がらなくなる。Vite は `apps/web/vite.config.ts` で `host: "127.0.0.1"` を指定済み。
+**ローカルホストは `127.0.0.1` に統一**（`localhost` と混在させない）。Cookie が別ホスト扱いになり、OAuth 後もログインが繋がらなくなる。Vite は `apps/web/vite.config.ts` で `host: "127.0.0.1"` を指定済み。
+
+**本番は Worker の公開ホストに統一**（例 `sikuttar.<subdomain>.workers.dev`）。API と SPA を別ホストに分けない（Free 初回は `[assets]` で同一 origin）。
 
 ## GitHub 上の手順（NPC）
 
-1. GitHub → **Settings** → **Developer settings** → **OAuth Apps** → **New OAuth App**
-2. 例:
-   - **Application name**: `Sikuttar (local)`（本番用は別名でも可）
-   - **Homepage URL**: `http://127.0.0.1:5173`（ローカル Web）
+1. GitHub → **Settings** → **Developer settings** · **OAuth Apps** → **New OAuth App**（または既存を編集）
+2. 例（ローカル）:
+   - **Application name**: `Sikuttar (local)`
+   - **Homepage URL**: `http://127.0.0.1:5173`
    - **Authorization callback URL**: 上表のローカル URL
 3. **Generate a new client secret** を作成
 4. Client ID / Secret を **ローカルのみ** `.dev.vars` に書く（下記）
@@ -62,7 +64,23 @@ cp .dev.vars.example .dev.vars
 
 `.dev.vars` は [`.gitignore`](../../../.gitignore) 済み。コミットするのは `.dev.vars.example` のみ。
 
-## CF 公開時（後工程）
+## CF Free 公開時（本番 Callback · secrets）
 
-- GitHub App に本番 Callback を追加（または本番用 App を分ける）
-- Worker secrets: `wrangler secret put GITHUB_CLIENT_SECRET` 等（手順は初回デプロイ時に本ファイルへ追記）
+1. Deploy 後に Worker URL を確定する（例 `https://sikuttar.<account>.workers.dev`）
+2. GitHub OAuth App に **Authorization callback URL** を追加（または本番用 App）:
+   - `https://<worker-host>/auth/github/callback`
+3. Homepage URL も `https://<worker-host>/` に揃える（任意だが推奨）
+4. Worker secrets を投入（値は対話入力 · git に載せない）:
+
+```bash
+npx wrangler secret put GITHUB_CLIENT_ID
+npx wrangler secret put GITHUB_CLIENT_SECRET
+npx wrangler secret put GITHUB_OAUTH_REDIRECT_URI
+# 値例: https://<worker-host>/auth/github/callback
+npx wrangler secret put OAUTH_SUCCESS_REDIRECT
+# 値例: https://<worker-host>/
+```
+
+5. ブラウザで `https://<worker-host>/` → ログイン → コールバック後にセッションが残ることを確認
+
+`wrangler.toml` の `[vars]` には OAuth 秘密を書かない。`SEMANTIC_SEARCH` / `SECRETARY_QA` のみ vars。

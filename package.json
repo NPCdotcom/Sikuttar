@@ -8,6 +8,8 @@
   "scripts": {
     "dev:api": "wrangler dev",
     "dev:web": "npm run dev -w apps/web",
+    "build:web": "npm run build -w apps/web",
+    "deploy": "npm run build:web && wrangler deploy",
     "test": "vitest run",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },

@@ -88,6 +88,34 @@ describe("fallbackTokenSearch", () => {
     const { db } = mockDbWithStories([]);
     expect(await fallbackTokenSearch(db, "  ")).toEqual([]);
   });
+
+  it("drops low query-coverage noise", async () => {
+    const rows = [
+      story("weak", "only alpha appears here among filler words"),
+      story(
+        "strong",
+        "alpha beta gamma delta epsilon zeta matched together",
+      ),
+    ];
+    const { db, prepare } = mockDbWithStories(rows);
+    prepare.mockReturnValueOnce({
+      bind: vi.fn().mockReturnValue({
+        all: vi.fn().mockResolvedValue({ results: rows }),
+      }),
+    });
+    prepare.mockReturnValueOnce({
+      bind: vi.fn().mockReturnValue({
+        all: vi.fn().mockResolvedValue({ results: [] }),
+      }),
+    });
+
+    const hits = await fallbackTokenSearch(
+      db,
+      "alpha beta gamma delta epsilon zeta",
+      10,
+    );
+    expect(hits.map((h) => h.id)).toEqual(["strong"]);
+  });
 });
 
 describe("embedText", () => {

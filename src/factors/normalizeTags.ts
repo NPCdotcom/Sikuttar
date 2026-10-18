@@ -15,7 +15,7 @@ export function normalizeTags(raw: unknown): string[] {
   const tags = [
     ...new Set(
       (raw as string[])
-        .map((tag) => tag.trim())
+        .map((tag) => tag.trim().replace(/^#+/u, "").trim())
         .filter((tag) => tag.length > 0),
     ),
   ];

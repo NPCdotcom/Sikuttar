@@ -1,8 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import {
   addBookmark,
+  askSecretary,
+  deleteStory,
   fetchBookmarks,
-  fetchRecommendedTags,
+  fetchDashboard,
+  fetchMyStories,
+  fetchUsedTags,
   fetchRelated,
   fetchSearch,
   fetchSession,
@@ -13,19 +17,27 @@ import {
   removeBookmark,
 } from "./api";
 import { AppLayout } from "./components/AppLayout";
-import type { AppView, PublicStory, ReactionKind } from "./types";
-import { BookmarksView } from "./views/BookmarksView";
+import type {
+  AppView,
+  DashboardPayload,
+  PublicStory,
+  ReactionKind,
+} from "./types";
+import { AssistantView } from "./views/AssistantView";
 import { ComposeView } from "./views/ComposeView";
+import { DashboardView } from "./views/DashboardView";
 import { DetailView } from "./views/DetailView";
 import { FeedView } from "./views/FeedView";
 import { ProfileView } from "./views/ProfileView";
 import { SearchView } from "./views/SearchView";
+import { bareTagName } from "./formatTag";
 
 export function App() {
-  const [view, setView] = useState<AppView>("feed");
+  const [view, setView] = useState<AppView>("dashboard");
   const [items, setItems] = useState<PublicStory[]>([]);
-  const [recommendedTags, setRecommendedTags] = useState<string[]>([]);
-  const [feedTag, setFeedTag] = useState<string | null>(null);
+  const [usedTags, setUsedTags] = useState<string[]>([]);
+  const [searchInitialQuery, setSearchInitialQuery] = useState("");
+  const [searchHashtagMode, setSearchHashtagMode] = useState(false);
   const [detailId, setDetailId] = useState<string | null>(null);
   const [related, setRelated] = useState<PublicStory[] | null>(null);
   const [relatedLoading, setRelatedLoading] = useState(false);
@@ -40,10 +52,22 @@ export function App() {
   const [bookmarkItems, setBookmarkItems] = useState<PublicStory[]>([]);
   const [bookmarksLoading, setBookmarksLoading] = useState(false);
   const [bookmarksError, setBookmarksError] = useState<string | null>(null);
+  const [myStories, setMyStories] = useState<PublicStory[]>([]);
+  const [myStoriesLoading, setMyStoriesLoading] = useState(false);
+  const [myStoriesError, setMyStoriesError] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [dashboard, setDashboard] = useState<DashboardPayload | null>(null);
+  const [dashboardLoading, setDashboardLoading] = useState(false);
+  const [dashboardError, setDashboardError] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<PublicStory[]>([]);
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
+  const [assistantQuestion, setAssistantQuestion] = useState("");
+  const [assistantSeedId, setAssistantSeedId] = useState<string | null>(null);
+  const [assistantEvidenceStories, setAssistantEvidenceStories] = useState<
+    PublicStory[]
+  >([]);
 
   const refreshSession = useCallback(async () => {
     setSessionError(false);
@@ -79,44 +103,87 @@ export function App() {
     }
   }, []);
 
+  const loadMyStories = useCallback(async () => {
+    setMyStoriesLoading(true);
+    setMyStoriesError(null);
+    try {
+      setMyStories(await fetchMyStories());
+    } catch (err: unknown) {
+      setMyStories([]);
+      setMyStoriesError(
+        err instanceof Error
+          ? err.message
+          : "自分の投稿一覧の取得に失敗しました",
+      );
+    } finally {
+      setMyStoriesLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (loggedIn !== true) {
       setBookmarkItems([]);
       setBookmarkedIds(new Set());
       setBookmarksError(null);
+      setMyStories([]);
+      setMyStoriesError(null);
       return;
     }
     void loadBookmarks();
-  }, [loggedIn, loadBookmarks]);
+    void loadMyStories();
+  }, [loggedIn, loadBookmarks, loadMyStories]);
 
-  const refreshFeed = useCallback(async (tag: string | null) => {
-    const next = await fetchStories(tag);
+  const refreshFeed = useCallback(async () => {
+    const next = await fetchStories();
     setItems(next);
     return next;
   }, []);
 
-  useEffect(() => {
-    void fetchRecommendedTags()
-      .then(setRecommendedTags)
-      .catch((err: unknown) => {
-        setError(
-          err instanceof Error ? err.message : "タグ候補の取得に失敗しました",
-        );
-      });
+  const refreshUsedTags = useCallback(async () => {
+    setUsedTags(await fetchUsedTags());
+  }, []);
+
+  const refreshDashboard = useCallback(async () => {
+    setDashboardLoading(true);
+    setDashboardError(null);
+    try {
+      setDashboard(await fetchDashboard());
+    } catch (err: unknown) {
+      setDashboardError(
+        err instanceof Error
+          ? err.message
+          : "ダッシュボードの取得に失敗しました",
+      );
+    } finally {
+      setDashboardLoading(false);
+    }
   }, []);
 
   useEffect(() => {
-    void refreshFeed(feedTag).catch((err: unknown) => {
+    void refreshUsedTags().catch(() => undefined);
+  }, [refreshUsedTags]);
+
+  useEffect(() => {
+    void refreshFeed().catch((err: unknown) => {
       setError(err instanceof Error ? err.message : "一覧の取得に失敗しました");
     });
-  }, [feedTag, refreshFeed]);
+  }, [refreshFeed]);
+
+  useEffect(() => {
+    if (view === "dashboard") {
+      void refreshDashboard();
+    }
+  }, [view, refreshDashboard]);
 
   const detailStory =
     detailId === null
       ? null
       : (items.find((item) => item.id === detailId) ??
         bookmarkItems.find((item) => item.id === detailId) ??
+        myStories.find((item) => item.id === detailId) ??
         searchResults.find((item) => item.id === detailId) ??
+        dashboard?.recent.find((item) => item.id === detailId) ??
+        assistantEvidenceStories.find((item) => item.id === detailId) ??
         null);
 
   useEffect(() => {
@@ -154,7 +221,25 @@ export function App() {
       setDetailId(null);
       setRelated(null);
     }
-    setView(next);
+    if (next !== "assistant") {
+      setAssistantSeedId(null);
+      setAssistantQuestion("");
+    }
+    if (next !== "search") {
+      setSearchHashtagMode(false);
+      setSearchInitialQuery("");
+    }
+    // Bookmarks live inside profile (X-like); keep legacy view id mapped.
+    setView(next === "bookmarks" ? "profile" : next);
+  }
+
+  function openAssistantFromStory(story: PublicStory) {
+    setError(null);
+    setAssistantSeedId(story.id);
+    setAssistantQuestion(story.body);
+    setDetailId(null);
+    setRelated(null);
+    setView("assistant");
   }
 
   function openDetail(storyId: string) {
@@ -163,9 +248,29 @@ export function App() {
     setView("detail");
   }
 
-  function handleFilterTag(tag: string | null) {
+  /** Twitter-like hashtag: open search with posts tagged (not feed chips). */
+  async function openHashtag(tag: string) {
+    const name = bareTagName(tag);
+    if (!name) return;
     setError(null);
-    setFeedTag(tag);
+    setDetailId(null);
+    setRelated(null);
+    setSearchHashtagMode(true);
+    setSearchInitialQuery(name);
+    setHasSearched(true);
+    setSearchLoading(true);
+    setSearchError(null);
+    setView("search");
+    try {
+      setSearchResults(await fetchStories(name));
+    } catch (err: unknown) {
+      setSearchResults([]);
+      setSearchError(
+        err instanceof Error ? err.message : "タグ検索に失敗しました",
+      );
+    } finally {
+      setSearchLoading(false);
+    }
   }
 
   async function handleLogout() {
@@ -175,6 +280,32 @@ export function App() {
       setLoggedIn(false);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "ログアウトに失敗しました");
+    }
+  }
+
+  async function handleDeleteStory(storyId: string) {
+    if (!window.confirm("この投稿を削除しますか？")) {
+      return;
+    }
+    setError(null);
+    setDeletingId(storyId);
+    try {
+      await deleteStory(storyId);
+      setMyStories((prev) => prev.filter((s) => s.id !== storyId));
+      setItems((prev) => prev.filter((s) => s.id !== storyId));
+      setBookmarkItems((prev) => prev.filter((s) => s.id !== storyId));
+      setSearchResults((prev) => prev.filter((s) => s.id !== storyId));
+      if (detailId === storyId) {
+        setDetailId(null);
+        setRelated(null);
+        setView("profile");
+      }
+      await refreshUsedTags().catch(() => undefined);
+      await refreshDashboard().catch(() => undefined);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "投稿の削除に失敗しました");
+    } finally {
+      setDeletingId(null);
     }
   }
 
@@ -206,6 +337,8 @@ export function App() {
 
   async function handleSearch(q: string) {
     setSearchError(null);
+    setSearchHashtagMode(false);
+    setSearchInitialQuery(q);
     setHasSearched(true);
     setSearchLoading(true);
     try {
@@ -228,8 +361,9 @@ export function App() {
     setBusy(true);
     try {
       await postStory(input);
-      setFeedTag(null);
-      await refreshFeed(null);
+      await refreshFeed();
+      await refreshUsedTags().catch(() => undefined);
+      await refreshDashboard().catch(() => undefined);
       navigate("feed");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "投稿に失敗しました");
@@ -243,7 +377,7 @@ export function App() {
     setReactingId(`${storyId}:${kind}`);
     try {
       await postReaction(storyId, kind);
-      await refreshFeed(feedTag);
+      await refreshFeed();
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "リアクションに失敗しました");
     } finally {
@@ -261,15 +395,25 @@ export function App() {
     >
       {error ? <p className="error" role="alert">{error}</p> : null}
 
+      {view === "dashboard" ? (
+        <DashboardView
+          data={dashboard}
+          loading={dashboardLoading}
+          error={dashboardError}
+          onCompose={() => navigate("compose")}
+          onFeed={() => navigate("feed")}
+          onOpenDetail={openDetail}
+          onHashtag={(tag) => void openHashtag(tag)}
+        />
+      ) : null}
+
       {view === "feed" ? (
         <FeedView
           items={items}
-          recommendedTags={recommendedTags}
-          selectedTag={feedTag}
           reactingId={reactingId}
-          onFilterTag={handleFilterTag}
           onReact={(storyId, kind) => void handleReact(storyId, kind)}
           onOpenDetail={openDetail}
+          onHashtag={(tag) => void openHashtag(tag)}
           bookmarkedIds={bookmarkedIds}
           onBookmark={(storyId) => void handleBookmark(storyId)}
         />
@@ -278,7 +422,7 @@ export function App() {
       {view === "compose" ? (
         <ComposeView
           busy={busy}
-          recommendedTags={recommendedTags}
+          suggestedTags={usedTags}
           onSubmit={handleCompose}
         />
       ) : null}
@@ -289,26 +433,55 @@ export function App() {
           loading={searchLoading}
           error={searchError}
           hasSearched={hasSearched}
+          initialQuery={searchInitialQuery}
+          hashtagMode={searchHashtagMode}
           reactingId={reactingId}
           bookmarkedIds={bookmarkedIds}
           onSearch={(q) => void handleSearch(q)}
           onReact={(storyId, kind) => void handleReact(storyId, kind)}
           onOpenDetail={openDetail}
+          onHashtag={(tag) => void openHashtag(tag)}
           onBookmark={(storyId) => void handleBookmark(storyId)}
         />
       ) : null}
 
-      {view === "profile" ? <ProfileView loggedIn={loggedIn} /> : null}
+      {view === "assistant" ? (
+        <AssistantView
+          initialQuestion={assistantQuestion}
+          seedStoryId={assistantSeedId}
+          onAsk={async (input) => {
+            const result = await askSecretary(input);
+            setAssistantEvidenceStories(
+              result.evidence.map((e) => ({
+                id: e.id,
+                body: e.body,
+                situation: null,
+                cause: null,
+                createdAt: "",
+                counts: { wakaru: 0, reference: 0 },
+                tags: e.tags,
+              })),
+            );
+            return result;
+          }}
+          onOpenEvidence={openDetail}
+        />
+      ) : null}
 
-      {view === "bookmarks" ? (
-        <BookmarksView
-          items={bookmarkItems}
-          loading={bookmarksLoading}
-          error={bookmarksError}
+      {view === "profile" ? (
+        <ProfileView
           loggedIn={loggedIn}
+          myStories={myStories}
+          myStoriesLoading={myStoriesLoading}
+          myStoriesError={myStoriesError}
+          bookmarkItems={bookmarkItems}
+          bookmarksLoading={bookmarksLoading}
+          bookmarksError={bookmarksError}
           bookmarkedIds={bookmarkedIds}
           onOpenDetail={openDetail}
           onBookmark={(storyId) => void handleBookmark(storyId)}
+          onDeleteStory={(storyId) => void handleDeleteStory(storyId)}
+          deletingId={deletingId}
         />
       ) : null}
 
@@ -323,6 +496,14 @@ export function App() {
           onReact={(kind) => void handleReact(detailStory.id, kind)}
           onBookmark={() => void handleBookmark(detailStory.id)}
           onOpenRelated={openDetail}
+          onAskSecretary={() => openAssistantFromStory(detailStory)}
+          onHashtag={(tag) => void openHashtag(tag)}
+          onDelete={
+            myStories.some((s) => s.id === detailStory.id)
+              ? () => void handleDeleteStory(detailStory.id)
+              : undefined
+          }
+          deleting={deletingId === detailStory.id}
         />
       ) : null}
 

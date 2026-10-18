@@ -2,7 +2,8 @@ import { countPublicReactions } from "./countPublicReactions";
 import { listByCreatedAtDesc, type StoryRow } from "./listByCreatedAtDesc";
 import {
   applyWakaruBoost,
-  scoreStorySimilarity,
+  passesTokenMatchFloor,
+  scoreTokenMatch,
 } from "./scoreStorySimilarity";
 import {
   storyTextForSimilarity,
@@ -37,12 +38,19 @@ export async function fallbackTokenSearch(
     candidates.map((c) => c.id),
   );
 
-  const scored = candidates.map((row) => {
-    const candidateTokens = tokenizeForSimilarity(storyTextForSimilarity(row));
-    const jaccard = scoreStorySimilarity(queryTokens, candidateTokens);
-    const wakaru = countsMap.get(row.id)?.wakaru ?? 0;
-    return { row, score: applyWakaruBoost(jaccard, wakaru) };
-  });
+  const scored = candidates
+    .map((row) => {
+      const candidateTokens = tokenizeForSimilarity(
+        storyTextForSimilarity(row),
+      );
+      if (!passesTokenMatchFloor(queryTokens, candidateTokens)) {
+        return null;
+      }
+      const base = scoreTokenMatch(queryTokens, candidateTokens);
+      const wakaru = countsMap.get(row.id)?.wakaru ?? 0;
+      return { row, score: applyWakaruBoost(base, wakaru) };
+    })
+    .filter((h): h is { row: StoryRow; score: number } => h !== null);
 
   scored.sort(
     (a, b) =>

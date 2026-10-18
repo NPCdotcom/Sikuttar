@@ -24,9 +24,21 @@ import {
 } from "./factors/linkAuthSubject";
 import { listBookmarks } from "./factors/listBookmarks";
 import { listByCreatedAtDesc } from "./factors/listByCreatedAtDesc";
+import { listMyStories } from "./factors/listMyStories";
 import type { StoryRow } from "./factors/listByCreatedAtDesc";
 import { listByTag } from "./factors/listByTag";
 import { listRecommendedTags } from "./factors/listRecommendedTags";
+import { listUsedTags } from "./factors/listUsedTags";
+import {
+  deleteOwnStory,
+  StoryForbiddenError,
+} from "./factors/deleteOwnStory";
+import { dashboardStats } from "./factors/dashboardStats";
+import {
+  daysAgoIso,
+  hoursAgoIso,
+  listTopicTags,
+} from "./factors/listTopicTags";
 import { loadTagsByStoryIds } from "./factors/loadTagsByStoryIds";
 import {
   createOAuthState,
@@ -50,7 +62,9 @@ import {
   requireLinkedAuthorKey,
   UnauthorizedError,
 } from "./factors/requireLinkedAuthorKey";
+import { askSecretary } from "./factors/askSecretary";
 import { searchStories } from "./factors/searchStories";
+import { secretaryQaEnabled } from "./factors/secretaryQaEnabled";
 import { updateAccountAttributes } from "./factors/updateAccountAttributes";
 import { upsertStoryEmbedding } from "./factors/upsertStoryEmbedding";
 import { validateAccountAttributes } from "./factors/validateAccountAttributes";
@@ -104,6 +118,24 @@ app.get("/health", async (c) => {
   await c.env.DB.prepare("SELECT 1 AS ok").first();
   return c.json({ ok: true });
 });
+
+/** Dashboard aggregates (counts · topic windows · recent stories). */
+app.get("/dashboard", async (c) => {
+  const [stats, day, week, month, recentRows] = await Promise.all([
+    dashboardStats(c.env.DB),
+    listTopicTags(c.env.DB, hoursAgoIso(24), 5),
+    listTopicTags(c.env.DB, daysAgoIso(7), 5),
+    listTopicTags(c.env.DB, daysAgoIso(30), 5),
+    listByCreatedAtDesc(c.env.DB, 5),
+  ]);
+  const recent = await toPublicItems(c.env.DB, recentRows);
+  return c.json({
+    stats,
+    recent,
+    topics: { day, week, month },
+  });
+});
+
 
 /** Login start — redirects to GitHub (IdP details stay server-side). */
 app.get("/auth/github", async (c) => {
@@ -198,12 +230,49 @@ app.get("/tags/recommended", (c) => {
   return c.json({ items: listRecommendedTags() });
 });
 
+/** Tags actually used on stories (feed filter · hashtag-style). */
+app.get("/tags", async (c) => {
+  const items = await listUsedTags(c.env.DB);
+  return c.json({ items });
+});
+
 /** Free-text semantic search (Vectorize when bound, else Jaccard). */
 app.get("/search", async (c) => {
   const q = c.req.query("q")?.trim() ?? "";
   const rows = await searchStories(c.env, q, 20);
   const items = await toPublicItems(c.env.DB, rows);
   return c.json({ items });
+});
+
+/** E12 secretary inquiry — template answer (ADR 0002). Gated by SECRETARY_QA. */
+app.post("/assistant/ask", async (c) => {
+  if (!secretaryQaEnabled(c.env)) {
+    return c.json({ error: "secretary disabled" }, 404);
+  }
+
+  let payload: unknown;
+  try {
+    payload = await c.req.json();
+  } catch {
+    return c.json({ error: "invalid JSON" }, 400);
+  }
+
+  if (!payload || typeof payload !== "object") {
+    return c.json({ error: "invalid body" }, 400);
+  }
+  const body = payload as Record<string, unknown>;
+  const question = typeof body.question === "string" ? body.question : "";
+  const seedStoryId =
+    typeof body.seed_story_id === "string" ? body.seed_story_id : undefined;
+  if (!question.trim()) {
+    return c.json({ error: "question required" }, 400);
+  }
+
+  const result = await askSecretary(c.env, question, {
+    seedStoryId,
+    cookieHeader: c.req.header("Cookie"),
+  });
+  return c.json(result);
 });
 
 /** Internal attributes only — never returned on public story JSON (FR13). */
@@ -267,6 +336,25 @@ app.get("/me/bookmarks", async (c) => {
   return c.json({ items });
 });
 
+/** Own posts for private profile (FR13: public JSON still anonymized). */
+app.get("/me/stories", async (c) => {
+  let linked;
+  try {
+    linked = await requireLinkedAuthorKey(c.env.DB, c.req.header("Cookie"));
+  } catch (err) {
+    if (err instanceof UnauthorizedError) {
+      return c.json({ error: err.message }, 401);
+    }
+    throw err;
+  }
+  const rows = await listMyStories(c.env.DB, linked.authorKey, 50);
+  const items = await toPublicItems(c.env.DB, rows);
+  if (linked.setCookie) {
+    c.header("Set-Cookie", linked.setCookie);
+  }
+  return c.json({ items });
+});
+
 app.post("/stories", async (c) => {
   let payload: unknown;
   try {
@@ -312,6 +400,27 @@ app.get("/stories", async (c) => {
     : await listByCreatedAtDesc(c.env.DB, 50);
   const items = await toPublicItems(c.env.DB, rows);
   return c.json({ items });
+});
+
+/** Delete own story (author_key must match cookie). */
+app.delete("/stories/:id", async (c) => {
+  const storyId = c.req.param("id");
+  const { authorKey, setCookie } = attachAuthorKey(c.req.header("Cookie"));
+  try {
+    await deleteOwnStory(c.env.DB, storyId, authorKey);
+  } catch (err) {
+    if (err instanceof StoryNotFoundError) {
+      return c.json({ error: "not found" }, 404);
+    }
+    if (err instanceof StoryForbiddenError) {
+      return c.json({ error: "forbidden" }, 403);
+    }
+    throw err;
+  }
+  if (setCookie) {
+    c.header("Set-Cookie", setCookie);
+  }
+  return c.body(null, 204);
 });
 
 app.get("/stories/:id/related", async (c) => {
@@ -421,6 +530,14 @@ app.post("/stories/:id/reactions", async (c) => {
     }
     throw err;
   }
+});
+
+/** SPA fallback via Workers Assets (same origin as API · Free deploy). */
+app.all("*", async (c) => {
+  if (c.env.ASSETS) {
+    return c.env.ASSETS.fetch(c.req.raw);
+  }
+  return c.json({ error: "not found" }, 404);
 });
 
 export default app;
