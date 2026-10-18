@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import {
   addBookmark,
+  askSecretary,
   fetchBookmarks,
   fetchRecommendedTags,
   fetchRelated,
@@ -14,6 +15,7 @@ import {
 } from "./api";
 import { AppLayout } from "./components/AppLayout";
 import type { AppView, PublicStory, ReactionKind } from "./types";
+import { AssistantView } from "./views/AssistantView";
 import { BookmarksView } from "./views/BookmarksView";
 import { ComposeView } from "./views/ComposeView";
 import { DetailView } from "./views/DetailView";
@@ -44,6 +46,11 @@ export function App() {
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
+  const [assistantQuestion, setAssistantQuestion] = useState("");
+  const [assistantSeedId, setAssistantSeedId] = useState<string | null>(null);
+  const [assistantEvidenceStories, setAssistantEvidenceStories] = useState<
+    PublicStory[]
+  >([]);
 
   const refreshSession = useCallback(async () => {
     setSessionError(false);
@@ -117,6 +124,7 @@ export function App() {
       : (items.find((item) => item.id === detailId) ??
         bookmarkItems.find((item) => item.id === detailId) ??
         searchResults.find((item) => item.id === detailId) ??
+        assistantEvidenceStories.find((item) => item.id === detailId) ??
         null);
 
   useEffect(() => {
@@ -154,7 +162,20 @@ export function App() {
       setDetailId(null);
       setRelated(null);
     }
+    if (next !== "assistant") {
+      setAssistantSeedId(null);
+      setAssistantQuestion("");
+    }
     setView(next);
+  }
+
+  function openAssistantFromStory(story: PublicStory) {
+    setError(null);
+    setAssistantSeedId(story.id);
+    setAssistantQuestion(story.body);
+    setDetailId(null);
+    setRelated(null);
+    setView("assistant");
   }
 
   function openDetail(storyId: string) {
@@ -298,6 +319,29 @@ export function App() {
         />
       ) : null}
 
+      {view === "assistant" ? (
+        <AssistantView
+          initialQuestion={assistantQuestion}
+          seedStoryId={assistantSeedId}
+          onAsk={async (input) => {
+            const result = await askSecretary(input);
+            setAssistantEvidenceStories(
+              result.evidence.map((e) => ({
+                id: e.id,
+                body: e.body,
+                situation: null,
+                cause: null,
+                createdAt: "",
+                counts: { wakaru: 0, reference: 0 },
+                tags: e.tags,
+              })),
+            );
+            return result;
+          }}
+          onOpenEvidence={openDetail}
+        />
+      ) : null}
+
       {view === "profile" ? <ProfileView loggedIn={loggedIn} /> : null}
 
       {view === "bookmarks" ? (
@@ -323,6 +367,7 @@ export function App() {
           onReact={(kind) => void handleReact(detailStory.id, kind)}
           onBookmark={() => void handleBookmark(detailStory.id)}
           onOpenRelated={openDetail}
+          onAskSecretary={() => openAssistantFromStory(detailStory)}
         />
       ) : null}
 

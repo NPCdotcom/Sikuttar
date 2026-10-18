@@ -50,7 +50,9 @@ import {
   requireLinkedAuthorKey,
   UnauthorizedError,
 } from "./factors/requireLinkedAuthorKey";
+import { askSecretary } from "./factors/askSecretary";
 import { searchStories } from "./factors/searchStories";
+import { secretaryQaEnabled } from "./factors/secretaryQaEnabled";
 import { updateAccountAttributes } from "./factors/updateAccountAttributes";
 import { upsertStoryEmbedding } from "./factors/upsertStoryEmbedding";
 import { validateAccountAttributes } from "./factors/validateAccountAttributes";
@@ -204,6 +206,37 @@ app.get("/search", async (c) => {
   const rows = await searchStories(c.env, q, 20);
   const items = await toPublicItems(c.env.DB, rows);
   return c.json({ items });
+});
+
+/** E12 secretary inquiry — template answer (ADR 0002). Gated by SECRETARY_QA. */
+app.post("/assistant/ask", async (c) => {
+  if (!secretaryQaEnabled(c.env)) {
+    return c.json({ error: "secretary disabled" }, 404);
+  }
+
+  let payload: unknown;
+  try {
+    payload = await c.req.json();
+  } catch {
+    return c.json({ error: "invalid JSON" }, 400);
+  }
+
+  if (!payload || typeof payload !== "object") {
+    return c.json({ error: "invalid body" }, 400);
+  }
+  const body = payload as Record<string, unknown>;
+  const question = typeof body.question === "string" ? body.question : "";
+  const seedStoryId =
+    typeof body.seed_story_id === "string" ? body.seed_story_id : undefined;
+  if (!question.trim()) {
+    return c.json({ error: "question required" }, 400);
+  }
+
+  const result = await askSecretary(c.env, question, {
+    seedStoryId,
+    cookieHeader: c.req.header("Cookie"),
+  });
+  return c.json(result);
 });
 
 /** Internal attributes only — never returned on public story JSON (FR13). */

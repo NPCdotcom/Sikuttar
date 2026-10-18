@@ -5,6 +5,8 @@ compatibility_date = "2024-11-01"
 [vars]
 # fallback until docs/operations/wave2/vectorize-paid-gate.md passes
 SEMANTIC_SEARCH = "fallback"
+# E12 secretary — set "on" for local prototype demos
+SECRETARY_QA = "off"
 
 [[d1_databases]]
 binding = "DB"

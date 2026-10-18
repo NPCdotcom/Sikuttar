@@ -9,3 +9,6 @@ OAUTH_SUCCESS_REDIRECT=http://127.0.0.1:5173
 
 # fallback | vectorize — keep fallback until Paid/Vectorize gate
 SEMANTIC_SEARCH=fallback
+
+# E12 secretary prototype — off by default in wrangler.toml; set on for local demo
+# SECRETARY_QA=on
