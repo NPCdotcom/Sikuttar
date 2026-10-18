@@ -37,6 +37,25 @@ export type SecretaryAskResult = {
 };
 export type ReactionKind = "wakaru" | "reference";
 
+export type TopicTag = {
+  name: string;
+  count: number;
+};
+
+export type DashboardPayload = {
+  stats: {
+    totalStories: number;
+    last24hStories: number;
+    totalWakaru: number;
+  };
+  recent: PublicStory[];
+  topics: {
+    day: TopicTag[];
+    week: TopicTag[];
+    month: TopicTag[];
+  };
+};
+
 export function withDefaultCounts(item: PublicStory): PublicStory {
   return {
     ...item,

@@ -4,6 +4,7 @@ import {
   askSecretary,
   deleteStory,
   fetchBookmarks,
+  fetchDashboard,
   fetchMyStories,
   fetchUsedTags,
   fetchRelated,
@@ -16,7 +17,12 @@ import {
   removeBookmark,
 } from "./api";
 import { AppLayout } from "./components/AppLayout";
-import type { AppView, PublicStory, ReactionKind } from "./types";
+import type {
+  AppView,
+  DashboardPayload,
+  PublicStory,
+  ReactionKind,
+} from "./types";
 import { AssistantView } from "./views/AssistantView";
 import { ComposeView } from "./views/ComposeView";
 import { DashboardView } from "./views/DashboardView";
@@ -50,6 +56,9 @@ export function App() {
   const [myStoriesLoading, setMyStoriesLoading] = useState(false);
   const [myStoriesError, setMyStoriesError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [dashboard, setDashboard] = useState<DashboardPayload | null>(null);
+  const [dashboardLoading, setDashboardLoading] = useState(false);
+  const [dashboardError, setDashboardError] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<PublicStory[]>([]);
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
@@ -134,6 +143,22 @@ export function App() {
     setUsedTags(await fetchUsedTags());
   }, []);
 
+  const refreshDashboard = useCallback(async () => {
+    setDashboardLoading(true);
+    setDashboardError(null);
+    try {
+      setDashboard(await fetchDashboard());
+    } catch (err: unknown) {
+      setDashboardError(
+        err instanceof Error
+          ? err.message
+          : "ダッシュボードの取得に失敗しました",
+      );
+    } finally {
+      setDashboardLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     void refreshUsedTags().catch(() => undefined);
   }, [refreshUsedTags]);
@@ -144,6 +169,12 @@ export function App() {
     });
   }, [refreshFeed]);
 
+  useEffect(() => {
+    if (view === "dashboard") {
+      void refreshDashboard();
+    }
+  }, [view, refreshDashboard]);
+
   const detailStory =
     detailId === null
       ? null
@@ -151,6 +182,7 @@ export function App() {
         bookmarkItems.find((item) => item.id === detailId) ??
         myStories.find((item) => item.id === detailId) ??
         searchResults.find((item) => item.id === detailId) ??
+        dashboard?.recent.find((item) => item.id === detailId) ??
         assistantEvidenceStories.find((item) => item.id === detailId) ??
         null);
 
@@ -269,6 +301,7 @@ export function App() {
         setView("profile");
       }
       await refreshUsedTags().catch(() => undefined);
+      await refreshDashboard().catch(() => undefined);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "投稿の削除に失敗しました");
     } finally {
@@ -330,6 +363,7 @@ export function App() {
       await postStory(input);
       await refreshFeed();
       await refreshUsedTags().catch(() => undefined);
+      await refreshDashboard().catch(() => undefined);
       navigate("feed");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "投稿に失敗しました");
@@ -361,7 +395,17 @@ export function App() {
     >
       {error ? <p className="error" role="alert">{error}</p> : null}
 
-      {view === "dashboard" ? <DashboardView /> : null}
+      {view === "dashboard" ? (
+        <DashboardView
+          data={dashboard}
+          loading={dashboardLoading}
+          error={dashboardError}
+          onCompose={() => navigate("compose")}
+          onFeed={() => navigate("feed")}
+          onOpenDetail={openDetail}
+          onHashtag={(tag) => void openHashtag(tag)}
+        />
+      ) : null}
 
       {view === "feed" ? (
         <FeedView

@@ -33,6 +33,12 @@ import {
   deleteOwnStory,
   StoryForbiddenError,
 } from "./factors/deleteOwnStory";
+import { dashboardStats } from "./factors/dashboardStats";
+import {
+  daysAgoIso,
+  hoursAgoIso,
+  listTopicTags,
+} from "./factors/listTopicTags";
 import { loadTagsByStoryIds } from "./factors/loadTagsByStoryIds";
 import {
   createOAuthState,
@@ -112,6 +118,24 @@ app.get("/health", async (c) => {
   await c.env.DB.prepare("SELECT 1 AS ok").first();
   return c.json({ ok: true });
 });
+
+/** Dashboard aggregates (counts · topic windows · recent stories). */
+app.get("/dashboard", async (c) => {
+  const [stats, day, week, month, recentRows] = await Promise.all([
+    dashboardStats(c.env.DB),
+    listTopicTags(c.env.DB, hoursAgoIso(24), 5),
+    listTopicTags(c.env.DB, daysAgoIso(7), 5),
+    listTopicTags(c.env.DB, daysAgoIso(30), 5),
+    listByCreatedAtDesc(c.env.DB, 5),
+  ]);
+  const recent = await toPublicItems(c.env.DB, recentRows);
+  return c.json({
+    stats,
+    recent,
+    topics: { day, week, month },
+  });
+});
+
 
 /** Login start — redirects to GitHub (IdP details stay server-side). */
 app.get("/auth/github", async (c) => {

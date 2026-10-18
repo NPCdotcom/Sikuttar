@@ -1,5 +1,6 @@
 import {
   withDefaultCounts,
+  type DashboardPayload,
   type PublicStory,
   type ReactionKind,
   type SecretaryAskResult,
@@ -27,6 +28,23 @@ export async function fetchUsedTags(): Promise<string[]> {
   }
   const data = (await res.json()) as { items: string[] };
   return data.items ?? [];
+}
+
+export async function fetchDashboard(): Promise<DashboardPayload> {
+  const res = await fetch("/dashboard", { credentials: "include" });
+  if (!res.ok) {
+    throw new Error(await readError(res, "ダッシュボードの取得に失敗しました"));
+  }
+  const data = (await res.json()) as DashboardPayload;
+  return {
+    stats: data.stats,
+    recent: (data.recent ?? []).map(withDefaultCounts),
+    topics: {
+      day: data.topics?.day ?? [],
+      week: data.topics?.week ?? [],
+      month: data.topics?.month ?? [],
+    },
+  };
 }
 
 export async function fetchStories(tag?: string | null): Promise<PublicStory[]> {
