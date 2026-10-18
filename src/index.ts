@@ -396,8 +396,8 @@ app.post("/stories", async (c) => {
 app.get("/stories", async (c) => {
   const tag = c.req.query("tag")?.trim();
   const rows = tag
-    ? await listByTag(c.env.DB, tag, 50)
-    : await listByCreatedAtDesc(c.env.DB, 50);
+    ? await listByTag(c.env.DB, tag, 100)
+    : await listByCreatedAtDesc(c.env.DB, 100);
   const items = await toPublicItems(c.env.DB, rows);
   return c.json({ items });
 });

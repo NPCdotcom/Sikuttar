@@ -31,3 +31,17 @@ export function storyTextForSimilarity(input: {
     .filter(Boolean)
     .join(" ");
 }
+
+/** Body/situation/cause plus classification tags for token scoring. */
+export function storyTextForSimilarityWithTags(
+  input: {
+    body: string;
+    situation: string | null;
+    cause: string | null;
+  },
+  tags: string[] = [],
+): string {
+  const base = storyTextForSimilarity(input);
+  const tagPart = tags.map((t) => t.trim()).filter(Boolean).join(" ");
+  return [base, tagPart].filter(Boolean).join(" ");
+}

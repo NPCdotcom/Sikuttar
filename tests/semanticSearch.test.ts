@@ -66,10 +66,15 @@ describe("fallbackTokenSearch", () => {
       story("c", "本番デプロイ失敗の反省", "2026-10-17T03:00:00.000Z"),
     ];
     const { db, prepare } = mockDbWithStories(rows);
-    // first prepare: list stories; second: reaction counts
+    // list stories → tags → reaction counts
     prepare.mockReturnValueOnce({
       bind: vi.fn().mockReturnValue({
         all: vi.fn().mockResolvedValue({ results: rows }),
+      }),
+    });
+    prepare.mockReturnValueOnce({
+      bind: vi.fn().mockReturnValue({
+        all: vi.fn().mockResolvedValue({ results: [] }),
       }),
     });
     prepare.mockReturnValueOnce({
@@ -101,6 +106,11 @@ describe("fallbackTokenSearch", () => {
     prepare.mockReturnValueOnce({
       bind: vi.fn().mockReturnValue({
         all: vi.fn().mockResolvedValue({ results: rows }),
+      }),
+    });
+    prepare.mockReturnValueOnce({
+      bind: vi.fn().mockReturnValue({
+        all: vi.fn().mockResolvedValue({ results: [] }),
       }),
     });
     prepare.mockReturnValueOnce({
@@ -149,16 +159,16 @@ describe("searchStories", () => {
   it("uses fallback when SEMANTIC_SEARCH is fallback", async () => {
     const rows = [story("a", "デプロイ失敗")];
     const prepare = vi.fn();
-    prepare.mockReturnValueOnce({
-      bind: vi.fn().mockReturnValue({
-        all: vi.fn().mockResolvedValue({ results: rows }),
-      }),
-    });
-    prepare.mockReturnValueOnce({
-      bind: vi.fn().mockReturnValue({
-        all: vi.fn().mockResolvedValue({ results: [] }),
-      }),
-    });
+    // list → tags → reactions
+    for (let i = 0; i < 3; i++) {
+      prepare.mockReturnValueOnce({
+        bind: vi.fn().mockReturnValue({
+          all: vi
+            .fn()
+            .mockResolvedValue({ results: i === 0 ? rows : [] }),
+        }),
+      });
+    }
     const env: Env = {
       DB: { prepare } as unknown as D1Database,
       SEMANTIC_SEARCH: "fallback",
@@ -170,16 +180,15 @@ describe("searchStories", () => {
   it("falls back when vectorize flag but unbound", async () => {
     const rows = [story("a", "テスト失敗")];
     const prepare = vi.fn();
-    prepare.mockReturnValueOnce({
-      bind: vi.fn().mockReturnValue({
-        all: vi.fn().mockResolvedValue({ results: rows }),
-      }),
-    });
-    prepare.mockReturnValueOnce({
-      bind: vi.fn().mockReturnValue({
-        all: vi.fn().mockResolvedValue({ results: [] }),
-      }),
-    });
+    for (let i = 0; i < 3; i++) {
+      prepare.mockReturnValueOnce({
+        bind: vi.fn().mockReturnValue({
+          all: vi
+            .fn()
+            .mockResolvedValue({ results: i === 0 ? rows : [] }),
+        }),
+      });
+    }
     const env: Env = {
       DB: { prepare } as unknown as D1Database,
       SEMANTIC_SEARCH: "vectorize",

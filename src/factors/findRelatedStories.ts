@@ -1,5 +1,6 @@
 import { countPublicReactions } from "./countPublicReactions";
 import { listByCreatedAtDesc, type StoryRow } from "./listByCreatedAtDesc";
+import { loadTagsByStoryIds } from "./loadTagsByStoryIds";
 import { StoryNotFoundError } from "./persistReaction";
 import {
   applyWakaruBoost,
@@ -7,7 +8,7 @@ import {
   scoreTokenMatch,
 } from "./scoreStorySimilarity";
 import {
-  storyTextForSimilarity,
+  storyTextForSimilarityWithTags,
   tokenizeForSimilarity,
 } from "./tokenizeForSimilarity";
 
@@ -38,16 +39,20 @@ export async function findRelatedStories(
     return [];
   }
 
+  const allIds = [query.id, ...others.map((c) => c.id)];
+  const tagsMap = await loadTagsByStoryIds(db, allIds);
   const countsMap = await countPublicReactions(
     db,
     others.map((c) => c.id),
   );
-  const queryTokens = tokenizeForSimilarity(storyTextForSimilarity(query));
+  const queryTokens = tokenizeForSimilarity(
+    storyTextForSimilarityWithTags(query, tagsMap.get(query.id) ?? []),
+  );
 
   const scored: RelatedHit[] = others
     .map((row) => {
       const candidateTokens = tokenizeForSimilarity(
-        storyTextForSimilarity(row),
+        storyTextForSimilarityWithTags(row, tagsMap.get(row.id) ?? []),
       );
       if (!passesTokenMatchFloor(queryTokens, candidateTokens)) {
         return null;

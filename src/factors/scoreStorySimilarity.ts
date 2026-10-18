@@ -24,7 +24,7 @@ export function scoreQueryCoverage(
 
 /**
  * Hybrid token match: coverage-weighted (cuts weak CJK-bigram noise).
- * base = 0.6 * coverage + 0.4 * jaccard
+ * base = 0.7 * coverage + 0.3 * jaccard
  */
 export function scoreTokenMatch(
   queryTokens: Set<string>,
@@ -32,11 +32,13 @@ export function scoreTokenMatch(
 ): number {
   const coverage = scoreQueryCoverage(queryTokens, candidateTokens);
   const jaccard = scoreStorySimilarity(queryTokens, candidateTokens);
-  return 0.6 * coverage + 0.4 * jaccard;
+  return 0.7 * coverage + 0.3 * jaccard;
 }
 
 /**
- * Drop empty intersection; for |Q| >= 3 also require coverage >= 0.2.
+ * Drop empty intersection.
+ * |Q| <= 2: require full query coverage (cuts weak bigram noise).
+ * |Q| >= 3: require coverage >= 0.2.
  */
 export function passesTokenMatchFloor(
   queryTokens: Set<string>,
@@ -46,10 +48,11 @@ export function passesTokenMatchFloor(
   if (intersection === 0) {
     return false;
   }
-  if (queryTokens.size >= 3) {
-    return scoreQueryCoverage(queryTokens, candidateTokens) >= 0.2;
+  const coverage = scoreQueryCoverage(queryTokens, candidateTokens);
+  if (queryTokens.size <= 2) {
+    return coverage >= 1;
   }
-  return true;
+  return coverage >= 0.2;
 }
 
 function countIntersection(a: Set<string>, b: Set<string>): number {

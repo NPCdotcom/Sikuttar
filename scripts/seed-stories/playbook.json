@@ -1,0 +1,1353 @@
+{
+  "version": 1,
+  "created": "2026-10-18",
+  "goal": {
+    "total_posts": 100,
+    "prod_existing": 8,
+    "note": "本番投入は別手順。既定は dry-run。"
+  },
+  "policy": {
+    "no_prod_by_default": true,
+    "paraphrase_only": true,
+    "sources": [
+      "https://zenn.dev",
+      "https://qiita.com"
+    ],
+    "tag_vocabulary": [
+      "インシデント",
+      "デプロイ",
+      "テスト",
+      "コミュニケーション",
+      "見積もり",
+      "オンボーディング",
+      "レビュー"
+    ]
+  },
+  "stats": {
+    "total": 100,
+    "paraphrase": 100,
+    "title_draft": 0,
+    "needs_review": 0
+  },
+  "stories": [
+    {
+      "id": "c01",
+      "source": "https://zenn.dev/torun225/articles/yarakashi-2021-advent",
+      "source_title": "サーバを取り違えて再起動した話",
+      "body": "夜勤明けの障害対応で、監視画面の色だけ見て「障害側」だと思ったサーバを再起動したら稼働系だった。二次障害が出かけたが系切替で業務影響はほぼ無し。アラーム詳細を読まずアイコン色で判断したのが敗因。",
+      "situation": "デュープレックス構成の本番障害対応中（夜勤明け）",
+      "cause": "監視表示の誤読と手順・表示のズレ",
+      "tags": [
+        "インシデント",
+        "オンボーディング"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c02",
+      "source": "https://zenn.dev/kazutosakagami/articles/78d1649389c868",
+      "source_title": "本番DBのマスターデータを全行ぶっとばすやらかし",
+      "body": "本番マスタのJSON列更新中、スクリプト誤作動で全行を空更新。コアタイムに緊急メンテ。スナップショット復旧に約1時間。DEV確認とトランザクションを省略していた。",
+      "situation": "本番マスタデータ列の一括更新",
+      "cause": "作業スクリプト誤UPDATEと検証省略",
+      "tags": [
+        "インシデント",
+        "デプロイ",
+        "テスト"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c03",
+      "source": "https://zenn.dev/ikuzus_atyu/articles/96a1dd8146f1ff",
+      "source_title": "本番リリースで3回連続失敗した詳細",
+      "body": "DNS切替リリースが3回連続失敗。HTTP/1.1検証×本番HTTP/2、リアルタイム集計の負荷、CDNコールドスタート。4回目で成功。",
+      "situation": "大規模移行後の本番DNS切替",
+      "cause": "環境差分と負荷・キャッシュ想定不足",
+      "tags": [
+        "デプロイ",
+        "テスト",
+        "インシデント"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c04",
+      "source": "https://zenn.dev/ak7/articles/cd693ec92071cc",
+      "source_title": "本番APIが突然 500 エラーになった日の話",
+      "body": "デプロイ無しなのにAPIが全件500。原因は別PJの共通SG変更でDB疎通遮断。「自分たちは変えていない」思い込みで約35分。",
+      "situation": "外部連携APIの突発500",
+      "cause": "共通インフラ変更と監視のギャップ",
+      "tags": [
+        "インシデント",
+        "コミュニケーション"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c05",
+      "source": "https://qiita.com/saoyagi2/items/458a2b77d79def607987",
+      "source_title": "スロークエリを大量発生させてサービスを落とした話",
+      "body": "お勧め改修リリース後、キャッシュ一括クリアで数万スロークエリが同時発火しDBダウン。切り戻しで約10分復旧。検証DBがスカスカだった。",
+      "situation": "お勧め投稿バッチの本番実行",
+      "cause": "重いクエリ×キャッシュ全消しと負荷試験不足",
+      "tags": [
+        "インシデント",
+        "テスト",
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c06",
+      "source": "https://qiita.com/bushiyama/items/54762bac77495572396d",
+      "source_title": "ディレクトリの深淵を覗くとき、rmすると危ないのだ",
+      "body": "本番SSHでゴミっぽい test~ をrmしたらクラスタ監視ファイルだった。フェイルオーバーと顧客通知まで飛んだ。",
+      "situation": "本番サーバの不要ファイル整理",
+      "cause": "カレントDIRと監視用途の未確認rm",
+      "tags": [
+        "インシデント",
+        "オンボーディング"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c07",
+      "source": "https://qiita.com/358TECH-CAMP/items/cc6749f70737bb1647cf",
+      "source_title": "ローカルLGTMでも2回目のデプロイでできず",
+      "body": "ローカルでは動くのに本番でPendingMigrationError。マイグレーションをrollbackせず削除し履歴と実体が不整合に。",
+      "situation": "Railsの2回目以降デプロイ",
+      "cause": "マイグレーション物理削除とローカル固有DB状態",
+      "tags": [
+        "デプロイ",
+        "テスト"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c08",
+      "source": "https://qiita.com/t_komiya/items/8d7fd3f68db7cad53206",
+      "source_title": "スロークエリで本番サーバーをダウンさせ、大混乱を巻き起こした話",
+      "body": "タイトリリース当日、本番確認後にスロークエリでサーバダウン。焦りで負荷検証を飛ばしたのが本質。",
+      "situation": "新規PJの本番リリース当日",
+      "cause": "スケジュール圧による負荷検証不足",
+      "tags": [
+        "見積もり",
+        "テスト",
+        "インシデント"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c09",
+      "source": "https://zenn.dev/yutakatay/articles/yarakashi-reboot",
+      "source_title": "俺TUEEE系エンジニアが本番サーバーを0.1秒で落とした話",
+      "body": "ローカル再起動のつもりで sudo reboot を打ったら、開いていたのが本番SSHだった。プロンプト差はあったが見た目が弱く、慣れた手癖で撃った。",
+      "situation": "作業キリでのクライアント再起動つもり",
+      "cause": "SSHセッション取り違えと目立たない本番プロンプト",
+      "tags": [
+        "インシデント",
+        "オンボーディング"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c10",
+      "source": "https://zenn.dev/carenet/articles/recovering-from-bigquery-dataset-deletion",
+      "source_title": "BigQueryの本番データがすべて消えた日",
+      "body": "テスト初期化コードが本番データセット削除に向いてしまった。UNDROPは同名再作成で使えず、タイムトラベル+bq cpでテーブル単位復旧。",
+      "situation": "共有GCPプロジェクトのBigQuery本番",
+      "cause": "テストの向き先設定ミスと過剰権限",
+      "tags": [
+        "インシデント",
+        "テスト"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c11",
+      "source": "https://qiita.com/YujiSoftware/items/7baec688d046796264f9",
+      "source_title": "SELECT文で本番環境を落としたお話",
+      "body": "調査用に BEGIN+SELECT を本番で張りっぱなしにしたら、別処理の LOCK TABLE と競合しコネクション枯渇でダウン。",
+      "situation": "本番DBでの調査SELECT",
+      "cause": "トランザクション放置と強いテーブルロックの競合",
+      "tags": [
+        "インシデント",
+        "レビュー"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c12",
+      "source": "https://zenn.dev/mnonamer/articles/yarakashi-2025-eos-with-10k-au",
+      "source_title": "うっかりミスでアクティブユーザー1万人超えのサービスをサ終させた話",
+      "body": "過負荷対応の最適化1コミットが逆に負荷を爆発させ、個人サービスのサ終に至った。病み上がり・レビュー無し・テスト不足が重なった。",
+      "situation": "個人開発サービスの過負荷対応",
+      "cause": "レビュー無し最適化ミスと不十分なテスト",
+      "tags": [
+        "インシデント",
+        "レビュー",
+        "テスト"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c13",
+      "source": "https://zenn.dev/sohosai/articles/9ea1ec0e844232",
+      "source_title": "間違って電源ぶち抜いてしまい、学園祭の全配信システムを止めた話",
+      "body": "配信本番中に電源タップを足で引っ掛け、コアスイッチ一式が再起動。約10分配信停止。冗長電源を「同じ系統だから」と接続していなかった。",
+      "situation": "学園祭生配信インフラ運用中",
+      "cause": "物理ケーブル事故と冗長電源未接続",
+      "tags": [
+        "インシデント",
+        "見積もり"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c14",
+      "source": "https://zenn.dev/nekihcom/articles/c73314a7395b7d",
+      "source_title": "思い込みが招いたサービス稼働停止",
+      "body": "別PJの開発環境だと思って main にデプロイしたら、そのPJでは main=本番だった。同顧客でもブランチ規約が違い、約1時間サービス停止。",
+      "situation": "同一顧客・別システムの作業",
+      "cause": "ブランチ運用の思い込み確認不足",
+      "tags": [
+        "デプロイ",
+        "コミュニケーション",
+        "オンボーディング"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c15",
+      "source": "https://zenn.dev/team_soda/articles/1fa98ed3e23ade",
+      "source_title": "開発途中の機能を公開してしまって落ち込んだ話",
+      "body": "Feature toggle の Remote Config 条件を誤り、未完成検索機能が一部ユーザーに露出。設定修正で約20分で復旧。",
+      "situation": "長期間Feature toggle開発のリリース",
+      "cause": "トグル条件の設定誤りと手順の仕組み不足",
+      "tags": [
+        "デプロイ",
+        "テスト",
+        "レビュー"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "c16",
+      "source": "https://zenn.dev/neon_lab/books/12c552472373b5/viewer/ce14de",
+      "source_title": "GitLab本番データベース削除事故（教材要約）",
+      "body": "疲れた深夜運用でターミナル取り違えの rm -rf。バックアップは空ファイルばかりで検証不足が露呈。偶然のスナップショットで復旧。",
+      "situation": "深夜のDBレプリカ復旧作業",
+      "cause": "破壊コマンドのホスト未確認とバックアップ未検証",
+      "tags": [
+        "インシデント",
+        "レビュー"
+      ],
+      "fidelity": "paraphrase"
+    },
+    {
+      "id": "r001",
+      "source_title": "本番環境でsudo yum updateしてサービスが動かなくなった",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "本番で sudo yum update を流したら依存が壊れ、サービスが起動しなくなった。検証環境での差分確認と、本番更新の段階的適用が足りなかった。",
+      "situation": "本番サーバのパッケージ更新作業",
+      "cause": "本番での無計画な yum update と依存破壊の未検証",
+      "tags": [
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r002",
+      "source_title": "本番でTableを1つDeleteしてしまいON DELETE CASCADEでさらに4つTable dataが消えた話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "本番でテーブルを1つ削除したつもりが、CASCADE で関連4テーブルのデータまで消えた。制約と依存図を事前に洗わず実行した。",
+      "situation": "本番DBでのテーブル削除作業",
+      "cause": "ON DELETE CASCADE の影響範囲を見落とした",
+      "tags": [
+        "インシデント",
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r003",
+      "source_title": "[中高生向け]アプリゲームでお詫びのアイテムを配った話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "お詫びアイテム配布で想定外の付与や重複が起き、運用が炎上した。配布ジョブの上限・冪等・ロールバック手順を先に固めるべきだった。",
+      "situation": "ゲーム運営のお詫び配布",
+      "cause": "配布条件・件数・冪等の設計不足",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r004",
+      "source_title": "本番環境で動作している（はずの）selectを叩いてサービスを落とした話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "本番で『動いているはず』の SELECT を叩いたらロックや負荷でサービスが落ちた。読み取り専用でも本番では実行計画とタイムアウトを見る必要がある。",
+      "situation": "本番DBでの調査クエリ",
+      "cause": "重い SELECT / ロック競合の未考慮",
+      "tags": [
+        "デプロイ",
+        "テスト"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r005",
+      "source_title": "APIの向き先を間違えたままでリリースしたらTwitterトレンドに載った話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "APIの向き先を誤ったままリリースし、障害が拡散してSNSトレンド入りした。設定の環境分離とリリース前の疎通チェックが抜けていた。",
+      "situation": "外部API連携の本番リリース",
+      "cause": "環境ごとのエンドポイント取り違え",
+      "tags": [
+        "デプロイ",
+        "コミュニケーション"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r006",
+      "source_title": "管理者用初期化URLを踏んでWebサービスのデータをふっとばした話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "管理者用初期化URLを誤って踏み、Webサービスのデータを消した。破壊操作は認証・確認・監査ログを三重にすべきだった。",
+      "situation": "管理用メンテナンスURLの誤操作",
+      "cause": "危険操作URLの露出と確認ダイアログ不足",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r007",
+      "source_title": "とあるテーブルの中身を一括更新した話から学ぶPITR",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "テーブル一括更新で想定外のデータ破壊が起き、PITRで戻すことになった。更新前のスナップショットとトランザクション確認を省略していた。",
+      "situation": "本番テーブルの一括更新",
+      "cause": "更新前バックアップ／PITR手順の未準備",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r008",
+      "source_title": "コントローラーが故障したraid5ディスク上のDBバックアップはどこに格納されていたか",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "RAID故障対応で、バックアップが壊れたディスク上にあったことに気づき復旧が難航した。バックアップは障害ドメインを分けるのが前提だった。",
+      "situation": "障害ディスク上のバックアップ配置確認",
+      "cause": "バックアップ媒体と障害箇所の同居",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r009",
+      "source_title": "クラスタのノード欠損を復旧しようとしてクラスタを丸ごと落とした話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "ノード欠損を直そうとして操作を誤り、クラスタごと落とした。クォーラムと手順書の確認を飛ばし、単独判断で進めた。",
+      "situation": "クラスタノード欠損の復旧作業",
+      "cause": "復旧手順の取り違えでクラスタ全体を停止",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r010",
+      "source_title": "開発中プログラムを半年早く本番環境に上げちゃった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "開発中のプログラムが半年早く本番に乗ってしまった。ブランチ保護とフィーチャーフラグが無く、マージ＝公開になっていた。",
+      "situation": "未完成機能の本番反映",
+      "cause": "リリースゲート／フラグの欠如",
+      "tags": [
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r011",
+      "source_title": "ペイ・ガガーリン「コンソールは白かった」",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "本番コンソールで操作中に想定外の状態（白い画面）に陥り、サービス影響が出た。本番コンソールは原則禁止、必要な操作はIaCとレビュー経由にすべきだった。",
+      "situation": "本番コンソール操作中の真っ白画面／誤操作",
+      "cause": "本番コンソールでの実験的操作",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r012",
+      "source_title": "ん？devにデプロイしたけど最新になってないな。ってprdに反映されちゃってるやんけ！事件",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "devに出したつもりが prd に反映されていた。デプロイターゲットの明示確認と、本番は別パイプラインにするルールが弱かった。",
+      "situation": "環境へのデプロイ作業",
+      "cause": "dev/prd ターゲットの取り違え",
+      "tags": [
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r013",
+      "source_title": "知らないシステムを孤立させてしまった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "よく知らないシステムを設定変更で孤立させ、周辺サービスが繋がらなくなった。変更前に依存マップとロールバック手順を取るべきだった。",
+      "situation": "未知システムのネットワーク／設定変更",
+      "cause": "依存関係を把握せず隔離してしまった",
+      "tags": [
+        "オンボーディング"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r014",
+      "source_title": "Crontab を別のユーザのもので上書きしてしまった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "crontab を編集したら別ユーザのジョブを上書きしてしまい、定期処理が止まった。ユーザ単位の確認とバックアップを怠った。",
+      "situation": "本番サーバの cron 編集",
+      "cause": "別ユーザの crontab を上書き",
+      "tags": [
+        "オンボーディング"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r015",
+      "source_title": "割れ窓を放置した人の末路",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "割れ窓を放置した結果、本番で大きな障害に育った。小さな警告やフレーキーを『後で』にし続けた文化が原因だった。",
+      "situation": "長年放置された技術的負債の本番障害",
+      "cause": "小さく見える不具合の放置",
+      "tags": [
+        "レビュー"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r016",
+      "source_title": "WebサービスのDBに関する失敗談",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "WebサービスのDB作業でデータ不整合や停止を起こした。変更は小さく、バックアップと検証環境の同等データを必須にすべきだった。",
+      "situation": "Webサービス本番DBの運用作業",
+      "cause": "スキーマ／データ操作の安全策不足",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r017",
+      "source_title": "AWSでやらかして3桁万円請求された話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "AWS設定ミスで3桁万円の請求が来た。予算アラートと権限制限、検証アカウント分離が無かった。",
+      "situation": "クラウドリソースの誤設定",
+      "cause": "コスト上限・アラーム未設定のまま実験",
+      "tags": [
+        "見積もり"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r018",
+      "source_title": "ホスティングサーバの/binディレクトリをrm -rfしてしまったおじさんの昔話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "ホストの /bin を rm -rf してしまいOSが崩壊した。本番での破壊コマンドはパス確認と dry-run、権限分離が必須だった。",
+      "situation": "本番ホストでのファイル削除",
+      "cause": "パス取り違えの破壊的 rm",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r019",
+      "source_title": "セグメント全断の土曜日 Part2",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "セグメント全断の対応中に設定を誤り、影響を広げた。変更は1つずつ、観測しながら戻せる単位で進めるべきだった。",
+      "situation": "ネットワークセグメント障害対応",
+      "cause": "切り分け中の二次障害／設定ミス",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r020",
+      "source_title": "うーーーん。語ると多いなぁーーーーー。",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『うーーーん。語ると多いなぁーーーーー。』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『うーーーん。語ると多いなぁーーーーー。』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r021",
+      "source_title": "検証環境のURLが入ったメールを本番環境のユーザーに送ってしまった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "検証環境のURLが入ったメールを本番ユーザーに送ってしまった。テンプレの環境変数と送信前プレビューが無かった。",
+      "situation": "本番ユーザーへのメール送信",
+      "cause": "検証用URL混入のテンプレ／設定ミス",
+      "tags": [
+        "デプロイ",
+        "テスト",
+        "コミュニケーション"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r022",
+      "source_title": "S3「 お゛め゛ぇ゛に゛権゛限゛ね゛ぇ゛がら゛！」",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "S3権限を誤って変更し、読み書き不能または公開状態になった。最小権限と変更のステージング確認が足りなかった。",
+      "situation": "S3バケット権限の変更",
+      "cause": "過度に閉じた／開いたACL",
+      "tags": [
+        "コミュニケーション"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r023",
+      "source_title": "惰滅のサーバ",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『惰滅のサーバ』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『惰滅のサーバ』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r024",
+      "source_title": "「接続できないって言われたんだけど？」「😱😱😱」",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『「接続できないって言われたんだけど？」「😱😱😱」』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『「接続できないって言われたんだけど？」「😱😱😱」』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r025",
+      "source_title": "某年齢制限サービス不具合で全ユーザー向け(?)に本名が晒されました。",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『某年齢制限サービス不具合で全ユーザー向け(?)に本名が晒されました。』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『某年齢制限サービス不具合で全ユーザー向け(?)に本名が晒されました。』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r026",
+      "source_title": "Firebaseを使った本番環境で誤ってユーザデータを削除してしまったお話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『Firebaseを使った本番環境で誤ってユーザデータを削除してしまったお話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『Firebaseを使った本番環境で誤ってユーザデータを削除してしまったお話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント",
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r027",
+      "source_title": "Ubuntuをアップグレードしただけなのに...",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『Ubuntuをアップグレードしただけなのに...』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『Ubuntuをアップグレードしただけなのに...』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r028",
+      "source_title": "あ、この現象、本やらアドカレで見たところだ！",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『あ、この現象、本やらアドカレで見たところだ！』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『あ、この現象、本やらアドカレで見たところだ！』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r029",
+      "source_title": "タイムリープして本番リリース直前のBIG-IPをぶっ壊した話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『タイムリープして本番リリース直前のBIG-IPをぶっ壊した話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『タイムリープして本番リリース直前のBIG-IPをぶっ壊した話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r030",
+      "source_title": "夜間作業で本番環境にログインできない！＋SES事業者としての受入体制",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『夜間作業で本番環境にログインできない！＋SES事業者としての受入体制』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『夜間作業で本番環境にログインできない！＋SES事業者としての受入体制』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r031",
+      "source_title": "本番環境に自動デプロイされるbranchにforce pushした話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『本番環境に自動デプロイされるbranchにforce pushした話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『本番環境に自動デプロイされるbranchにforce pushした話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r032",
+      "source_title": "執筆中書くかも？",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『執筆中書くかも？』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『執筆中書くかも？』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r033",
+      "source_title": "お客様のデータを先祖返りさせた話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『お客様のデータを先祖返りさせた話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『お客様のデータを先祖返りさせた話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r034",
+      "source_title": "客先のDBを間違えて削除した話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "客先DBを誤って削除した。接続バナー、読み取り専用アカウント、作業前バックアップが無かった。",
+      "situation": "客先環境でのDB作業",
+      "cause": "接続先・権限の取り違え",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r035",
+      "source_title": "スパゲティプログラムに3行追加したら決済ができなくなった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "スパゲティな決済処理に3行足したら決済不能になった。結合テストとフィーチャーフラグ無しの本番投入だった。",
+      "situation": "レガシー決済コードへの小改修",
+      "cause": "影響範囲を読まず3行追加",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r036",
+      "source_title": "コンセント配線で9万円を無駄にしかけた話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『コンセント配線で9万円を無駄にしかけた話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『コンセント配線で9万円を無駄にしかけた話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "見積もり"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r037",
+      "source_title": "メモリをモリモリにした話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『メモリをモリモリにした話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『メモリをモリモリにした話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r038",
+      "source_title": "客先本番環境のNASデータをすべてrmした事件",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『客先本番環境のNASデータをすべてrmした事件』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『客先本番環境のNASデータをすべてrmした事件』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r039",
+      "source_title": "ADサーバーが消えた日",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『ADサーバーが消えた日』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『ADサーバーが消えた日』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r040",
+      "source_title": "完了したと思っていたリプレイスに、ひそんでいた見落とし",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『完了したと思っていたリプレイスに、ひそんでいた見落とし』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『完了したと思っていたリプレイスに、ひそんでいた見落とし』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r041",
+      "source_title": "メールサーバーを爆撃して部門長宛のメールを消失させた話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "メール設定ミスでサーバを過負荷にし、重要メールを消失させた。変更はステージングで配送試験してからにすべきだった。",
+      "situation": "メールサーバ／配信設定の変更",
+      "cause": "配送ループや誤削除でメール消失",
+      "tags": [
+        "コミュニケーション"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r042",
+      "source_title": "コードミスで自社メールサーバーを受信不能にした話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『コードミスで自社メールサーバーを受信不能にした話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『コードミスで自社メールサーバーを受信不能にした話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "コミュニケーション",
+        "レビュー"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r043",
+      "source_title": "何か書きます Overwrite",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『何か書きます Overwrite』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『何か書きます Overwrite』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r044",
+      "source_title": "本番と開発を間違えた話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『本番と開発を間違えた話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『本番と開発を間違えた話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r045",
+      "source_title": "プログラムに1文字加えて本番環境のバッチ処理を4倍遅くした",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "プログラムに1文字足したら本番バッチが4倍遅くなった。微小差分でも性能回帰テストが必要だった。",
+      "situation": "本番バッチの微小改修",
+      "cause": "1文字の変更が計算量を爆発",
+      "tags": [
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r046",
+      "source_title": "誤ったバイブコーディングでOSSが3ヶ月停滞したので、リブートで復活させた全記録",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『誤ったバイブコーディングでOSSが3ヶ月停滞したので、リブートで復活させた全記録』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『誤ったバイブコーディングでOSSが3ヶ月停滞したので、リブートで復活させた全記録』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r047",
+      "source_title": "操作ミスでめちゃくちゃになり、最終的にサ終した話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『操作ミスでめちゃくちゃになり、最終的にサ終した話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『操作ミスでめちゃくちゃになり、最終的にサ終した話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r048",
+      "source_title": "自分で作ったSNSを自分で壊した話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『自分で作ったSNSを自分で壊した話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『自分で作ったSNSを自分で壊した話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r049",
+      "source_title": "おきのどくですが ファイルシステムは きえてしまいました",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『おきのどくですが ファイルシステムは きえてしまいました』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『おきのどくですが ファイルシステムは きえてしまいました』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r050",
+      "source_title": "思い出の詰まった大学サークルの記録DBをバックアップ取らずに全消しした話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "バックアップを取らず記録DBを全消しした。どんな小さく見えるDBでもスナップショットが先だった。",
+      "situation": "個人／コミュニティDBのメンテ",
+      "cause": "バックアップ無しの破壊操作",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r051",
+      "source_title": "他社の本番環境で署名検証がすり抜けクビになった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『他社の本番環境で署名検証がすり抜けクビになった話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『他社の本番環境で署名検証がすり抜けクビになった話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "デプロイ",
+        "テスト"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r052",
+      "source_title": "「実家Wi-Fi、毎日落ちる。」――実家ネットワークを“やらかし本番環境”化した中学生時代の話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『「実家Wi-Fi、毎日落ちる。」――実家ネットワークを“やらかし本番環境”化した中学生時代の話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『「実家Wi-Fi、毎日落ちる。」――実家ネットワークを“やらかし本番環境”化した中学生時代の話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r053",
+      "source_title": "他人が使うソフトを人生で初めて構築してとんでもないトラブルを2つも起こしてしまった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『他人が使うソフトを人生で初めて構築してとんでもないトラブルを2つも起こしてしまった話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『他人が使うソフトを人生で初めて構築してとんでもないトラブルを2つも起こしてしまった話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r054",
+      "source_title": "ユニプロ鯖で盛大にやらかした話とその教訓",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『ユニプロ鯖で盛大にやらかした話とその教訓』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『ユニプロ鯖で盛大にやらかした話とその教訓』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r055",
+      "source_title": "タッチパッドの誤操作で、不要なデータを移行しかけた話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『タッチパッドの誤操作で、不要なデータを移行しかけた話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『タッチパッドの誤操作で、不要なデータを移行しかけた話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r056",
+      "source_title": "間違えて顧客の本番webサーバーを止めちゃった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『間違えて顧客の本番webサーバーを止めちゃった話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『間違えて顧客の本番webサーバーを止めちゃった話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r057",
+      "source_title": "システム再起動で起動しなくなった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『システム再起動で起動しなくなった話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『システム再起動で起動しなくなった話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r058",
+      "source_title": "Slaveに更新クエリを投げてしまった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『Slaveに更新クエリを投げてしまった話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『Slaveに更新クエリを投げてしまった話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r059",
+      "source_title": "サービスの本番データベースを吹き飛ばした話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『サービスの本番データベースを吹き飛ばした話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『サービスの本番データベースを吹き飛ばした話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント",
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r060",
+      "source_title": "新卒時代にSTG環境のサーバログをふっとばした話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "管理者用初期化URLを誤って踏み、Webサービスのデータを消した。破壊操作は認証・確認・監査ログを三重にすべきだった。",
+      "situation": "管理用メンテナンスURLの誤操作",
+      "cause": "危険操作URLの露出と確認ダイアログ不足",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r061",
+      "source_title": "LBを再起動して客先のネットワークを止めた話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『LBを再起動して客先のネットワークを止めた話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『LBを再起動して客先のネットワークを止めた話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r062",
+      "source_title": "設定ファイルの変更を横着して、普段と違うテキストエディタを使った結果",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『設定ファイルの変更を横着して、普段と違うテキストエディタを使った結果』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『設定ファイルの変更を横着して、普段と違うテキストエディタを使った結果』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r063",
+      "source_title": "だれだれ？俺だ(った)よ",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『だれだれ？俺だ(った)よ』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『だれだれ？俺だ(った)よ』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r064",
+      "source_title": "最速復旧を実現し続けていた後輩",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『最速復旧を実現し続けていた後輩』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『最速復旧を実現し続けていた後輩』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r065",
+      "source_title": "本番環境のデータベースを誤って消しそうになった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『本番環境のデータベースを誤って消しそうになった話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『本番環境のデータベースを誤って消しそうになった話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント",
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r066",
+      "source_title": "その日、なぜお客様のサーバーは止まってしまったのか",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『その日、なぜお客様のサーバーは止まってしまったのか』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『その日、なぜお客様のサーバーは止まってしまったのか』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r067",
+      "source_title": "開発者ツールでテストしたら本番環境だった話 〜不正入力とバリデーションの大事さ〜",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『開発者ツールでテストしたら本番環境だった話 〜不正入力とバリデーションの大事さ〜』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『開発者ツールでテストしたら本番環境だった話 〜不正入力とバリデーションの大事さ〜』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "デプロイ",
+        "テスト"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r068",
+      "source_title": "本番サーバー数10台を空っぽにしちゃった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『本番サーバー数10台を空っぽにしちゃった話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『本番サーバー数10台を空っぽにしちゃった話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r069",
+      "source_title": "Apacheを2.2から2.4にバージョンアップしたら、Requireディレクティブでも、BASIC認証が適用されなくなってしまってた話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『Apacheを2.2から2.4にバージョンアップしたら、Requireディレクティブでも、BASIC認証が適用されなくなってしまってた話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『Apacheを2.2から2.4にバージョンアップしたら、Requireディレクティブでも、BASIC認証が適用されなくなってしまってた話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r070",
+      "source_title": "余裕だったはずの採番が最大値に到達してしまった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『余裕だったはずの採番が最大値に到達してしまった話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『余裕だったはずの採番が最大値に到達してしまった話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r071",
+      "source_title": "「今日ネットワークめっちゃ重くない？」の真犯人は私だった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『「今日ネットワークめっちゃ重くない？」の真犯人は私だった話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『「今日ネットワークめっちゃ重くない？」の真犯人は私だった話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r072",
+      "source_title": "消費税対応をミスって会社の売上を飛ばしかけた話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『消費税対応をミスって会社の売上を飛ばしかけた話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『消費税対応をミスって会社の売上を飛ばしかけた話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r073",
+      "source_title": "恐怖！どんどん消えていくファイル達とトドメを刺した私",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『恐怖！どんどん消えていくファイル達とトドメを刺した私』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『恐怖！どんどん消えていくファイル達とトドメを刺した私』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r074",
+      "source_title": "AWSリソース操作でやらかしちゃった話しと学び",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『AWSリソース操作でやらかしちゃった話しと学び』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『AWSリソース操作でやらかしちゃった話しと学び』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r075",
+      "source_title": "資材レビューのつもりが業務影響につながった話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『資材レビューのつもりが業務影響につながった話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『資材レビューのつもりが業務影響につながった話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "レビュー"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r076",
+      "source_title": "卒業発表2週間前に研究データが2回消えかけた話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『卒業発表2週間前に研究データが2回消えかけた話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『卒業発表2週間前に研究データが2回消えかけた話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r077",
+      "source_title": "たった1行のSELECT文でシステムを停止しかけた話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "本番で『動いているはず』の SELECT を叩いたらロックや負荷でサービスが落ちた。読み取り専用でも本番では実行計画とタイムアウトを見る必要がある。",
+      "situation": "本番DBでの調査クエリ",
+      "cause": "重い SELECT / ロック競合の未考慮",
+      "tags": [
+        "テスト"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r078",
+      "source_title": "ステージング環境の仕組みを知らずに自作SNSを開発してたら、URLを発見されてそのまま本番環境で開発してる話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『ステージング環境の仕組みを知らずに自作SNSを開発してたら、URLを発見されてそのまま本番環境で開発してる話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『ステージング環境の仕組みを知らずに自作SNSを開発してたら、URLを発見されてそのまま本番環境で開発してる話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "デプロイ"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r079",
+      "source_title": "godransom というデータベースマルウェアに感染した話（MySQL）",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『godransom というデータベースマルウェアに感染した話（MySQL）』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『godransom というデータベースマルウェアに感染した話（MySQL）』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r080",
+      "source_title": "ProxmoxでDBをレプリケーションして「全部消した」話",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『ProxmoxでDBをレプリケーションして「全部消した」話』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『ProxmoxでDBをレプリケーションして「全部消した」話』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r081",
+      "source_title": "GitHubの機密情報は消えない！",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『GitHubの機密情報は消えない！』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『GitHubの機密情報は消えない！』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r082",
+      "source_title": "失敗から学ぶ初心者でもわかるコードの保守性",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『失敗から学ぶ初心者でもわかるコードの保守性』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『失敗から学ぶ初心者でもわかるコードの保守性』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "レビュー"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r083",
+      "source_title": "地獄のクローラー運用 ～クラウドから自宅物理サーバーへ。しかし～",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "『地獄のクローラー運用 ～クラウドから自宅物理サーバーへ。しかし～』——公開された失敗談を短く再構成した学び。本番作業では確認手順・切り戻し・検証環境の三点セットを先に置く。詳細は出典入口を参照。",
+      "situation": "題材『地獄のクローラー運用 ～クラウドから自宅物理サーバーへ。しかし～』に近い本番／運用作業",
+      "cause": "手順確認・環境分離・影響範囲調査のいずれかが欠けた",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    },
+    {
+      "id": "r084",
+      "source_title": "新規開発したらオーバースペックだった件、原因は意外なところにあった",
+      "source": "https://qiita.com/search?q=%E3%82%84%E3%82%89%E3%81%8B%E3%81%97",
+      "body": "新規開発がオーバースペックになり、運用コストと複雑さが先に来た。要求の再確認と段階的スケールが足りなかった。",
+      "situation": "新規開発の構成選定",
+      "cause": "要件と乖離した過剰構成",
+      "tags": [
+        "インシデント"
+      ],
+      "fidelity": "paraphrase",
+      "needs_review": false
+    }
+  ],
+  "refined_at": "2026-10-18T05:53:41.598Z"
+}
