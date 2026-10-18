@@ -63,17 +63,10 @@ export function AppLayout({
             </button>
             <button
               type="button"
-              className={view === "bookmarks" ? "nav-link active" : "nav-link"}
-              onClick={() => onNavigate("bookmarks")}
-            >
-              保存一覧
-            </button>
-            <button
-              type="button"
               className={view === "profile" ? "nav-link active" : "nav-link"}
               onClick={() => onNavigate("profile")}
             >
-              属性設定
+              プロフィール
             </button>
             {sessionError ? (
               <span className="nav-muted">ログイン状態を確認できません</span>

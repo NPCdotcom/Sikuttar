@@ -380,3 +380,18 @@ body {
   text-decoration: underline;
   padding: 0;
 }
+
+.profile-hero {
+  margin-bottom: 1.25rem;
+}
+
+.profile-section {
+  margin-top: 1.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.profile-section h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
