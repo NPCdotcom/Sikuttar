@@ -1,7 +1,7 @@
 # Session navigation (every turn): .agents/memory/state/nav.yaml — see docs/PM_ROUTING.md
 
 current_phase: P6
-phase_note: "CF Free first deploy Pass (方針 A) 2026-10-18 · https://sikuttar.npcdotcom.workers.dev; Paid/Vectorize/gen-LLM next gates; GitHub OAuth production Callback pending user"
+phase_note: "CF Free Pass · totalStories=100; 2026-10-18 free-path A agreed (Vectorize/Paid/gen-LLM OOS); free improvements = D1 Jaccard + template secretary only — docs/operations/wave2/free-path-decision.md"
 
 scope_focus:
   level: H2

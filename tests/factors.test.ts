@@ -272,4 +272,12 @@ describe("similarity factors", () => {
     expect(passesTokenMatchFloor(q, weak)).toBe(false);
     expect(passesTokenMatchFloor(q, new Set(["aa", "bb", "cc"]))).toBe(true);
   });
+
+  it("requires full coverage for short queries", () => {
+    const q = new Set(["デプロイ", "失敗"]);
+    expect(passesTokenMatchFloor(q, new Set(["デプロイ", "失敗", "本番"]))).toBe(
+      true,
+    );
+    expect(passesTokenMatchFloor(q, new Set(["デプロイ", "本番"]))).toBe(false);
+  });
 });

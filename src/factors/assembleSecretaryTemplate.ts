@@ -15,6 +15,37 @@ export type AssembleSecretaryInput = {
 const INSUFFICIENT =
   "蓄積された失敗談からは、この話題について確認できる根拠が見つかりませんでした。";
 
+function normalizeSnippet(s: string): string {
+  return s.replace(/\s+/gu, " ").trim();
+}
+
+function bodySnippet(body: string, max = 80): string {
+  const t = normalizeSnippet(body);
+  if (t.length <= max) return t;
+  return `${t.slice(0, max)}…`;
+}
+
+/** Pick a solution snippet from body; skip if it duplicates the cause text. */
+function pickSolution(
+  evidence: SecretaryEvidenceItem[],
+  cause: string,
+): string {
+  const causeNorm = normalizeSnippet(cause);
+  for (const e of evidence) {
+    const snip = bodySnippet(e.body);
+    if (!snip) continue;
+    if (causeNorm && (snip === causeNorm || snip.includes(causeNorm) || causeNorm.includes(snip))) {
+      continue;
+    }
+    return snip;
+  }
+  for (const e of evidence) {
+    const snip = bodySnippet(e.body);
+    if (snip) return snip;
+  }
+  return "（解決の記述は根拠投稿から拾えませんでした）";
+}
+
 /** Fixed template + slots (ADR 0002). Caller must not invoke when evidence is empty. */
 export function assembleSecretaryTemplate(
   input: AssembleSecretaryInput,
@@ -29,10 +60,7 @@ export function assembleSecretaryTemplate(
     evidence.map((e) => e.situation?.trim()).find((s) => s) ??
     "（投稿からは特定の原因記述が見つかりませんでした）";
 
-  const solution =
-    evidence
-      .map((e) => e.situation?.trim() || e.body.trim().slice(0, 80))
-      .find((s) => s) ?? "（解決の記述は根拠投稿から拾えませんでした）";
+  const solution = pickSolution(evidence, cause);
 
   const bookmark = evidence.find((e) => e.role === "bookmark");
   const tagCounts = new Map<string, number>();
@@ -59,7 +87,7 @@ export function assembleSecretaryTemplate(
     );
   }
   if (topTag) {
-    parts.push(`${topTag}のようなタグが関連性が強いです。`);
+    parts.push(`#${topTag} の失敗談が根拠に多く含まれます。`);
   }
 
   return parts.join("");

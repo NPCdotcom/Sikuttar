@@ -9,7 +9,7 @@ updated: "2026-10-18"
 
 # Workers Paid / Vectorize ゲート
 
-親決定: [ADR 0001](../../adr/0001-cloudflare-semantic-search-cost.md) · 要素: [semantic-search](../../design/elements/semantic-search.md)
+親決定: [ADR 0001](../../adr/0001-cloudflare-semantic-search-cost.md) · 要素: [semantic-search](../../design/elements/semantic-search.md) · 無料優先: [free-path-decision.md](./free-path-decision.md)
 
 ## 原則
 
@@ -20,6 +20,7 @@ updated: "2026-10-18"
 
 - Workers Paid **未契約** · Vectorize **未作成** · `SEMANTIC_SEARCH=fallback`（Jaccard）
 - Free 公開とは **分離**（[deploy-boundary.md](./deploy-boundary.md)）。生成 LLM は [gen-llm-gate.md](./gen-llm-gate.md)
+- **2026-10-18 合意**: Vectorize は当面 **スコープ外**（課金回避 · [free-path-decision.md](./free-path-decision.md)）。ゲート通過作業に着手しない
 
 ## ゲート前（いま · やらないこと）
 

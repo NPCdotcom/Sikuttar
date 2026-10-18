@@ -9,12 +9,13 @@ updated: "2026-10-18"
 
 # 生成 LLM ゲート
 
-親決定: [ADR 0002](../../adr/0002-secretary-qa-template-only.md) · 質問 UI: E12 テンプレのみ
+親決定: [ADR 0002](../../adr/0002-secretary-qa-template-only.md) · 質問 UI: E12 テンプレのみ · 無料優先: [free-path-decision.md](./free-path-decision.md)
 
 ## 原則
 
 - **Free 初回公開では生成 LLM を入れない**（Workers AI チャット生成・講義向け生成パスは次ゲート）
 - 本番の質問（`SECRETARY_QA=on`）は **テンプレート応答のみ**（ADR 0002 維持）
+- **2026-10-18 合意**: 生成 LLM は当面スコープ外（[free-path-decision.md](./free-path-decision.md)）
 
 ## ゲート前（いま · やらないこと）
 

@@ -1,0 +1,1235 @@
+{
+  "mined_titles": [
+    {
+      "title": "本番環境でsudo yum updateしてサービスが動かなくなった",
+      "user": "maip0902",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "本番でTableを1つDeleteしてしまいON DELETE CASCADEでさらに4つTable dataが消えた話",
+      "user": "nobu0605",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "[中高生向け]アプリゲームでお詫びのアイテムを配った話",
+      "user": "j_kitayama_hoge000",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "本番環境で動作している（はずの）selectを叩いてサービスを落とした話",
+      "user": "glassmonkey",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "俺TUEEE系エンジニアが本番サーバーを0.1秒で落とした話",
+      "user": "yutkat",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "APIの向き先を間違えたままでリリースしたらTwitterトレンドに載った話",
+      "user": "namizatork",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "管理者用初期化URLを踏んでWebサービスのデータをふっとばした話",
+      "user": "HirotoKagotani",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "とあるテーブルの中身を一括更新した話から学ぶPITR",
+      "user": "madai0517",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "コントローラーが故障したraid5ディスク上のDBバックアップはどこに格納されていたか",
+      "user": "karo-jp",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "クラスタのノード欠損を復旧しようとしてクラスタを丸ごと落とした話",
+      "user": "Yutaka_Nakano",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "開発中プログラムを半年早く本番環境に上げちゃった話",
+      "user": "MA-fn",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "ペイ・ガガーリン「コンソールは白かった」",
+      "user": "pei0804",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "ん？devにデプロイしたけど最新になってないな。ってprdに反映されちゃってるやんけ！事件",
+      "user": "niwatoliver",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "知らないシステムを孤立させてしまった話",
+      "user": "sakai00kou",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "Crontab を別のユーザのもので上書きしてしまった話",
+      "user": "noritakaIzumi",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "割れ窓を放置した人の末路",
+      "user": "hoshi_kouki",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "WebサービスのDBに関する失敗談",
+      "user": "AkariKanbe",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "AWSでやらかして3桁万円請求された話",
+      "user": "kappa0923",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "ホスティングサーバの/binディレクトリをrm -rfしてしまったおじさんの昔話",
+      "user": "real_yaruo",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "セグメント全断の土曜日 Part2",
+      "user": "Words4MyRegret",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "うーーーん。語ると多いなぁーーーーー。",
+      "user": "hiro_matsuno2",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "検証環境のURLが入ったメールを本番環境のユーザーに送ってしまった話",
+      "user": "takoikatakotako",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "S3「 お゛め゛ぇ゛に゛権゛限゛ね゛ぇ゛がら゛！」",
+      "user": "tsumita7",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "惰滅のサーバ ##",
+      "user": "tosiooooooo",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "本番環境でsudo yum updateしてサービスが動かなくなった ##",
+      "user": "maip0902",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "本番でTableを1つDeleteしてしまいON DELETE CASCADEでさらに4つTable dataが消えた話 ##",
+      "user": "nobu0605",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "[中高生向け]アプリゲームでお詫びのアイテムを配った話 ##",
+      "user": "j_kitayama_hoge000",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "本番環境で動作している（はずの）selectを叩いてサービスを落とした話 ##",
+      "user": "glassmonkey",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "俺TUEEE系エンジニアが本番サーバーを0.1秒で落とした話 ##",
+      "user": "yutkat",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "APIの向き先を間違えたままでリリースしたらTwitterトレンドに載った話 ##",
+      "user": "namizatork",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "管理者用初期化URLを踏んでWebサービスのデータをふっとばした話 ##",
+      "user": "HirotoKagotani",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "とあるテーブルの中身を一括更新した話から学ぶPITR ##",
+      "user": "madai0517",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "コントローラーが故障したraid5ディスク上のDBバックアップはどこに格納されていたか ##",
+      "user": "karo-jp",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "クラスタのノード欠損を復旧しようとしてクラスタを丸ごと落とした話 ##",
+      "user": "Yutaka_Nakano",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "開発中プログラムを半年早く本番環境に上げちゃった話 ##",
+      "user": "MA-fn",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "ペイ・ガガーリン「コンソールは白かった」 ##",
+      "user": "pei0804",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "ん？devにデプロイしたけど最新になってないな。ってprdに反映されちゃってるやんけ！事件 ##",
+      "user": "niwatoliver",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "知らないシステムを孤立させてしまった話 ##",
+      "user": "sakai00kou",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "Crontab を別のユーザのもので上書きしてしまった話 ##",
+      "user": "noritakaIzumi",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "割れ窓を放置した人の末路 ##",
+      "user": "hoshi_kouki",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "WebサービスのDBに関する失敗談 ##",
+      "user": "AkariKanbe",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "AWSでやらかして3桁万円請求された話 ##",
+      "user": "kappa0923",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "ホスティングサーバの/binディレクトリをrm -rfしてしまったおじさんの昔話 ##",
+      "user": "real_yaruo",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "セグメント全断の土曜日 Part2 ##",
+      "user": "Words4MyRegret",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "うーーーん。語ると多いなぁーーーーー。 ##",
+      "user": "hiro_matsuno2",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "検証環境のURLが入ったメールを本番環境のユーザーに送ってしまった話 ##",
+      "user": "takoikatakotako",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "S3「 お゛め゛ぇ゛に゛権゛限゛ね゛ぇ゛がら゛！」 ##",
+      "user": "tsumita7",
+      "source": "1f2441e1-a776-4ca9-bca3-d982e12e00db.txt"
+    },
+    {
+      "title": "「接続できないって言われたんだけど？」「😱😱😱」",
+      "user": "wancom",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "某年齢制限サービス不具合で全ユーザー向け(?)に本名が晒されました。",
+      "user": "rompasinai",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "Firebaseを使った本番環境で誤ってユーザデータを削除してしまったお話",
+      "user": "mogmet",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "Ubuntuをアップグレードしただけなのに...",
+      "user": "tooooofu24",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "あ、この現象、本やらアドカレで見たところだ！",
+      "user": "nozomu0321",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "タイムリープして本番リリース直前のBIG-IPをぶっ壊した話",
+      "user": "sakai00kou",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "夜間作業で本番環境にログインできない！＋SES事業者としての受入体制",
+      "user": "oishi-d",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "本番環境に自動デプロイされるbranchにforce pushした話",
+      "user": "soshi_harami",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "執筆中書くかも？",
+      "user": "trompot",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "お客様のデータを先祖返りさせた話",
+      "user": "sky_t",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "「接続できないって言われたんだけど？」「😱😱😱」 ##",
+      "user": "wancom",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "某年齢制限サービス不具合で全ユーザー向け(?)に本名が晒されました。 ##",
+      "user": "rompasinai",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "Firebaseを使った本番環境で誤ってユーザデータを削除してしまったお話 ##",
+      "user": "mogmet",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "Ubuntuをアップグレードしただけなのに... ##",
+      "user": "tooooofu24",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "あ、この現象、本やらアドカレで見たところだ！ ##",
+      "user": "nozomu0321",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "タイムリープして本番リリース直前のBIG-IPをぶっ壊した話 ##",
+      "user": "sakai00kou",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "夜間作業で本番環境にログインできない！＋SES事業者としての受入体制 ##",
+      "user": "oishi-d",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "お客様のデータを先祖返りさせた話 ##",
+      "user": "sky_t",
+      "source": "36c9bca5-25b4-49c2-8e92-c7e73f4078c1.txt"
+    },
+    {
+      "title": "客先のDBを間違えて削除した話",
+      "user": "lif_yumumu",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "スパゲティプログラムに3行追加したら決済ができなくなった話",
+      "user": "ryo_s0127",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "コンセント配線で9万円を無駄にしかけた話",
+      "user": "waricoma",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "メモリをモリモリにした話",
+      "user": "namamurasub",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "客先本番環境のNASデータをすべてrmした事件",
+      "user": "iikaiki",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "ADサーバーが消えた日",
+      "user": "katohiro_fi",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "完了したと思っていたリプレイスに、ひそんでいた見落とし",
+      "user": "katokonigiry",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "メールサーバーを爆撃して部門長宛のメールを消失させた話",
+      "user": "infinity0206",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "コードミスで自社メールサーバーを受信不能にした話",
+      "user": "tampopo256",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "何か書きます Overwrite",
+      "user": "piepie1231",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "本番と開発を間違えた話",
+      "user": "okakajp_25",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "思い込みが招いたサービス稼働停止",
+      "user": "nekihcom",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "プログラムに1文字加えて本番環境のバッチ処理を4倍遅くした",
+      "user": "nfujita55a",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "誤ったバイブコーディングでOSSが3ヶ月停滞したので、リブートで復活させた全記録",
+      "user": "kako-jun",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "間違って電源ぶち抜いてしまい、学園祭の全配信システムを止めた話",
+      "user": "MaseBB",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "操作ミスでめちゃくちゃになり、最終的にサ終した話",
+      "user": "harumaki2000",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "自分で作ったSNSを自分で壊した話",
+      "user": "Ayahira_0319",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "おきのどくですが ファイルシステムは きえてしまいました",
+      "user": "papillon",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "思い出の詰まった大学サークルの記録DBをバックアップ取らずに全消しした話",
+      "user": "Tatsu1567",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "他社の本番環境で署名検証がすり抜けクビになった話",
+      "user": "ocnito",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "「実家Wi-Fi、毎日落ちる。」――実家ネットワークを“やらかし本番環境”化した中学生時代の話",
+      "user": "kizuki1749",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "他人が使うソフトを人生で初めて構築してとんでもないトラブルを2つも起こしてしまった話",
+      "user": "mpcode_dev",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "うっかりミスでアクティブユーザー1万人超えのサービスをサ終させた話",
+      "user": "sevenc-nanashi",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "客先のDBを間違えて削除した話 ##",
+      "user": "lif_yumumu",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "スパゲティプログラムに3行追加したら決済ができなくなった話 ##",
+      "user": "ryo_s0127",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "コンセント配線で9万円を無駄にしかけた話 ##",
+      "user": "waricoma",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "メモリをモリモリにした話 ##",
+      "user": "namamurasub",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "客先本番環境のNASデータをすべてrmした事件 ##",
+      "user": "iikaiki",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "ADサーバーが消えた日 ##",
+      "user": "katohiro_fi",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "完了したと思っていたリプレイスに、ひそんでいた見落とし ##",
+      "user": "katokonigiry",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "メールサーバーを爆撃して部門長宛のメールを消失させた話 ##",
+      "user": "infinity0206",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "コードミスで自社メールサーバーを受信不能にした話 ##",
+      "user": "tampopo256",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "本番と開発を間違えた話 ##",
+      "user": "okakajp_25",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "思い込みが招いたサービス稼働停止 ##",
+      "user": "nekihcom",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "プログラムに1文字加えて本番環境のバッチ処理を4倍遅くした ##",
+      "user": "nfujita55a",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "誤ったバイブコーディングでOSSが3ヶ月停滞したので、リブートで復活させた全記録 ##",
+      "user": "kako-jun",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "間違って電源ぶち抜いてしまい、学園祭の全配信システムを止めた話 ##",
+      "user": "MaseBB",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "操作ミスでめちゃくちゃになり、最終的にサ終した話 ##",
+      "user": "harumaki2000",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "自分で作ったSNSを自分で壊した話 ##",
+      "user": "Ayahira_0319",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "おきのどくですが ファイルシステムは きえてしまいました ##",
+      "user": "papillon",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "「実家Wi-Fi、毎日落ちる。」――実家ネットワークを“やらかし本番環境”化した中学生時代の話 ##",
+      "user": "kizuki1749",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "他人が使うソフトを人生で初めて構築してとんでもないトラブルを2つも起こしてしまった話 ##",
+      "user": "mpcode_dev",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "うっかりミスでアクティブユーザー1万人超えのサービスをサ終させた話 ##",
+      "user": "sevenc-nanashi",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "ユニプロ鯖で盛大にやらかした話とその教訓 ##",
+      "user": "ayane0857",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "タッチパッドの誤操作で、不要なデータを移行しかけた話 ##",
+      "user": "ajisai_engineer",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "間違えて顧客の本番webサーバーを止めちゃった話 ##",
+      "user": "nagashi_ma_w",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "システム再起動で起動しなくなった話 ##",
+      "user": "zzzzico",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "Slaveに更新クエリを投げてしまった話 ##",
+      "user": "LearWisteria",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "サービスの本番データベースを吹き飛ばした話 ##",
+      "user": "tampopo256",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "新卒時代にSTG環境のサーバログをふっとばした話 ##",
+      "user": "add2",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "LBを再起動して客先のネットワークを止めた話 ##",
+      "user": "lovablepleiad",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "設定ファイルの変更を横着して、普段と違うテキストエディタを使った結果 ##",
+      "user": "xx_mana",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "だれだれ？俺だ(った)よ ##",
+      "user": "evakichi",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "最速復旧を実現し続けていた後輩 ##",
+      "user": "poropinai1966",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "本番環境のデータベースを誤って消しそうになった話 ##",
+      "user": "tekun0701",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "その日、なぜお客様のサーバーは止まってしまったのか ##",
+      "user": "KMKZ",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "開発者ツールでテストしたら本番環境だった話 〜不正入力とバリデーションの大事さ〜 ##",
+      "user": "nprimem",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "本番サーバー数10台を空っぽにしちゃった話",
+      "user": "udon_jihanki",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "Apacheを2.2から2.4にバージョンアップしたら、Requireディレクティブでも、BASIC認証が適用されなくなってしまってた話 ##",
+      "user": "umeyon",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "余裕だったはずの採番が最大値に到達してしまった話 ##",
+      "user": "yaju",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "「今日ネットワークめっちゃ重くない？」の真犯人は私だった話 ##",
+      "user": "KoheiKushida",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "消費税対応をミスって会社の売上を飛ばしかけた話 ##",
+      "user": "kotmyn0812",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "恐怖！どんどん消えていくファイル達とトドメを刺した私 ##",
+      "user": "kizawa2020",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "AWSリソース操作でやらかしちゃった話しと学び ##",
+      "user": "yousaku",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "資材レビューのつもりが業務影響につながった話 ##",
+      "user": "inorin__62",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "卒業発表2週間前に研究データが2回消えかけた話 ##",
+      "user": "yanbaru",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "たった1行のSELECT文でシステムを停止しかけた話 ##",
+      "user": "shota0616",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "ステージング環境の仕組みを知らずに自作SNSを開発してたら、URLを発見されてそのまま本番環境で開発してる話 ##",
+      "user": "kako-jun",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "godransom というデータベースマルウェアに感染した話（MySQL） ##",
+      "user": "ysmreg1",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "ProxmoxでDBをレプリケーションして「全部消した」話 ##",
+      "user": "ysmreg1",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "GitHubの機密情報は消えない！ ##",
+      "user": "yuito_it_",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "失敗から学ぶ初心者でもわかるコードの保守性 ##",
+      "user": "ayane0857",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "地獄のクローラー運用 ～クラウドから自宅物理サーバーへ。しかし～ ##",
+      "user": "kotauchisunsun",
+      "source": "439642a0-b51e-434f-b41a-231dfe322d25.txt"
+    },
+    {
+      "title": "新規開発したらオーバースペックだった件、原因は意外なところにあった",
+      "user": "rompasinai",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "RFC2322のすゝめ",
+      "user": "ikuzak",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "アップロード画像を全消しした話",
+      "user": "tosiooooooo",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "本番サーバー60台のホスト名を全部 cat にしてしまった話",
+      "user": "yonex",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "ファイルサーバーを業務中に再起動しちゃったので経緯と原因と対策を共有します",
+      "user": "waitonly",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "ロードバランサ配下のサーバを全部切り離してサービス停止させてしまった話",
+      "user": "yuki_ink",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "ノーコード開発なのに盛大にやらかした",
+      "user": "takahiko",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "カンファレンス会場の会場ルーターを落としてしまった話",
+      "user": "notoken3331",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "突然、Google Play Console デベロッパーアカウントが停止され、アプリが全て削除された話",
+      "user": "hukusuke1007",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "サイトを停止させた話 ～慢心は敵！バックアップはゼッタイ！～",
+      "user": "benjuwan",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "正規表現ミスって一晩誰もサービスにログインできなくしてしまった話",
+      "user": "tinoji",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "Windowsの共有ドライブ6人目が弾かれる",
+      "user": "waitonly",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "Gitと本番に乖離が発生していたのに気が付かなかった話",
+      "user": "AJ_sk_show",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "一体いつから開発サーバーを触っていると錯覚していた？",
+      "user": "mahanma",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "DBeaverでやらかした話",
+      "user": "tosiooooooo",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "意図せずエラー爆撃をしてしまった話",
+      "user": "Awayume",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "すべてが私になった日",
+      "user": "rubytail",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "不用意にサーバーでアプリを起動してハングアップさせてしまった話",
+      "user": "danishi",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "ファイルサーバーのシャドウコピーを破壊した話",
+      "user": "waitonly",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "あの日見た障害の原因を僕達はまだ知らない。",
+      "user": "come25136",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "起動ディスクを消去してOSの強制バージョンダウンを余儀なくされた話",
+      "user": "Hagian",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "Docker が俺の Postgres を勝手に全世界に公開しやがって色々怒られた話",
+      "user": "isso_719",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "CDN業者にやられた話",
+      "user": "tosiooooooo",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "コンテンツ全消ししちゃった話",
+      "user": "tosiooooooo",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "早々の消費税対応",
+      "user": "danishi",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "新規開発したらオーバースペックだった件、原因は意外なところにあった ##",
+      "user": "rompasinai",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "RFC2322のすゝめ ##",
+      "user": "ikuzak",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "アップロード画像を全消しした話 ##",
+      "user": "tosiooooooo",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "本番サーバー60台のホスト名を全部 cat にしてしまった話 ##",
+      "user": "yonex",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "ファイルサーバーを業務中に再起動しちゃったので経緯と原因と対策を共有します ##",
+      "user": "waitonly",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "ロードバランサ配下のサーバを全部切り離してサービス停止させてしまった話 ##",
+      "user": "yuki_ink",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "ノーコード開発なのに盛大にやらかした ##",
+      "user": "takahiko",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "カンファレンス会場の会場ルーターを落としてしまった話 ##",
+      "user": "notoken3331",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "突然、Google Play Console デベロッパーアカウントが停止され、アプリが全て削除された話 ##",
+      "user": "hukusuke1007",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "サイトを停止させた話 ～慢心は敵！バックアップはゼッタイ！～ ##",
+      "user": "benjuwan",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "正規表現ミスって一晩誰もサービスにログインできなくしてしまった話 ##",
+      "user": "tinoji",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "Windowsの共有ドライブ6人目が弾かれる ##",
+      "user": "waitonly",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "Gitと本番に乖離が発生していたのに気が付かなかった話 ##",
+      "user": "AJ_sk_show",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "一体いつから開発サーバーを触っていると錯覚していた？ ##",
+      "user": "mahanma",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "DBeaverでやらかした話 ##",
+      "user": "tosiooooooo",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "意図せずエラー爆撃をしてしまった話 ##",
+      "user": "Awayume",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "すべてが私になった日 ##",
+      "user": "rubytail",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "不用意にサーバーでアプリを起動してハングアップさせてしまった話 ##",
+      "user": "danishi",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "ファイルサーバーのシャドウコピーを破壊した話 ##",
+      "user": "waitonly",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "あの日見た障害の原因を僕達はまだ知らない。 ##",
+      "user": "come25136",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "起動ディスクを消去してOSの強制バージョンダウンを余儀なくされた話 ##",
+      "user": "Hagian",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "Docker が俺の Postgres を勝手に全世界に公開しやがって色々怒られた話 ##",
+      "user": "isso_719",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "CDN業者にやられた話 ##",
+      "user": "tosiooooooo",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "コンテンツ全消ししちゃった話 ##",
+      "user": "tosiooooooo",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "早々の消費税対応 ##",
+      "user": "danishi",
+      "source": "5b67742e-32bb-44de-912c-25c52fba62d2.txt"
+    },
+    {
+      "title": "「webのことよく分からんから全部お任せで」は死亡フラグ",
+      "user": "benjuwan",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "絶対に離せない指",
+      "user": "poropinai1966",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "グループ会社のインターネット向け通信をできなくしてしまった。。",
+      "user": "fmt_ykhr",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "オペレーター時代に連絡役でお客さんのＮＷでループを発生させた",
+      "user": "nakatakouta216",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "全然違うSWに入って設定変更した",
+      "user": "katokonigiry",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "ロードバランサーを設置してネットワークをまるごと吹っ飛ばした",
+      "user": "nfujita55a",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "データベースを吹っ飛ばした話",
+      "user": "kawamasato",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "本番環境のYAMAHAルーターをリモートで初期化しちゃった話",
+      "user": "AKYM21",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "検証したのに冗長ルータが本番環境では切り替わらなかった話",
+      "user": "PeterNWse",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "条件付きフォワーダー設定のせいで業務停止させた話",
+      "user": "satan_engineer",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "shutdownシステムアカウントが見事に本番サーバを停止させた",
+      "user": "kitaji0306",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "意図せずオープンリレーサーバーが爆誕していた話",
+      "user": "Awayume",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "３年ぶりにかきたい",
+      "user": "kaizen_nagoya",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "既存のGitHubパーソナルアクセストークンを全て無効化した",
+      "user": "amixedcolor",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "ルート直下に謎のディレクトリを大量生産した話",
+      "user": "aiz4ryhe",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "MisskeyのDBを吹っ飛ばした時の対処法",
+      "user": "netou_kurage",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "「webのことよく分からんから全部お任せで」は死亡フラグ ##",
+      "user": "benjuwan",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "絶対に離せない指 ##",
+      "user": "poropinai1966",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "グループ会社のインターネット向け通信をできなくしてしまった。。 ##",
+      "user": "fmt_ykhr",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "オペレーター時代に連絡役でお客さんのＮＷでループを発生させた ##",
+      "user": "nakatakouta216",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "全然違うSWに入って設定変更した ##",
+      "user": "katokonigiry",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "ロードバランサーを設置してネットワークをまるごと吹っ飛ばした ##",
+      "user": "nfujita55a",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "データベースを吹っ飛ばした話 ##",
+      "user": "kawamasato",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "本番環境のYAMAHAルーターをリモートで初期化しちゃった話 ##",
+      "user": "AKYM21",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "検証したのに冗長ルータが本番環境では切り替わらなかった話 ##",
+      "user": "PeterNWse",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "条件付きフォワーダー設定のせいで業務停止させた話 ##",
+      "user": "satan_engineer",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "shutdownシステムアカウントが見事に本番サーバを停止させた ##",
+      "user": "kitaji0306",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "意図せずオープンリレーサーバーが爆誕していた話 ##",
+      "user": "Awayume",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "既存のGitHubパーソナルアクセストークンを全て無効化した ##",
+      "user": "amixedcolor",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "ルート直下に謎のディレクトリを大量生産した話 ##",
+      "user": "aiz4ryhe",
+      "source": "b8f49003-ba86-4750-aac4-0348598e0c4a.txt"
+    },
+    {
+      "title": "facebookで やらかし た話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    },
+    {
+      "title": "DBeaverで やらかし た話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    },
+    {
+      "title": "ついに やらかし たお話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    },
+    {
+      "title": "json.Unmarshal()で やらかし た話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    },
+    {
+      "title": "Gitで やらかし た話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    },
+    {
+      "title": "dotenvxの導入で やらかし た話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    },
+    {
+      "title": "新卒2年目のときに本番環境で やらかし た やらかし 話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    },
+    {
+      "title": "若手のころ やらかし た話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    },
+    {
+      "title": "git revert で やらかし た話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    },
+    {
+      "title": "やらかし デプロイを任されたが、マージされていないことに気づかずオフィス待機状態になった話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    },
+    {
+      "title": "ここでは、エンジニアなら誰もが知っている、あのコマンドの恐ろしいお話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    },
+    {
+      "title": "はじめに みなさん！プログラムファイルの管理はしっかりできていますか？ 今回は初心者がついついGitで やらかし がちな3つのケースに焦点を当てて話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    },
+    {
+      "title": "はじめに これは、４月21日17時にある就活準備中の学生が やらかし た話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    },
+    {
+      "title": "新卒エンジニア2年目の秋口に やらかし た話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    },
+    {
+      "title": "はじめに 私は個人で iOS アプリを開発 & リリースしています。 そのリリースに関する やらかし た話",
+      "user": "",
+      "source": "snapshot-2026-10-18T05-49-43-660Z-5f5y1v.log"
+    }
+  ],
+  "curated_urls": [
+    {
+      "title": "サーバを取り違えて再起動した話",
+      "url": "https://zenn.dev/torun225/articles/yarakashi-2021-advent"
+    },
+    {
+      "title": "本番DBのマスターデータを全行ぶっとばすやらかし",
+      "url": "https://zenn.dev/kazutosakagami/articles/78d1649389c868"
+    },
+    {
+      "title": "本番リリースで3回連続失敗した詳細",
+      "url": "https://zenn.dev/ikuzus_atyu/articles/96a1dd8146f1ff"
+    },
+    {
+      "title": "本番APIが突然 500 エラーになった日の話",
+      "url": "https://zenn.dev/ak7/articles/cd693ec92071cc"
+    },
+    {
+      "title": "スロークエリを大量発生させてサービスを落とした話",
+      "url": "https://qiita.com/saoyagi2/items/458a2b77d79def607987"
+    },
+    {
+      "title": "ディレクトリの深淵を覗くとき、rmすると危ないのだ",
+      "url": "https://qiita.com/bushiyama/items/54762bac77495572396d"
+    },
+    {
+      "title": "ローカルLGTMでも2回目のデプロイでできず",
+      "url": "https://qiita.com/358TECH-CAMP/items/cc6749f70737bb1647cf"
+    },
+    {
+      "title": "スロークエリで本番サーバーをダウンさせ、大混乱を巻き起こした話",
+      "url": "https://qiita.com/t_komiya/items/8d7fd3f68db7cad53206"
+    },
+    {
+      "title": "俺TUEEE系エンジニアが本番サーバーを0.1秒で落とした話",
+      "url": "https://zenn.dev/yutakatay/articles/yarakashi-reboot"
+    },
+    {
+      "title": "BigQueryの本番データがすべて消えた日",
+      "url": "https://zenn.dev/carenet/articles/recovering-from-bigquery-dataset-deletion"
+    },
+    {
+      "title": "SELECT文で本番環境を落としたお話",
+      "url": "https://qiita.com/YujiSoftware/items/7baec688d046796264f9"
+    },
+    {
+      "title": "うっかりミスでアクティブユーザー1万人超えのサービスをサ終させた話",
+      "url": "https://zenn.dev/mnonamer/articles/yarakashi-2025-eos-with-10k-au"
+    },
+    {
+      "title": "間違って電源ぶち抜いてしまい、学園祭の全配信システムを止めた話",
+      "url": "https://zenn.dev/sohosai/articles/9ea1ec0e844232"
+    },
+    {
+      "title": "思い込みが招いたサービス稼働停止",
+      "url": "https://zenn.dev/nekihcom/articles/c73314a7395b7d"
+    },
+    {
+      "title": "開発途中の機能を公開してしまって落ち込んだ話",
+      "url": "https://zenn.dev/team_soda/articles/1fa98ed3e23ade"
+    },
+    {
+      "title": "GitLab本番データベース削除事故（教材要約）",
+      "url": "https://zenn.dev/neon_lab/books/12c552472373b5/viewer/ce14de"
+    }
+  ]
+}

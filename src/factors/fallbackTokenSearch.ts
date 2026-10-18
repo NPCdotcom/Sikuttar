@@ -1,12 +1,13 @@
 import { countPublicReactions } from "./countPublicReactions";
 import { listByCreatedAtDesc, type StoryRow } from "./listByCreatedAtDesc";
+import { loadTagsByStoryIds } from "./loadTagsByStoryIds";
 import {
   applyWakaruBoost,
   passesTokenMatchFloor,
   scoreTokenMatch,
 } from "./scoreStorySimilarity";
 import {
-  storyTextForSimilarity,
+  storyTextForSimilarityWithTags,
   tokenizeForSimilarity,
 } from "./tokenizeForSimilarity";
 
@@ -33,6 +34,10 @@ export async function fallbackTokenSearch(
     return [];
   }
 
+  const tagsMap = await loadTagsByStoryIds(
+    db,
+    candidates.map((c) => c.id),
+  );
   const countsMap = await countPublicReactions(
     db,
     candidates.map((c) => c.id),
@@ -41,7 +46,7 @@ export async function fallbackTokenSearch(
   const scored = candidates
     .map((row) => {
       const candidateTokens = tokenizeForSimilarity(
-        storyTextForSimilarity(row),
+        storyTextForSimilarityWithTags(row, tagsMap.get(row.id) ?? []),
       );
       if (!passesTokenMatchFloor(queryTokens, candidateTokens)) {
         return null;
