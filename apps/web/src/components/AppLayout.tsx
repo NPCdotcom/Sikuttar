@@ -56,6 +56,13 @@ export function AppLayout({
             </button>
             <button
               type="button"
+              className={view === "assistant" ? "nav-link active" : "nav-link"}
+              onClick={() => onNavigate("assistant")}
+            >
+              質問
+            </button>
+            <button
+              type="button"
               className={view === "bookmarks" ? "nav-link active" : "nav-link"}
               onClick={() => onNavigate("bookmarks")}
             >

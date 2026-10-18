@@ -1,4 +1,9 @@
-import { withDefaultCounts, type PublicStory, type ReactionKind } from "./types";
+import {
+  withDefaultCounts,
+  type PublicStory,
+  type ReactionKind,
+  type SecretaryAskResult,
+} from "./types";
 
 async function readError(res: Response, fallback: string): Promise<string> {
   const payload = (await res.json().catch(() => null)) as { error?: string } | null;
@@ -157,4 +162,28 @@ export async function fetchSearch(q: string): Promise<PublicStory[]> {
   }
   const data = (await res.json()) as { items: PublicStory[] };
   return data.items.map(withDefaultCounts);
+}
+
+export async function askSecretary(input: {
+  question: string;
+  seedStoryId?: string;
+}): Promise<SecretaryAskResult> {
+  const res = await fetch("/assistant/ask", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      question: input.question,
+      seed_story_id: input.seedStoryId || undefined,
+    }),
+  });
+  if (res.status === 404) {
+    throw new Error(
+      "質問機能は現在オフです（サーバの SECRETARY_QA=on が必要です）",
+    );
+  }
+  if (!res.ok) {
+    throw new Error(await readError(res, "質問の送信に失敗しました"));
+  }
+  return (await res.json()) as SecretaryAskResult;
 }

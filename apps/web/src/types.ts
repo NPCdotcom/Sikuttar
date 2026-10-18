@@ -19,7 +19,21 @@ export type AppView =
   | "detail"
   | "profile"
   | "bookmarks"
-  | "search";
+  | "search"
+  | "assistant";
+
+export type SecretaryEvidence = {
+  id: string;
+  body: string;
+  role: "corpus" | "bookmark";
+  tags: string[];
+};
+
+export type SecretaryAskResult = {
+  answer: string;
+  evidence: SecretaryEvidence[];
+  attribute_hint?: string;
+};
 export type ReactionKind = "wakaru" | "reference";
 
 export function withDefaultCounts(item: PublicStory): PublicStory {

@@ -7,6 +7,8 @@ export type Env = {
   OAUTH_SUCCESS_REDIRECT?: string;
   /** `vectorize` | `fallback` (default fallback until Paid/Vectorize gate). */
   SEMANTIC_SEARCH?: string;
+  /** `on` | `off` (default off). Secretary Q&A prototype gate. */
+  SECRETARY_QA?: string;
   /** Workers AI binding — optional until vectorize gate. */
   AI?: Ai;
   /** Vectorize index binding — optional until vectorize gate. */

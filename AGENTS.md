@@ -62,12 +62,20 @@ User chat: **Japanese** · Kit canon: **English** — [LANGUAGE_POLICY.md](.agen
 - 作業チャットのスコープを分ける（例: チャーター完成専用チャットのあと、続きの P0 は別チャット）
 - キットに未登録の手続きコードネームを捏造・追従しない；誤りなら訂正して実在スキル／ドキュメントで進める
 - 外部ドキュメント（例: 非公開 HackMD）が読めないときは推測せず、Markdown の貼付やエクスポートを求める
+- P3+ 設計は charter の構造（§8 認識単位・着手順・§7 スタンス）に沿わせる
+- OAuth の Client ID / Secret は GitHub に載せず、Slack 等の非公開チャネルで共有する
+- 共同者の不完全な PR は構造・構文・アルゴリズム／アーキテクチャをレビューしたうえで、こちらで完遂する進め方を好む
+- デプロイ依存手前までを区切りにし、方針 B では審査・改修まで行いデプロイは別フェーズとする
 
 ## Learned Workspace Facts
 
 - H0 charter は `docs/design/product/charter.md`（`status: agreed` · 2026-10-11）。章立ては EnTeX プロジェクト概要型（§0–§11 · Facts/Assumptions · `>` 対話）
 - Sikuttar（シクッター）は失敗談共有×集合知の学習向け SNS 的 Web。キャッチコピーは「しくじったら、シクッター。」
-- リモートは `github.com/NPCdotcom/Sikuttar`（パブリック／ハッカソン作品想定）。共同者は NPC(NPCdotcom) と rako(takarakostar-code)
+- リモートは `github.com/NPCdotcom/Sikuttar`（パブリック／ハッカソン作品想定）。共同者は NPC(NPCdotcom)、rako(takarakostar-code)、hiroto(fca2506060002-coder)
+- 役割分担: FE = rako+NPC、BE = hiroto+NPC、インフラ／PM（全体）= NPC
 - 配布形態 Fact: Web アプリ・利用者はブラウザのみ。スタック Assumption: TypeScript / React / Hono / Cloudflare
 - MVP は投稿・閲覧；類似提示（RAG）は後段。確定リアクションは「わかる」「参考になる」。BAD は非可視化・システム用（プロフィール掲載投稿にも載せない）
+- UI/IA は laratter 風（フィード／作成／詳細・カード）を借り、Laravel 構成には寄せない
+- Wave2（agreed）: セマンティック検索（Vectorize + Jaccard fallback）、GitHub OAuth によるアカウント紐づけ、分類タグ、個人ブックマーク。Cloudflare デプロイは「最低限公開できるまとまり」ができてから行い、ローカルで足りる間は頻繁に上げない
+- ローカル OAuth／cookie は `localhost` と `127.0.0.1` を混在させない（コールバック・Cookie ホストを揃える）
 

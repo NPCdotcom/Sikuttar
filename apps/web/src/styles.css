@@ -343,3 +343,40 @@ body {
   flex: 1 1 10rem;
   min-width: 0;
 }
+
+.detail-actions {
+  margin: 0.75rem 0 1rem;
+}
+
+.secondary-btn {
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  border-radius: 6px;
+  padding: 0.4rem 0.85rem;
+}
+
+.secondary-btn:hover {
+  border-color: var(--ink);
+}
+
+.assistant-result {
+  margin-top: 1.25rem;
+}
+
+.assistant-answer {
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.text-link {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: var(--ink);
+  text-decoration: underline;
+  padding: 0;
+}

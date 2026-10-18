@@ -11,6 +11,7 @@ type Props = {
   onReact: (kind: ReactionKind) => void;
   onBookmark: () => void;
   onOpenRelated: (storyId: string) => void;
+  onAskSecretary: () => void;
 };
 
 export function DetailView({
@@ -23,6 +24,7 @@ export function DetailView({
   onReact,
   onBookmark,
   onOpenRelated,
+  onAskSecretary,
 }: Props) {
   return (
     <section className="view detail" aria-label="失敗談の詳細">
@@ -37,6 +39,12 @@ export function DetailView({
         onReact={onReact}
         onBookmark={onBookmark}
       />
+
+      <p className="detail-actions">
+        <button type="button" className="secondary-btn" onClick={onAskSecretary}>
+          質問する
+        </button>
+      </p>
 
       <div className="related-block">
         <h3>関連する失敗談</h3>

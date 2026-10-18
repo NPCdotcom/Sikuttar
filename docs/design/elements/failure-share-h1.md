@@ -9,7 +9,7 @@ related_product: docs/design/product/charter.md
 related_requirements: docs/requirements/failure-share/要件.md
 structure_ref: "charter §8 認識単位 · 着手順 · §7 設計スタンス"
 created: "2026-10-15"
-updated: "2026-10-15"
+updated: "2026-10-18"
 ---
 
 # H1 要素概要 — failure-share
@@ -35,8 +35,10 @@ Semantics: [.agents/docs/DESIGN_SEMANTICS.md](../../../.agents/docs/DESIGN_SEMAN
 | E6 | 関連失敗の提示（RAG · 後段） | 蓄積失敗談からの類似／関連提示 | could | 3 |
 | E7 | アカウント属性（内部保持 · 非表示） | 職業等を内部に持ちうるが初期は出さない | should | 1〜2（データのみ） |
 | E8 | 匿名表示 | 画面上は身元を出さない表示方針 | must | 1 |
+| E12 | 秘書照会 | 蓄積失敗談に基づき短い助言と根拠を返す照会（§8 関数追加） | should | secretary |
 
-スタック（TS / React / Hono / Cloudflare）は charter §7 の手段であり、上表の認識単位には入れない。
+スタック（TS / React / Hono / Cloudflare）は charter §7 の手段であり、上表の認識単位には入れない。  
+E9–E11 · E7′ は wave2（[capability-wave2](../product/capability-wave2-deliberation.md)）。E12 は [secretary-inquiry](secretary-inquiry.md)。
 
 ## Factors（たたき · 種別のみ）
 
@@ -50,6 +52,7 @@ Semantics: [.agents/docs/DESIGN_SEMANTICS.md](../../../.agents/docs/DESIGN_SEMAN
 | E4 BAD | 内部記録する · 公開UIに載せない | action / property | プロフィール掲載分にも載せない |
 | E5 表示優先度 | 優先度を算出する | function | 式は後段 · 差し込み点だけ先に |
 | E6 関連失敗 | 類似を照会する · 提示する | function / action | 後段 · API境界を先に文書化可 |
+| E12 秘書照会 | フォーカス取得 · 属性集計 · テンプレ応答 · 根拠リンク | function / action | FR20– · [secretary-inquiry](secretary-inquiry.md) |
 
 ## 境界・非目的
 
@@ -66,6 +69,7 @@ Semantics: [.agents/docs/DESIGN_SEMANTICS.md](../../../.agents/docs/DESIGN_SEMAN
 | S3 | E6 | FR10 | **Go** → [related-failure](related-failure.md) · H2: [related-retrieval](../systems/related-retrieval.md) · [review](../../reviews/s3-related-p6.md) |
 | S4 | E5 | FR9 | 後 |
 | wave2 | E9–E11 · E7′ | FR11–FR19 | **agreed** → [capability-wave2-deliberation](../product/capability-wave2-deliberation.md) · [要求-wave2](../../requirements/failure-share/要求-wave2.md) · [要件-wave2](../../requirements/failure-share/要件-wave2.md) |
+| secretary | E12 | FR20–FR25 | **agreed** → [secretary-inquiry](secretary-inquiry.md) · [capability-secretary-qa-deliberation](../product/capability-secretary-qa-deliberation.md) · [要求-secretary](../../requirements/failure-share/要求-secretary.md) · [要件-secretary](../../requirements/failure-share/要件-secretary.md) |
 
 ## エージェント提案
 

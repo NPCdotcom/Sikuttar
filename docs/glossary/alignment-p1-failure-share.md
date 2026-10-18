@@ -6,7 +6,7 @@ status: agreed
 agreed_at: "2026-10-15"
 related_requirement: docs/requirements/failure-share/要求.md
 created: "2026-10-12"
-updated: "2026-10-15"
+updated: "2026-10-18"
 ---
 
 # Terminology alignment（外部調査）— P1 failure-share
@@ -25,11 +25,12 @@ updated: "2026-10-15"
 | 分類タグ | 認識（E10） | 失敗談の索引ラベル（通称ハッシュタグ）。炎上話題タグではなく学びの類型 | Hashtag / taxonomy label（製品では分類に限定） | wave2 要求 |
 | 個人保存 | 認識（E11） | 認証利用者の非公開ブックマーク | Bookmark / save-for-later | wave2 要求 |
 | 持続アカウント紐づけ | 認識（E7′） | 認証 subject を accounts 行に結ぶ。公開プロフィールは作らない | Account linking / federated identity | wave2 要求 |
+| 秘書照会 | 認識（E12） | 蓄積失敗談に基づく短い助言＋根拠。v1 はテンプレ応答（生成 LLM なし） | Advice / RAG-style Q&A face（製品はテンプレ優先） | [要求-secretary](../requirements/failure-share/要求-secretary.md) · ADR 0002 |
 
 ### ズレ・リスク
 
 - 「要求」と「要件」を同一視すると、P1 で検証条件や式まで書き過ぎる
-- RAG を「必ず LLM 生成」と読むと MVP スコープが膨らむ（本プロジェクトは類似提示を段階導入）
+- RAG を「必ず LLM 生成」と読むと MVP スコープが膨らむ（類似提示は段階導入 · 秘書 E12 も v1 はテンプレ）
 - 心理安全性を「ネガティブ反応ゼロ」と厳密化するとモデレーション設計が肥大化する
 
 ### 推奨（おすすめ 1）
