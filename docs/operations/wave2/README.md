@@ -14,7 +14,8 @@ Issue [#11](https://github.com/NPCdotcom/Sikuttar/issues/11) · 方針の正本:
 | 文書 | 用途 |
 |------|------|
 | [deploy-boundary.md](./deploy-boundary.md) | CF デプロイ Go / No-Go チェックリスト |
-| [oauth-github-setup.md](./oauth-github-setup.md) | GitHub OAuth App · env 契約 |
+| [oauth-github-setup.md](./oauth-github-setup.md) | GitHub OAuth App · env 契約 · 本番 secrets |
 | [vectorize-paid-gate.md](./vectorize-paid-gate.md) | Workers Paid / Vectorize 本番オン直前ゲート |
+| [gen-llm-gate.md](./gen-llm-gate.md) | 生成 LLM 載せる直前ゲート（ADR 0002 維持） |
 
-**いま（2026-10-18）**: ローカルデモ受け入れ **Pass**（子 Issue #2–#10 完了 · `SEMANTIC_SEARCH=fallback`）。初回 CF デプロイと Vectorize / Paid は **次ゲート**（ユーザー明示の Go まで上げない）。
+**いま（2026-10-18）**: ローカルデモ **Pass** · **Free 初回公開 Go（方針 A）** — Workers + D1 · Jaccard · 質問テンプレ。Workers Paid / Vectorize / 生成 LLM は **次ゲート**（契約・オンしない）。

@@ -72,17 +72,26 @@ npm run build -w apps/web
 
 CI: `.github/workflows/ci.yml`（`main` への push / PR）
 
-## Wave2 インフラ
+## 本番デプロイ（Cloudflare Free）
 
-ローカルデモ一式（認証・検索 fallback・タグ・ブックマーク）は受け入れ済み。**初回 CF デプロイと Vectorize / Paid は次ゲート**（ユーザー明示の Go まで上げない）。詳細: [docs/operations/wave2/](docs/operations/wave2/README.md)
+同一 Worker で API + SPA（課金なし · Jaccard · 質問テンプレ）:
+
+```bash
+npm run deploy
+```
+
+公開: **https://sikuttar.npcdotcom.workers.dev** · 事前に remote migrations · OAuth は [oauth-github-setup.md](docs/operations/wave2/oauth-github-setup.md)（GitHub App に本番 Callback を追加すること）。
+
+Workers Paid / Vectorize / 生成 LLM は **次ゲート**（契約・オンしない）。詳細: [docs/operations/wave2/](docs/operations/wave2/README.md)
 
 | 項目 | 場所 |
 |------|------|
 | デプロイ境界 | [deploy-boundary.md](docs/operations/wave2/deploy-boundary.md) |
 | GitHub OAuth | [oauth-github-setup.md](docs/operations/wave2/oauth-github-setup.md) · `.dev.vars.example` を `.dev.vars` にコピー |
-| Paid / Vectorize | [vectorize-paid-gate.md](docs/operations/wave2/vectorize-paid-gate.md)（本番オン直前まで保留） |
+| Paid / Vectorize | [vectorize-paid-gate.md](docs/operations/wave2/vectorize-paid-gate.md) |
+| 生成 LLM | [gen-llm-gate.md](docs/operations/wave2/gen-llm-gate.md) |
 
-`SEMANTIC_SEARCH` 既定は `fallback`（[`wrangler.toml`](wrangler.toml)）。
+`SEMANTIC_SEARCH=fallback` · `SECRETARY_QA=on`（[`wrangler.toml`](wrangler.toml)）。
 
 ## ドキュメント
 
