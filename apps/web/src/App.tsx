@@ -2,9 +2,10 @@ import { useCallback, useEffect, useState } from "react";
 import {
   addBookmark,
   askSecretary,
+  deleteStory,
   fetchBookmarks,
   fetchMyStories,
-  fetchRecommendedTags,
+  fetchUsedTags,
   fetchRelated,
   fetchSearch,
   fetchSession,
@@ -18,16 +19,19 @@ import { AppLayout } from "./components/AppLayout";
 import type { AppView, PublicStory, ReactionKind } from "./types";
 import { AssistantView } from "./views/AssistantView";
 import { ComposeView } from "./views/ComposeView";
+import { DashboardView } from "./views/DashboardView";
 import { DetailView } from "./views/DetailView";
 import { FeedView } from "./views/FeedView";
 import { ProfileView } from "./views/ProfileView";
 import { SearchView } from "./views/SearchView";
+import { bareTagName } from "./formatTag";
 
 export function App() {
-  const [view, setView] = useState<AppView>("feed");
+  const [view, setView] = useState<AppView>("dashboard");
   const [items, setItems] = useState<PublicStory[]>([]);
-  const [recommendedTags, setRecommendedTags] = useState<string[]>([]);
-  const [feedTag, setFeedTag] = useState<string | null>(null);
+  const [usedTags, setUsedTags] = useState<string[]>([]);
+  const [searchInitialQuery, setSearchInitialQuery] = useState("");
+  const [searchHashtagMode, setSearchHashtagMode] = useState(false);
   const [detailId, setDetailId] = useState<string | null>(null);
   const [related, setRelated] = useState<PublicStory[] | null>(null);
   const [relatedLoading, setRelatedLoading] = useState(false);
@@ -45,6 +49,7 @@ export function App() {
   const [myStories, setMyStories] = useState<PublicStory[]>([]);
   const [myStoriesLoading, setMyStoriesLoading] = useState(false);
   const [myStoriesError, setMyStoriesError] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<PublicStory[]>([]);
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
@@ -119,27 +124,25 @@ export function App() {
     void loadMyStories();
   }, [loggedIn, loadBookmarks, loadMyStories]);
 
-  const refreshFeed = useCallback(async (tag: string | null) => {
-    const next = await fetchStories(tag);
+  const refreshFeed = useCallback(async () => {
+    const next = await fetchStories();
     setItems(next);
     return next;
   }, []);
 
-  useEffect(() => {
-    void fetchRecommendedTags()
-      .then(setRecommendedTags)
-      .catch((err: unknown) => {
-        setError(
-          err instanceof Error ? err.message : "タグ候補の取得に失敗しました",
-        );
-      });
+  const refreshUsedTags = useCallback(async () => {
+    setUsedTags(await fetchUsedTags());
   }, []);
 
   useEffect(() => {
-    void refreshFeed(feedTag).catch((err: unknown) => {
+    void refreshUsedTags().catch(() => undefined);
+  }, [refreshUsedTags]);
+
+  useEffect(() => {
+    void refreshFeed().catch((err: unknown) => {
       setError(err instanceof Error ? err.message : "一覧の取得に失敗しました");
     });
-  }, [feedTag, refreshFeed]);
+  }, [refreshFeed]);
 
   const detailStory =
     detailId === null
@@ -190,6 +193,10 @@ export function App() {
       setAssistantSeedId(null);
       setAssistantQuestion("");
     }
+    if (next !== "search") {
+      setSearchHashtagMode(false);
+      setSearchInitialQuery("");
+    }
     // Bookmarks live inside profile (X-like); keep legacy view id mapped.
     setView(next === "bookmarks" ? "profile" : next);
   }
@@ -209,9 +216,29 @@ export function App() {
     setView("detail");
   }
 
-  function handleFilterTag(tag: string | null) {
+  /** Twitter-like hashtag: open search with posts tagged (not feed chips). */
+  async function openHashtag(tag: string) {
+    const name = bareTagName(tag);
+    if (!name) return;
     setError(null);
-    setFeedTag(tag);
+    setDetailId(null);
+    setRelated(null);
+    setSearchHashtagMode(true);
+    setSearchInitialQuery(name);
+    setHasSearched(true);
+    setSearchLoading(true);
+    setSearchError(null);
+    setView("search");
+    try {
+      setSearchResults(await fetchStories(name));
+    } catch (err: unknown) {
+      setSearchResults([]);
+      setSearchError(
+        err instanceof Error ? err.message : "タグ検索に失敗しました",
+      );
+    } finally {
+      setSearchLoading(false);
+    }
   }
 
   async function handleLogout() {
@@ -221,6 +248,31 @@ export function App() {
       setLoggedIn(false);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "ログアウトに失敗しました");
+    }
+  }
+
+  async function handleDeleteStory(storyId: string) {
+    if (!window.confirm("この投稿を削除しますか？")) {
+      return;
+    }
+    setError(null);
+    setDeletingId(storyId);
+    try {
+      await deleteStory(storyId);
+      setMyStories((prev) => prev.filter((s) => s.id !== storyId));
+      setItems((prev) => prev.filter((s) => s.id !== storyId));
+      setBookmarkItems((prev) => prev.filter((s) => s.id !== storyId));
+      setSearchResults((prev) => prev.filter((s) => s.id !== storyId));
+      if (detailId === storyId) {
+        setDetailId(null);
+        setRelated(null);
+        setView("profile");
+      }
+      await refreshUsedTags().catch(() => undefined);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "投稿の削除に失敗しました");
+    } finally {
+      setDeletingId(null);
     }
   }
 
@@ -252,6 +304,8 @@ export function App() {
 
   async function handleSearch(q: string) {
     setSearchError(null);
+    setSearchHashtagMode(false);
+    setSearchInitialQuery(q);
     setHasSearched(true);
     setSearchLoading(true);
     try {
@@ -274,8 +328,8 @@ export function App() {
     setBusy(true);
     try {
       await postStory(input);
-      setFeedTag(null);
-      await refreshFeed(null);
+      await refreshFeed();
+      await refreshUsedTags().catch(() => undefined);
       navigate("feed");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "投稿に失敗しました");
@@ -289,7 +343,7 @@ export function App() {
     setReactingId(`${storyId}:${kind}`);
     try {
       await postReaction(storyId, kind);
-      await refreshFeed(feedTag);
+      await refreshFeed();
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "リアクションに失敗しました");
     } finally {
@@ -307,15 +361,15 @@ export function App() {
     >
       {error ? <p className="error" role="alert">{error}</p> : null}
 
+      {view === "dashboard" ? <DashboardView /> : null}
+
       {view === "feed" ? (
         <FeedView
           items={items}
-          recommendedTags={recommendedTags}
-          selectedTag={feedTag}
           reactingId={reactingId}
-          onFilterTag={handleFilterTag}
           onReact={(storyId, kind) => void handleReact(storyId, kind)}
           onOpenDetail={openDetail}
+          onHashtag={(tag) => void openHashtag(tag)}
           bookmarkedIds={bookmarkedIds}
           onBookmark={(storyId) => void handleBookmark(storyId)}
         />
@@ -324,7 +378,7 @@ export function App() {
       {view === "compose" ? (
         <ComposeView
           busy={busy}
-          recommendedTags={recommendedTags}
+          suggestedTags={usedTags}
           onSubmit={handleCompose}
         />
       ) : null}
@@ -335,11 +389,14 @@ export function App() {
           loading={searchLoading}
           error={searchError}
           hasSearched={hasSearched}
+          initialQuery={searchInitialQuery}
+          hashtagMode={searchHashtagMode}
           reactingId={reactingId}
           bookmarkedIds={bookmarkedIds}
           onSearch={(q) => void handleSearch(q)}
           onReact={(storyId, kind) => void handleReact(storyId, kind)}
           onOpenDetail={openDetail}
+          onHashtag={(tag) => void openHashtag(tag)}
           onBookmark={(storyId) => void handleBookmark(storyId)}
         />
       ) : null}
@@ -379,6 +436,8 @@ export function App() {
           bookmarkedIds={bookmarkedIds}
           onOpenDetail={openDetail}
           onBookmark={(storyId) => void handleBookmark(storyId)}
+          onDeleteStory={(storyId) => void handleDeleteStory(storyId)}
+          deletingId={deletingId}
         />
       ) : null}
 
@@ -394,6 +453,13 @@ export function App() {
           onBookmark={() => void handleBookmark(detailStory.id)}
           onOpenRelated={openDetail}
           onAskSecretary={() => openAssistantFromStory(detailStory)}
+          onHashtag={(tag) => void openHashtag(tag)}
+          onDelete={
+            myStories.some((s) => s.id === detailStory.id)
+              ? () => void handleDeleteStory(detailStory.id)
+              : undefined
+          }
+          deleting={deletingId === detailStory.id}
         />
       ) : null}
 

@@ -16,6 +16,8 @@ type Props = {
   bookmarkedIds: ReadonlySet<string>;
   onOpenDetail: (storyId: string) => void;
   onBookmark: (storyId: string) => void;
+  onDeleteStory: (storyId: string) => void;
+  deletingId: string | null;
 };
 
 export function ProfileView({
@@ -29,6 +31,8 @@ export function ProfileView({
   bookmarkedIds,
   onOpenDetail,
   onBookmark,
+  onDeleteStory,
+  deletingId,
 }: Props) {
   const [occupation, setOccupation] = useState("");
   const [busy, setBusy] = useState(false);
@@ -141,6 +145,8 @@ export function ProfileView({
                   bookmarked={bookmarkedIds.has(item.id)}
                   onBookmark={() => onBookmark(item.id)}
                   onOpenDetail={() => onOpenDetail(item.id)}
+                  deleting={deletingId === item.id}
+                  onDelete={() => onDeleteStory(item.id)}
                 />
               </li>
             ))}

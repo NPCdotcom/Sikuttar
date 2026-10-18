@@ -12,6 +12,9 @@ type Props = {
   onBookmark: () => void;
   onOpenRelated: (storyId: string) => void;
   onAskSecretary: () => void;
+  onHashtag: (tag: string) => void;
+  onDelete?: () => void;
+  deleting?: boolean;
 };
 
 export function DetailView({
@@ -25,11 +28,14 @@ export function DetailView({
   onBookmark,
   onOpenRelated,
   onAskSecretary,
+  onHashtag,
+  onDelete,
+  deleting = false,
 }: Props) {
   return (
     <section className="view detail" aria-label="失敗談の詳細">
       <button type="button" className="back-link" onClick={onBack}>
-        ← フィードに戻る
+        一覧へ戻る
       </button>
       <h2>詳細</h2>
       <StoryCard
@@ -38,6 +44,9 @@ export function DetailView({
         bookmarked={bookmarked}
         onReact={onReact}
         onBookmark={onBookmark}
+        onHashtag={onHashtag}
+        onDelete={onDelete}
+        deleting={deleting}
       />
 
       <p className="detail-actions">
@@ -61,6 +70,7 @@ export function DetailView({
                   clamp
                   showDetailLink
                   onOpenDetail={() => onOpenRelated(item.id)}
+                  onHashtag={onHashtag}
                 />
               </li>
             ))}

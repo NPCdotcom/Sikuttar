@@ -80,7 +80,7 @@ CI: `.github/workflows/ci.yml`（`main` への push / PR）
 npm run deploy
 ```
 
-公開: **https://sikuttar.npcdotcom.workers.dev** · 事前に remote migrations · OAuth は [oauth-github-setup.md](docs/operations/wave2/oauth-github-setup.md)（GitHub App に本番 Callback を追加すること）。
+公開: **https://sikuttar.npcdotcom.workers.dev** · 共同者スモーク: [prod-smoke.md](docs/operations/wave2/prod-smoke.md) · OAuth: [oauth-github-setup.md](docs/operations/wave2/oauth-github-setup.md)
 
 Workers Paid / Vectorize / 生成 LLM は **次ゲート**（契約・オンしない）。詳細: [docs/operations/wave2/](docs/operations/wave2/README.md)
 

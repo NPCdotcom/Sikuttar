@@ -36,7 +36,7 @@ describe("validateBody", () => {
   it("accepts tags and removes duplicates", () => {
     const result = validateBody({
       body: "デプロイに失敗した",
-      tags: ["デプロイ", " テスト ", "デプロイ"],
+      tags: ["デプロイ", " テスト ", "デプロイ", "#デプロイ"],
     });
     expect(result.tags).toEqual(["デプロイ", "テスト"]);
   });

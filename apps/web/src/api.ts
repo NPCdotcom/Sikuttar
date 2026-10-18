@@ -19,6 +19,16 @@ export async function fetchRecommendedTags(): Promise<string[]> {
   return data.items ?? [];
 }
 
+/** Tags that appear on at least one story (feed filter chips). */
+export async function fetchUsedTags(): Promise<string[]> {
+  const res = await fetch("/tags", { credentials: "include" });
+  if (!res.ok) {
+    throw new Error(await readError(res, "タグ一覧の取得に失敗しました"));
+  }
+  const data = (await res.json()) as { items: string[] };
+  return data.items ?? [];
+}
+
 export async function fetchStories(tag?: string | null): Promise<PublicStory[]> {
   const url =
     tag && tag.trim()
@@ -51,6 +61,16 @@ export async function postStory(input: {
   });
   if (!res.ok) {
     throw new Error(await readError(res, "投稿に失敗しました"));
+  }
+}
+
+export async function deleteStory(storyId: string): Promise<void> {
+  const res = await fetch(`/stories/${encodeURIComponent(storyId)}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+  if (!res.ok) {
+    throw new Error(await readError(res, "投稿の削除に失敗しました"));
   }
 }
 
