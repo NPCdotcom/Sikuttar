@@ -16,11 +16,16 @@ updated: "2026-10-18"
 - **意味検索を本番経路で公開オンにする直前**まで、Workers Paid 契約と Vectorize インデックス作成は保留する
 - それまでは `SEMANTIC_SEARCH=fallback`（D1 Jaccard 等）で開発・デモする
 
+## 現状（Free 初回公開 · 2026-10-18）
+
+- Workers Paid **未契約** · Vectorize **未作成** · `SEMANTIC_SEARCH=fallback`（Jaccard）
+- Free 公開とは **分離**（[deploy-boundary.md](./deploy-boundary.md)）。生成 LLM は [gen-llm-gate.md](./gen-llm-gate.md)
+
 ## ゲート前（いま · やらないこと）
 
-- [ ] Workers Paid に加入しない（不要な課金を避ける）
-- [ ] Vectorize インデックスを本番用に作らない
-- [ ] `wrangler.toml` の Vectorize / AI バインディングを実 ID で有効化しない（コメントプレースホルダのまま）
+- [x] Workers Paid に加入しない（不要な課金を避ける）
+- [x] Vectorize インデックスを本番用に作らない
+- [x] `wrangler.toml` の Vectorize / AI バインディングを実 ID で有効化しない（コメントプレースホルダのまま）
 
 ## ゲート通過条件（本番オン直前）
 

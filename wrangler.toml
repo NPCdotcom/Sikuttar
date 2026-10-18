@@ -2,19 +2,26 @@ name = "sikuttar"
 main = "src/index.ts"
 compatibility_date = "2024-11-01"
 
+# Free first deploy: same-origin SPA + API (no Vectorize / Workers AI)
+[assets]
+directory = "apps/web/dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = true
+
 [vars]
-# fallback until docs/operations/wave2/vectorize-paid-gate.md passes
+# Free path — Jaccard only (Paid/Vectorize gate separate)
 SEMANTIC_SEARCH = "fallback"
-# E12 secretary — set "on" for local prototype demos
-SECRETARY_QA = "off"
+# E12 question UI — template answers (ADR 0002 · no generative LLM)
+SECRETARY_QA = "on"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "sikuttar"
-database_id = "00000000-0000-0000-0000-000000000001"
+database_id = "32bc066b-aa26-43e0-8d4d-3de566915ed3"
 migrations_dir = "migrations"
 
-# --- wave2 placeholders (do not enable until Paid/Vectorize gate) ---
+# --- Paid / Vectorize gate (do not enable on Free first deploy) ---
 # [[vectorize]]
 # binding = "VECTORIZE"
 # index_name = "sikuttar-stories"

@@ -476,4 +476,12 @@ app.post("/stories/:id/reactions", async (c) => {
   }
 });
 
+/** SPA fallback via Workers Assets (same origin as API · Free deploy). */
+app.all("*", async (c) => {
+  if (c.env.ASSETS) {
+    return c.env.ASSETS.fetch(c.req.raw);
+  }
+  return c.json({ error: "not found" }, 404);
+});
+
 export default app;
