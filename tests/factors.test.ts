@@ -9,7 +9,10 @@ import {
 } from "../src/factors/validateReactionKind";
 import {
   applyWakaruBoost,
+  passesTokenMatchFloor,
+  scoreQueryCoverage,
   scoreStorySimilarity,
+  scoreTokenMatch,
 } from "../src/factors/scoreStorySimilarity";
 import {
   storyTextForSimilarity,
@@ -250,5 +253,23 @@ describe("similarity factors", () => {
 
   it("applies wakaru boost without introducing bad", () => {
     expect(applyWakaruBoost(0.5, 2)).toBeCloseTo(0.54);
+  });
+
+  it("prefers query coverage in scoreTokenMatch", () => {
+    const q = new Set(["デプロイ", "失敗", "ロールバック"]);
+    const highCoverage = new Set(["デプロイ", "失敗", "ロールバック", "本番", "夜"]);
+    const lowCoverage = new Set(["デプロイ", ..."abcdefghij".split("")]);
+    expect(scoreQueryCoverage(q, highCoverage)).toBe(1);
+    expect(scoreTokenMatch(q, highCoverage)).toBeGreaterThan(
+      scoreTokenMatch(q, lowCoverage),
+    );
+  });
+
+  it("rejects low coverage when query has many tokens", () => {
+    const q = new Set(["aa", "bb", "cc", "dd", "ee", "ff"]);
+    const weak = new Set(["aa", "zz", "yy", "xx", "ww"]);
+    // 1/6 ≈ 0.167 < 0.2
+    expect(passesTokenMatchFloor(q, weak)).toBe(false);
+    expect(passesTokenMatchFloor(q, new Set(["aa", "bb", "cc"]))).toBe(true);
   });
 });
