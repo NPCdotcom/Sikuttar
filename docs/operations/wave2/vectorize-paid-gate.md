@@ -4,7 +4,7 @@ kind: operations
 slice: wave2
 related_adr: docs/adr/0001-cloudflare-semantic-search-cost.md
 created: "2026-10-17"
-updated: "2026-10-17"
+updated: "2026-10-18"
 ---
 
 # Workers Paid / Vectorize ゲート
@@ -31,7 +31,12 @@ updated: "2026-10-17"
 - [ ] アカウントの Vectorize / Workers AI 料金表を確認し、Paid 要否をメモした
 - [ ] 埋め込みモデル次元とインデックス設定を #2 実装と合意した
 
-## ゲート後の作業（後工程 · 本 Issue の「後回し」）
+### 埋め込みモデル合意メモ（実装済み · ゲート前）
+
+- モデル: `@cf/baai/bge-m3`（[`src/factors/semanticSearchMode.ts`](../../../src/factors/semanticSearchMode.ts)）
+- インデックス寸法・Paid 契約は **本番オン直前**に確定する（本ゲート通過まで作成しない）
+
+## ゲート後の作業（後工程 · デプロイ Go 後）
 
 1. Workers Paid 要否を確定し、必要なら契約
 2. Vectorize インデックス作成
