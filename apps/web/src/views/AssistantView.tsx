@@ -55,7 +55,7 @@ export function AssistantView({
       <h2>質問</h2>
       <p className="hint">
         蓄積された失敗談をもとに短い助言と根拠を返します（生成 AI
-        は使いません）。
+        は使いません）。話題の核になる語（例: デプロイ、OAuth、テスト）が入っていると見つかりやすいです。
       </p>
 
       <form className="compose" onSubmit={(e) => void handleSubmit(e)}>
@@ -118,7 +118,11 @@ export function AssistantView({
                 ))}
               </ul>
             </>
-          ) : null}
+          ) : (
+            <p className="hint">
+              根拠が見つからないときは、質問を短いキーワードに近づけるか、失敗談に出てくる語（デプロイ、OAuth、テストなど）を含めて再度試してください。文字数制限はありません。
+            </p>
+          )}
         </div>
       ) : null}
     </section>

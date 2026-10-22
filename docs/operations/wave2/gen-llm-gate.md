@@ -4,7 +4,7 @@ kind: operations
 slice: wave2
 related_adr: docs/adr/0002-secretary-qa-template-only.md
 created: "2026-10-18"
-updated: "2026-10-18"
+updated: "2026-10-22"
 ---
 
 # 生成 LLM ゲート
@@ -16,6 +16,7 @@ updated: "2026-10-18"
 - **Free 初回公開では生成 LLM を入れない**（Workers AI チャット生成・講義向け生成パスは次ゲート）
 - 本番の質問（`SECRETARY_QA=on`）は **テンプレート応答のみ**（ADR 0002 維持）
 - **2026-10-18 合意**: 生成 LLM は当面スコープ外（[free-path-decision.md](./free-path-decision.md)）
+- **2026-10-22**: 段 B（Vectorize）Go でも **C は同時に開かない**（埋め込み検索のみ許可）
 
 ## ゲート前（いま · やらないこと）
 
