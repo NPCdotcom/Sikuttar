@@ -55,6 +55,80 @@ export function passesTokenMatchFloor(
   return coverage >= 0.2;
 }
 
+/**
+ * Whether a floor surface token is evidenced in candidate similarity tokens
+ * (exact hit, or enough CJK char-bigrams present).
+ */
+export function floorTokenMatched(
+  token: string,
+  candidateTokens: Set<string>,
+): boolean {
+  if (candidateTokens.has(token)) {
+    return true;
+  }
+  if (token.length < 2) {
+    return false;
+  }
+  const hasLatin = /[a-z0-9]/i.test(token);
+  if (hasLatin) {
+    return false;
+  }
+  let hits = 0;
+  let total = 0;
+  for (let i = 0; i < token.length - 1; i++) {
+    total += 1;
+    if (candidateTokens.has(token.slice(i, i + 2))) {
+      hits += 1;
+    }
+  }
+  if (total === 0) {
+    return false;
+  }
+  // Short content (2–3 chars): any bigram. Longer: at least half the bigrams.
+  if (token.length <= 3) {
+    return hits >= 1;
+  }
+  return hits / total >= 0.5;
+}
+
+/** Floor coverage using surface query tokens against candidate similarity tokens. */
+export function scoreFloorCoverage(
+  floorQueryTokens: Set<string>,
+  candidateTokens: Set<string>,
+): number {
+  if (floorQueryTokens.size === 0) {
+    return 0;
+  }
+  let matched = 0;
+  for (const t of floorQueryTokens) {
+    if (floorTokenMatched(t, candidateTokens)) {
+      matched += 1;
+    }
+  }
+  return matched / floorQueryTokens.size;
+}
+
+/**
+ * Floor gate for user/search queries: surface tokens on the query side
+ * (see tokenizeQueryForFloor), similarity tokens on the candidate side.
+ */
+export function passesQueryFloor(
+  floorQueryTokens: Set<string>,
+  candidateTokens: Set<string>,
+): boolean {
+  if (floorQueryTokens.size === 0) {
+    return false;
+  }
+  const coverage = scoreFloorCoverage(floorQueryTokens, candidateTokens);
+  if (coverage <= 0) {
+    return false;
+  }
+  if (floorQueryTokens.size <= 2) {
+    return coverage >= 1;
+  }
+  return coverage >= 0.2;
+}
+
 function countIntersection(a: Set<string>, b: Set<string>): number {
   let n = 0;
   for (const t of a) {

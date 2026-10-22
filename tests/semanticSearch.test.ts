@@ -145,13 +145,17 @@ describe("embedText", () => {
 });
 
 describe("queryVectorIndex", () => {
-  it("maps match ids", async () => {
+  it("maps match ids above min score", async () => {
     const query = vi.fn().mockResolvedValue({
-      matches: [{ id: "s1", score: 0.9 }, { id: "s2", score: 0.8 }],
+      matches: [
+        { id: "s1", score: 0.9 },
+        { id: "s2", score: 0.8 },
+        { id: "weak", score: 0.3 },
+      ],
     });
-    const ids = await queryVectorIndex({ query }, [1, 2], 2);
+    const ids = await queryVectorIndex({ query }, [1, 2], 3);
     expect(ids).toEqual(["s1", "s2"]);
-    expect(query).toHaveBeenCalledWith([1, 2], { topK: 2 });
+    expect(query).toHaveBeenCalledWith([1, 2], { topK: 3 });
   });
 });
 

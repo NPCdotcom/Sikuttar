@@ -1,15 +1,7 @@
 import { countPublicReactions } from "./countPublicReactions";
 import { listByCreatedAtDesc, type StoryRow } from "./listByCreatedAtDesc";
 import { loadTagsByStoryIds } from "./loadTagsByStoryIds";
-import {
-  applyWakaruBoost,
-  passesTokenMatchFloor,
-  scoreTokenMatch,
-} from "./scoreStorySimilarity";
-import {
-  storyTextForSimilarityWithTags,
-  tokenizeForSimilarity,
-} from "./tokenizeForSimilarity";
+import { rankStoriesByTokenQuery } from "./rankStoriesByTokenQuery";
 
 /**
  * Free-query Jaccard search over recent stories (FR12 fallback).
@@ -29,11 +21,6 @@ export async function fallbackTokenSearch(
     return [];
   }
 
-  const queryTokens = tokenizeForSimilarity(q);
-  if (queryTokens.size === 0) {
-    return [];
-  }
-
   const tagsMap = await loadTagsByStoryIds(
     db,
     candidates.map((c) => c.id),
@@ -43,23 +30,14 @@ export async function fallbackTokenSearch(
     candidates.map((c) => c.id),
   );
 
-  const scored = candidates
-    .map((row) => {
-      const candidateTokens = tokenizeForSimilarity(
-        storyTextForSimilarityWithTags(row, tagsMap.get(row.id) ?? []),
-      );
-      if (!passesTokenMatchFloor(queryTokens, candidateTokens)) {
-        return null;
-      }
-      const base = scoreTokenMatch(queryTokens, candidateTokens);
-      const wakaru = countsMap.get(row.id)?.wakaru ?? 0;
-      return { row, score: applyWakaruBoost(base, wakaru) };
-    })
-    .filter((h): h is { row: StoryRow; score: number } => h !== null);
-
-  scored.sort(
-    (a, b) =>
-      b.score - a.score || b.row.created_at.localeCompare(a.row.created_at),
+  const ranked = rankStoriesByTokenQuery(
+    q,
+    candidates.map((row) => ({
+      row,
+      tags: tagsMap.get(row.id) ?? [],
+      wakaru: countsMap.get(row.id)?.wakaru ?? 0,
+    })),
+    limit,
   );
-  return scored.filter((h) => h.score > 0).slice(0, limit).map((h) => h.row);
+  return ranked.map((h) => h.row);
 }
