@@ -15,7 +15,7 @@ updated: "2026-10-15"
 
 # Program — ブラウザシェル
 
-Semantics: [.agents/docs/DESIGN_SEMANTICS.md](../../../.agents/docs/DESIGN_SEMANTICS.md)  
+Semantics: recognition / classification / spec (kit local)  
 H3: [react-ui](../frameworks/react-ui.md) · API: story-posting / feed-reading pipelines
 
 ## 目的（どの H1/H2 のためか）

@@ -15,7 +15,7 @@ updated: "2026-10-15"
 
 # H3 フレームワーク概要 — failure-share（S1）
 
-Semantics: [.agents/docs/DESIGN_SEMANTICS.md](../../../.agents/docs/DESIGN_SEMANTICS.md)  
+Semantics: recognition / classification / spec (kit local)  
 親 H2: [failure-share-h2](../systems/failure-share-h2.md)（agreed）  
 手段 Assumption（charter §7）: TypeScript · React · Hono · Cloudflare
 

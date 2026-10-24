@@ -18,6 +18,6 @@ H0–H5 design docs. See [PROJECT_LIFECYCLE.md](../PROJECT_LIFECYCLE.md).
 
 **Constraint**: P3+ design follows charter recognition units (§8), extend by factors—not a parallel SNS taxonomy.
 
-**P4 plans**: [.agents/plans/README.md](../../.agents/plans/README.md)  
+**P4 plans**: 実装計画はローカル作業用（公開リポジトリ外）  
 **P6 reviews**: [s1-mvp-p6](../reviews/s1-mvp-p6.md) · [s2-reactions-p6](../reviews/s2-reactions-p6.md) · [s3-related-p6](../reviews/s3-related-p6.md)  
 **References（非方針）**: [lecture-alterbooth-cloudflare-rag](../references/lecture-alterbooth-cloudflare-rag.md) — 講義要約と既存方針との A/B/C 切り分け
