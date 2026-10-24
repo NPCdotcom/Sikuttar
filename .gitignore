@@ -1,32 +1,7 @@
-# --- Agent kit (do not edit this block; stack lines go below) ---
-# Local agent memory — never committed (docs/MEMORY_ARCHITECTURE.md)
-.agents/memory/*
-!.agents/memory/README.md
-!.agents/memory/index.yaml.example
-!.agents/memory/state/nav.yaml.example
-!.agents/memory/audit/audit-log.md.example
-!.agents/memory/knowledge/_template.md
-!.agents/memory/**/README.md
-
-# Cursor junctions (scripts/link-cursor) and local plan-mode notes
-.cursor/rules
-.cursor/skills
-.cursor/hooks
-.cursor/hooks.json
-.cursor/plans/
-
-# Agent env
-.agents/env/python/.venv/
-.agents/env/node/node_modules/
-
-# Learning sandbox — large / local-only
-.agents/learning/**/sources/**
-.agents/learning/**/.venv/
-.agents/learning/**/node_modules/
-.agents/learning/**/__pycache__/
-
-# Local hook / continual-learning state
-.agents/hooks/state/
+# --- Local AI / agent kit (not published) ---
+AGENTS.md
+.agents/
+.cursor/
 
 # Secrets
 .env
@@ -41,7 +16,7 @@ Thumbs.db
 *.swp
 *~
 
-# --- Stack (appended by maintain-bootstrap from AGENTS.md stack docs) ---
+# --- Stack ---
 node_modules/
 dist/
 .wrangler/

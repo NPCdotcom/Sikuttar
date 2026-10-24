@@ -15,7 +15,7 @@ updated: "2026-10-15"
 
 # H2 システム概要 — failure-share（S1+S2）
 
-Semantics: [.agents/docs/DESIGN_SEMANTICS.md](../../../.agents/docs/DESIGN_SEMANTICS.md)  
+Semantics: recognition / classification / spec (kit local)  
 親 H1: [failure-share-h1](../elements/failure-share-h1.md)（agreed）· S1/S2 elements
 
 > **構造ルール**: システムは charter §8 / H1 認識単位を **組み合わせる**。新しい製品語彙ツリーを立てない。スタックは手段（§7 Assumption）。
