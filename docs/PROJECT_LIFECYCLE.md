@@ -1,6 +1,6 @@
 # Project lifecycle (phases · scope hierarchy · PDCA units)
 
-**Canonical** for consumer projects. The kit holds generic definitions only. Product name and domain live in `AGENTS.md` and `docs/`.
+**Canonical** for this repository’s product lifecycle. Product name and domain live in `docs/`（agent kit はローカル専用で公開しない）.
 
 ## Three-layer model
 

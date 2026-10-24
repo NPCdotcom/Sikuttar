@@ -15,7 +15,7 @@ updated: "2026-10-15"
 
 # Program — フィード閲覧パイプライン
 
-Semantics: [.agents/docs/DESIGN_SEMANTICS.md](../../../.agents/docs/DESIGN_SEMANTICS.md)  
+Semantics: recognition / classification / spec (kit local)  
 H2: [feed-reading](../systems/feed-reading.md)（SYS2）· H1: [anonymous-display](../elements/anonymous-display.md)
 
 ## 目的（どの H1/H2 のためか）

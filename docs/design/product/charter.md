@@ -237,5 +237,5 @@ restored_note: "2026-10-15 kit-refresh で空テンプレ上書き → 合意本
 
 ---
 
-Semantics（キット）: [.agents/docs/DESIGN_SEMANTICS.md](../../../.agents/docs/DESIGN_SEMANTICS.md)  
+Semantics（キット・ローカル）  
 次: P1 `docs/requirements/failure-share/要求.md`（agreed）→ P2 `要件.md`

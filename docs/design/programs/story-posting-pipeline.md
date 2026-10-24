@@ -15,7 +15,7 @@ updated: "2026-10-15"
 
 # Program — 失敗談投稿パイプライン
 
-Semantics: [.agents/docs/DESIGN_SEMANTICS.md](../../../.agents/docs/DESIGN_SEMANTICS.md)  
+Semantics: recognition / classification / spec (kit local)  
 H2: [story-posting](../systems/story-posting.md)（SYS1）· H3: [hono-api](../frameworks/hono-api.md) · [cloudflare-platform](../frameworks/cloudflare-platform.md)
 
 ## 目的（どの H1/H2 のためか）

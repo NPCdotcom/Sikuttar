@@ -14,7 +14,7 @@ updated: "2026-10-18"
 
 # H1 要素概要 — failure-share
 
-Semantics: [.agents/docs/DESIGN_SEMANTICS.md](../../../.agents/docs/DESIGN_SEMANTICS.md)  
+Semantics: recognition / classification / spec (kit local)  
 親: [charter](../product/charter.md) §8 · [要件](../../requirements/failure-share/要件.md)（agreed）
 
 > **構造ルール**: 本ドキュメントの認識単位は charter §8 と **1:1**。別名の並行ツリーやクラス階層での再分類はしない。
