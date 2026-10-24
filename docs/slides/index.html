@@ -53,8 +53,27 @@
         text-align: left;
       }
 
-      .reveal .slides section {
+      /* Fixed title band: slides 2–7 share the same h2 origin */
+      .reveal .slides section.content-slide {
+        padding: 96px 7% 48px;
+        text-align: left;
+        top: 0 !important;
+      }
+
+      .reveal .slides section.content-slide > h2 {
+        margin: 0 0 0.7em;
+        min-height: 1.7em;
+      }
+
+      .reveal .slides section.center-slide {
         padding: 0 7%;
+        text-align: center;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        box-sizing: border-box;
       }
 
       .reveal .controls {
@@ -204,10 +223,6 @@
         color: var(--sik-accent);
       }
 
-      .reveal .center-slide {
-        text-align: center;
-      }
-
       .reveal .center-slide h2 {
         margin-left: auto;
         margin-right: auto;
@@ -334,7 +349,7 @@
         </section>
 
         <!-- 2 -->
-        <section>
+        <section class="content-slide">
           <h2>一行でいうと</h2>
           <p class="lead">
             愚痴感覚で失敗談を投稿し、<br />
@@ -344,7 +359,7 @@
         </section>
 
         <!-- 3 -->
-        <section>
+        <section class="content-slide">
           <h2>普通の SNS と違うところ</h2>
           <blockquote class="nowrap">
             失敗無き学習は、失敗を防ぐことに寄与しない。
@@ -366,7 +381,7 @@
         </section>
 
         <!-- 4 -->
-        <section>
+        <section class="content-slide">
           <h2>ライブデモ</h2>
           <p class="demo-url">
             <a href="https://sikuttar.npcdotcom.workers.dev" target="_blank" rel="noopener"
@@ -382,7 +397,7 @@
         </section>
 
         <!-- 5 -->
-        <section>
+        <section class="content-slide">
           <h2>どう作っているか</h2>
           <div class="arch">
             <div class="box">Browser（React）</div>
@@ -398,7 +413,7 @@
         </section>
 
         <!-- 6 -->
-        <section>
+        <section class="content-slide">
           <h2>見どころ</h2>
           <ul>
             <li class="nowrap">
@@ -418,9 +433,9 @@
         </section>
 
         <!-- 7 -->
-        <section class="center-slide">
+        <section class="content-slide">
           <h2>一番見てほしいこと</h2>
-          <p class="lead nowrap" style="margin: 0.95em auto">
+          <p class="lead nowrap">
             「失敗を書いてよい」を、<span class="accent">ルールと検索</span>で支えていること。
           </p>
           <p class="note">心理安全性 → Retriever →（必要なら）生成</p>
@@ -453,7 +468,7 @@
         slideNumber: "c/t",
         controls: true,
         progress: true,
-        center: true,
+        center: false,
         transition: "fade",
         backgroundTransition: "fade",
         width: 1600,
