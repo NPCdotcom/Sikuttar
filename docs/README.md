@@ -2,6 +2,7 @@
 
 | Path | Purpose |
 |------|---------|
+| [slides/](slides/) | 発表スライド（Reveal.js · Pages `/slides/`） |
 | [FIRST_PROJECT_START.md](FIRST_PROJECT_START.md) | 最初の 1 プロジェクトの起動手順（汎用） |
 | [PROJECT_LIFECYCLE.md](PROJECT_LIFECYCLE.md) | Phases P0–P6, scope H0–H5, PDCA rules |
 | [_example/](_example/) | 中立サンプル（削除可） |

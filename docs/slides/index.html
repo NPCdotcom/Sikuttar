@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sikuttar — 発表スライド</title>
+    <link rel="stylesheet" href="./vendor/reveal/reveal.css" />
+    <link rel="stylesheet" href="./vendor/reveal/theme/black.css" />
+    <style>
+      :root {
+        --sik-bg: #12141a;
+        --sik-fg: #f2efe8;
+        --sik-muted: #a8a29a;
+        --sik-accent: #e8a54b;
+        --sik-line: #2a2f3a;
+      }
+      .reveal {
+        font-family: "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+        color: var(--sik-fg);
+      }
+      .reveal .slides {
+        text-align: left;
+      }
+      .reveal .slides section {
+        padding: 0 4%;
+      }
+      .reveal h1,
+      .reveal h2,
+      .reveal h3 {
+        text-transform: none;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        color: var(--sik-fg);
+      }
+      .reveal h1 {
+        font-size: 2.4em;
+      }
+      .reveal h2 {
+        font-size: 1.7em;
+        border-bottom: 2px solid var(--sik-accent);
+        padding-bottom: 0.2em;
+        margin-bottom: 0.6em;
+      }
+      .reveal p,
+      .reveal li {
+        color: var(--sik-fg);
+        line-height: 1.45;
+      }
+      .reveal .muted {
+        color: var(--sik-muted);
+      }
+      .reveal .accent {
+        color: var(--sik-accent);
+      }
+      .reveal .tagline {
+        font-size: 1.35em;
+        margin-top: 0.6em;
+      }
+      .reveal .brand {
+        font-size: 0.85em;
+        letter-spacing: 0.08em;
+        color: var(--sik-accent);
+        margin-bottom: 0.4em;
+      }
+      .reveal ul {
+        margin-left: 1em;
+      }
+      .reveal li {
+        margin: 0.35em 0;
+      }
+      .reveal a {
+        color: var(--sik-accent);
+      }
+      .reveal table {
+        font-size: 0.72em;
+        margin: 0;
+      }
+      .reveal th,
+      .reveal td {
+        border-bottom: 1px solid var(--sik-line);
+        padding: 0.35em 0.55em;
+      }
+      .reveal .center-slide {
+        text-align: center;
+      }
+      .reveal .foot {
+        margin-top: 1.4em;
+        font-size: 0.7em;
+        color: var(--sik-muted);
+      }
+      .reveal .small {
+        font-size: 0.78em;
+      }
+      .reveal pre {
+        font-size: 0.55em;
+        box-shadow: none;
+        background: #1a1e28;
+        border: 1px solid var(--sik-line);
+      }
+      .reveal code {
+        font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- 1 -->
+        <section class="center-slide" data-background-color="#12141a">
+          <p class="brand">SIKUTTAR</p>
+          <h1>シクッター</h1>
+          <p class="tagline accent">しくじったら、シクッター。</p>
+          <p class="muted">失敗談共有 × 集合知</p>
+          <p class="foot">NPC · rako · hiroto</p>
+        </section>
+
+        <!-- 2 -->
+        <section>
+          <h2>一行でいうと</h2>
+          <p>
+            愚痴感覚で失敗談を投稿し、<br />
+            他人のしくじりから学べる Web アプリ。
+          </p>
+          <p class="muted small" style="margin-top: 1.2em">
+            ダメ出しされない設計の、学習向け SNS 的プロダクト。
+          </p>
+        </section>
+
+        <!-- 3 -->
+        <section>
+          <h2>なぜ作るか</h2>
+          <blockquote class="accent" style="border: none; box-shadow: none; font-size: 1.05em">
+            失敗無き学習は、失敗を防ぐことに寄与しない。
+          </blockquote>
+          <ul>
+            <li>自分の失敗だけが学びの源になりがち</li>
+            <li>他人のしくじりこそ先回りの財産</li>
+            <li>だから「書いてよい」「見つかる」場が要る</li>
+          </ul>
+        </section>
+
+        <!-- 4 -->
+        <section>
+          <h2>普通の SNS / Q&amp;A と違うところ</h2>
+          <ul>
+            <li><strong>ダメ出ししない</strong> — 自由コメントなし。わかる / 参考になる だけ</li>
+            <li><strong>晒さない</strong> — フィードは匿名。BAD 件数は出さない</li>
+            <li><strong>学びを取り出す</strong> — 検索と質問で集合知を手元に戻す</li>
+          </ul>
+        </section>
+
+        <!-- 5 -->
+        <section>
+          <h2>できること</h2>
+          <ul class="small">
+            <li>投稿（本文必須 · 状況/原因は任意）</li>
+            <li>フィード · 詳細 · わかる / 参考になる</li>
+            <li>意味検索（Vectorize · 失敗時 Jaccard）</li>
+            <li>質問（テンプレ応答 + 根拠リンク · 生成 LLM なし）</li>
+            <li>タグ · ブックマーク · ダッシュボード · 自分の投稿削除</li>
+          </ul>
+        </section>
+
+        <!-- 6 -->
+        <section>
+          <h2>ライブデモ</h2>
+          <p>
+            <a href="https://sikuttar.npcdotcom.workers.dev" target="_blank" rel="noopener"
+              >sikuttar.npcdotcom.workers.dev</a
+            >
+          </p>
+          <ol class="small">
+            <li>フィードで失敗談カード</li>
+            <li>検索「本番公開の直前チェックを怠った話」→ 言い換えでも近い投稿</li>
+            <li>質問「デプロイ前の確認を…」→ テンプレ + 根拠（生成ではない）</li>
+            <li>余力:「カレーの作り方」→ 根拠が空</li>
+          </ol>
+        </section>
+
+        <!-- 7 -->
+        <section>
+          <h2>技術スタック</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>層</th>
+                <th>技術</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>UI</td>
+                <td>Vite + React (TS)</td>
+              </tr>
+              <tr>
+                <td>API</td>
+                <td>Hono on Cloudflare Workers</td>
+              </tr>
+              <tr>
+                <td>DB</td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>検索</td>
+                <td>Workers AI bge-m3 + Vectorize</td>
+              </tr>
+              <tr>
+                <td>質問</td>
+                <td>テンプレ組み立て（ADR 0002）</td>
+              </tr>
+              <tr>
+                <td>認証</td>
+                <td>GitHub OAuth</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- 8 -->
+        <section>
+          <h2>アーキテクチャ</h2>
+          <pre><code>[Browser SPA]
+     │
+     ▼
+[Worker = Hono API + SPA assets]
+     ├─ D1
+     ├─ Workers AI（埋め込みのみ）
+     └─ Vectorize（sikuttar-stories）</code></pre>
+          <p class="muted small">チャット生成は載せない。Retriever が先。</p>
+        </section>
+
+        <!-- 9 -->
+        <section>
+          <h2>見どころ 1 — 心理安全性</h2>
+          <ul>
+            <li>わかる（全体類似）と 参考になる（学び）を分離</li>
+            <li>自由記述コメントを置かない</li>
+            <li>BAD は内部用 · 公開件数なし</li>
+          </ul>
+          <p class="muted small">「書いてよい」を機能ではなくルールで支える。</p>
+        </section>
+
+        <!-- 10 -->
+        <section>
+          <h2>見どころ 2 — Retriever を段階で強くする</h2>
+          <ul>
+            <li><strong>A</strong> — 無料で計測 · 長文 floor · 評価セット</li>
+            <li><strong>B</strong> — Vectorize で言い換え対応 · 弱ヒットは閾値で切る</li>
+            <li><strong>C</strong> — 生成 LLM（未搭載 · 必要なら後段）</li>
+          </ul>
+          <p class="muted small">測ってから載せる。B のとき C は同時に開かない。</p>
+        </section>
+
+        <!-- 11 -->
+        <section>
+          <h2>費用とクオリティ</h2>
+          <ul>
+            <li>質問の応答はテンプレ（Neuron をチャットに使わない）</li>
+            <li>埋め込み検索だけを本番オン</li>
+            <li>障害時は Jaccard にフォールバック</li>
+          </ul>
+          <p class="muted small">
+            「RAG = Retriever が先、Generator は任意」をそのまま実装方針にした。
+          </p>
+        </section>
+
+        <!-- 12 -->
+        <section>
+          <h2>チーム</h2>
+          <table>
+            <tbody>
+              <tr>
+                <td>フロント</td>
+                <td>rako · NPC</td>
+              </tr>
+              <tr>
+                <td>バック</td>
+                <td>hiroto · NPC</td>
+              </tr>
+              <tr>
+                <td>インフラ · 進行</td>
+                <td>NPC</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="foot">
+            <a href="https://github.com/NPCdotcom/Sikuttar" target="_blank" rel="noopener"
+              >github.com/NPCdotcom/Sikuttar</a
+            >
+          </p>
+        </section>
+
+        <!-- 13 -->
+        <section class="center-slide">
+          <h2>一番見てほしいこと</h2>
+          <p style="font-size: 1.15em; margin-top: 0.8em">
+            「失敗を書いてよい」を、<br />
+            <span class="accent">ルールと検索</span>で支えていること。
+          </p>
+          <p class="muted small" style="margin-top: 1.4em">
+            心理安全性 → 計測可能な Retriever →（必要なら）生成
+          </p>
+        </section>
+
+        <!-- 14 -->
+        <section class="center-slide">
+          <p class="brand">SIKUTTAR</p>
+          <h1>ありがとうございました</h1>
+          <p class="tagline accent">しくじったら、シクッター。</p>
+          <p class="foot">
+            デモ
+            <a href="https://sikuttar.npcdotcom.workers.dev" target="_blank" rel="noopener"
+              >workers.dev</a
+            >
+            · 詳細
+            <a href="https://github.com/NPCdotcom/Sikuttar/wiki" target="_blank" rel="noopener"
+              >Wiki</a
+            >
+          </p>
+        </section>
+      </div>
+    </div>
+    <script src="./vendor/reveal/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        slideNumber: "c/t",
+        controls: true,
+        progress: true,
+        center: false,
+        transition: "fade",
+        backgroundTransition: "fade",
+        width: 1280,
+        height: 720,
+        margin: 0.08,
+      });
+    </script>
+  </body>
+</html>
