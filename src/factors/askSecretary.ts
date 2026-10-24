@@ -72,10 +72,14 @@ export async function askSecretary(
     }
   }
 
+  // Bookmark first, then prefer rows with a non-empty cause for template slots.
   const ranked = [...focus].sort((a, b) => {
     const aBm = bookmarkedIds.has(a.id) ? 1 : 0;
     const bBm = bookmarkedIds.has(b.id) ? 1 : 0;
-    return bBm - aBm;
+    if (bBm !== aBm) return bBm - aBm;
+    const aCause = a.cause?.trim() ? 1 : 0;
+    const bCause = b.cause?.trim() ? 1 : 0;
+    return bCause - aCause;
   });
 
   const slice = ranked.slice(0, EVIDENCE_LIMIT);

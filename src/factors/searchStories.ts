@@ -23,7 +23,11 @@ export async function searchStories(
     try {
       const vector = await embedText(env.AI!, q);
       const ids = await queryVectorIndex(env.VECTORIZE!, vector, limit);
-      return await hydrateStoriesByIds(env.DB, ids);
+      if (ids.length > 0) {
+        return await hydrateStoriesByIds(env.DB, ids);
+      }
+      // No strong vector hits → token fallback (empty / weak paraphrase edge)
+      return fallbackTokenSearch(env.DB, q, limit);
     } catch {
       // FR12: never die on Vectorize/AI failure alone
       return fallbackTokenSearch(env.DB, q, limit);

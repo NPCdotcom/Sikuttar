@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "created": "2026-10-22",
+  "queries": [
+    {
+      "id": "short-deploy",
+      "query": "デプロイ",
+      "bucket": "short",
+      "expect": "hits"
+    },
+    {
+      "id": "short-oauth",
+      "query": "OAuth",
+      "bucket": "short",
+      "expect": "hits"
+    },
+    {
+      "id": "short-test",
+      "query": "テスト",
+      "bucket": "short",
+      "expect": "hits"
+    },
+    {
+      "id": "medium-checklist",
+      "query": "デプロイ前の確認",
+      "bucket": "medium",
+      "expect": "hits"
+    },
+    {
+      "id": "medium-cookie",
+      "query": "localhost の Cookie",
+      "bucket": "medium",
+      "expect": "hits"
+    },
+    {
+      "id": "long-deploy-learn",
+      "query": "デプロイ前の確認を飛ばしてしまったときの学びは？",
+      "bucket": "long",
+      "expect": "hits"
+    },
+    {
+      "id": "long-oauth-fail",
+      "query": "GitHub OAuth のコールバック URL を間違えてログインできなかった経験について教えて",
+      "bucket": "long",
+      "expect": "hits"
+    },
+    {
+      "id": "long-test-skip",
+      "query": "テストを書かずにマージして本番で壊したときにどうすればよかったか知りたいです",
+      "bucket": "long",
+      "expect": "hits"
+    },
+    {
+      "id": "para-release",
+      "query": "本番公開の直前チェックを怠った話",
+      "bucket": "paraphrase",
+      "expect": "hits"
+    },
+    {
+      "id": "para-auth",
+      "query": "認証連携の戻り先設定ミス",
+      "bucket": "paraphrase",
+      "expect": "hits"
+    },
+    {
+      "id": "empty-cooking",
+      "query": "カレーの作り方",
+      "bucket": "expect_empty",
+      "expect": "empty"
+    },
+    {
+      "id": "empty-weather",
+      "query": "明日の天気は？",
+      "bucket": "expect_empty",
+      "expect": "empty"
+    },
+    {
+      "id": "empty-gibberish",
+      "query": "あいうえおかきくけこさしすせそ",
+      "bucket": "expect_empty",
+      "expect": "empty"
+    },
+    {
+      "id": "medium-tag-d1",
+      "query": "D1 マイグレーション",
+      "bucket": "medium",
+      "expect": "hits"
+    }
+  ]
+}

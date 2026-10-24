@@ -4,7 +4,7 @@ import type { StoryRow } from "./listByCreatedAtDesc";
 export async function listByTag(
   db: D1Database,
   tag: string,
-  limit = 50,
+  limit = 100,
 ): Promise<StoryRow[]> {
   const result = await db
     .prepare(
