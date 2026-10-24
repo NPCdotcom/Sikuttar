@@ -19,13 +19,16 @@
       .reveal {
         font-family: "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
         color: var(--sik-fg);
-        font-size: 36px;
+        font-size: 34px;
+        line-break: strict;
+        word-break: keep-all;
+        overflow-wrap: normal;
       }
       .reveal .slides {
         text-align: left;
       }
       .reveal .slides section {
-        padding: 0 5%;
+        padding: 0 4%;
       }
       .reveal .controls {
         color: var(--sik-accent);
@@ -52,11 +55,12 @@
         margin-bottom: 0.25em;
       }
       .reveal h2 {
-        font-size: 1.45em;
+        font-size: 1.4em;
         border-bottom: 2px solid var(--sik-accent);
         padding-bottom: 0.18em;
-        margin: 0 0 0.7em;
-        max-width: 18em;
+        margin: 0 0 0.65em;
+        display: inline-block;
+        max-width: none;
       }
       .reveal p,
       .reveal li {
@@ -68,9 +72,9 @@
         font-size: 1.05em;
       }
       .reveal .lead {
-        font-size: 1.25em;
-        line-height: 1.45;
-        max-width: 16em;
+        font-size: 1.22em;
+        line-height: 1.5;
+        max-width: 28em;
       }
       .reveal .muted {
         color: var(--sik-muted);
@@ -91,10 +95,10 @@
       .reveal ul,
       .reveal ol {
         margin: 0.2em 0 0 1.05em;
-        max-width: 22em;
+        max-width: 36em;
       }
       .reveal li {
-        margin: 0.45em 0;
+        margin: 0.4em 0;
         font-size: 0.95em;
       }
       .reveal a {
@@ -102,15 +106,15 @@
       }
       .reveal blockquote {
         width: auto;
-        max-width: 20em;
+        max-width: 32em;
         margin: 0 0 0.85em;
         padding: 0;
         background: transparent;
         box-shadow: none;
         border: none;
         font-style: normal;
-        font-size: 1.15em;
-        line-height: 1.45;
+        font-size: 1.12em;
+        line-height: 1.5;
         color: var(--sik-accent);
       }
       .reveal table {
@@ -144,16 +148,17 @@
         margin-top: 0.9em;
         font-size: 0.78em;
         color: var(--sik-muted);
-        max-width: 22em;
+        max-width: 36em;
       }
       .reveal .demo-url {
         font-size: 1.05em;
         margin-bottom: 0.55em;
+        white-space: nowrap;
       }
       .reveal .flow {
         list-style: none;
         margin-left: 0;
-        max-width: 24em;
+        max-width: 36em;
       }
       .reveal .flow li {
         position: relative;
@@ -172,7 +177,7 @@
         gap: 0.35em;
         margin: 0.2em 0 0.7em;
         font-size: 0.9em;
-        max-width: 22em;
+        max-width: 34em;
       }
       .reveal .arch .box {
         border: 1px solid var(--sik-line);
@@ -216,9 +221,7 @@
         <section>
           <h2>一行でいうと</h2>
           <p class="lead">
-            愚痴感覚で失敗談を投稿し、<br />
-            他人のしくじりから学べる<br />
-            Web アプリ。
+            愚痴感覚で失敗談を投稿し、他人のしくじりから学べる Web アプリ。
           </p>
           <p class="note">ダメ出しされない、学習向けの SNS 的プロダクト。</p>
         </section>
@@ -226,7 +229,9 @@
         <!-- 3: なぜ + 違い を統合 -->
         <section>
           <h2>普通の SNS と違うところ</h2>
-          <blockquote>失敗無き学習は、失敗を防ぐことに寄与しない。</blockquote>
+          <blockquote>
+            失敗無き学習は、失敗を防ぐことに寄与しない。
+          </blockquote>
           <ul>
             <li><strong>ダメ出ししない</strong> — わかる / 参考になる だけ</li>
             <li><strong>晒さない</strong> — 匿名フィード · BAD 件数は出さない</li>
@@ -282,9 +287,8 @@
         <!-- 7 -->
         <section class="center-slide">
           <h2>一番見てほしいこと</h2>
-          <p class="lead" style="margin: 0.9em auto; max-width: 14em">
-            「失敗を書いてよい」を、<br />
-            <span class="accent">ルールと検索</span>で支えていること。
+          <p class="lead" style="margin: 0.9em auto; max-width: 22em">
+            「失敗を書いてよい」を、<span class="accent">ルールと検索</span>で支えていること。
           </p>
           <p class="note" style="margin-left: auto; margin-right: auto">
             心理安全性 → 計測可能な Retriever →（必要なら）生成
@@ -321,9 +325,10 @@
         center: true,
         transition: "fade",
         backgroundTransition: "fade",
-        width: 1280,
-        height: 720,
-        margin: 0.1,
+        /* Wider than 16:9 so JP phrases wrap less mid-clause */
+        width: 1600,
+        height: 800,
+        margin: 0.06,
       });
     </script>
   </body>
