@@ -1,4 +1,4 @@
-# Session navigation (every turn): .agents/memory/state/nav.yaml — see docs/PM_ROUTING.md
+# Project control plane (phase / gates). Local agent nav is not published.
 
 current_phase: P6
 phase_note: "2026-10-22 Phase A+B: Vectorize on (sikuttar-stories) + template secretary; gen-LLM (C) still gated — https://sikuttar.npcdotcom.workers.dev · docs/operations/wave2/question-quality-eval.md"

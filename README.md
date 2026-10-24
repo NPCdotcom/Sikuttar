@@ -103,8 +103,6 @@ Workers Paid / Vectorize / 生成 LLM は **次ゲート**（契約・オンし�
 | 要求・要件 | [docs/requirements/failure-share/](docs/requirements/failure-share/) |
 | 設計（H0–H4） | [docs/design/README.md](docs/design/README.md) |
 | Wave2 運用 | [docs/operations/wave2/](docs/operations/wave2/README.md) |
-| 実装プラン | [.agents/plans/README.md](.agents/plans/README.md) |
-| エージェント向け | [AGENTS.md](AGENTS.md) |
 
 ## 主な API（ローカル）
 
@@ -130,4 +128,3 @@ Workers Paid / Vectorize / 生成 LLM は **次ゲート**（契約・オンし�
 ## ブランチ運用（目安）
 
 - 機能は `plan/<slug>` などで作業 → PR → `main`
-- エージェントキット由来のローカル差分（`.agents/memory` 等）はコミット対象外

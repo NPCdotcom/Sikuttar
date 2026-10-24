@@ -1,9 +1,0 @@
-version: 1
-# Copy to learning/index.yaml — optional catalog of active learning topics
-
-topics:
-  # - id: example-topic
-  #   path: learning/example-topic
-  #   status: exploring
-  #   summary: "One line intent"
-  #   recall: on_demand
