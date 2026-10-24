@@ -1,15 +1,9 @@
 import { countPublicReactions } from "./countPublicReactions";
 import { listByCreatedAtDesc, type StoryRow } from "./listByCreatedAtDesc";
+import { loadTagsByStoryIds } from "./loadTagsByStoryIds";
 import { StoryNotFoundError } from "./persistReaction";
-import {
-  applyWakaruBoost,
-  passesTokenMatchFloor,
-  scoreTokenMatch,
-} from "./scoreStorySimilarity";
-import {
-  storyTextForSimilarity,
-  tokenizeForSimilarity,
-} from "./tokenizeForSimilarity";
+import { rankStoriesByTokenQuery } from "./rankStoriesByTokenQuery";
+import { storyTextForSimilarityWithTags } from "./tokenizeForSimilarity";
 
 export type RelatedHit = {
   row: StoryRow;
@@ -38,29 +32,25 @@ export async function findRelatedStories(
     return [];
   }
 
+  const allIds = [query.id, ...others.map((c) => c.id)];
+  const tagsMap = await loadTagsByStoryIds(db, allIds);
   const countsMap = await countPublicReactions(
     db,
     others.map((c) => c.id),
   );
-  const queryTokens = tokenizeForSimilarity(storyTextForSimilarity(query));
 
-  const scored: RelatedHit[] = others
-    .map((row) => {
-      const candidateTokens = tokenizeForSimilarity(
-        storyTextForSimilarity(row),
-      );
-      if (!passesTokenMatchFloor(queryTokens, candidateTokens)) {
-        return null;
-      }
-      const base = scoreTokenMatch(queryTokens, candidateTokens);
-      const wakaru = countsMap.get(row.id)?.wakaru ?? 0;
-      return { row, score: applyWakaruBoost(base, wakaru) };
-    })
-    .filter((h): h is RelatedHit => h !== null);
-
-  scored.sort(
-    (a, b) =>
-      b.score - a.score || b.row.created_at.localeCompare(a.row.created_at),
+  const queryText = storyTextForSimilarityWithTags(
+    query,
+    tagsMap.get(query.id) ?? [],
   );
-  return scored.filter((h) => h.score > 0).slice(0, limit);
+
+  return rankStoriesByTokenQuery(
+    queryText,
+    others.map((row) => ({
+      row,
+      tags: tagsMap.get(row.id) ?? [],
+      wakaru: countsMap.get(row.id)?.wakaru ?? 0,
+    })),
+    limit,
+  );
 }

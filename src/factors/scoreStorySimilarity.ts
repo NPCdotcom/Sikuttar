@@ -24,7 +24,7 @@ export function scoreQueryCoverage(
 
 /**
  * Hybrid token match: coverage-weighted (cuts weak CJK-bigram noise).
- * base = 0.6 * coverage + 0.4 * jaccard
+ * base = 0.7 * coverage + 0.3 * jaccard
  */
 export function scoreTokenMatch(
   queryTokens: Set<string>,
@@ -32,11 +32,13 @@ export function scoreTokenMatch(
 ): number {
   const coverage = scoreQueryCoverage(queryTokens, candidateTokens);
   const jaccard = scoreStorySimilarity(queryTokens, candidateTokens);
-  return 0.6 * coverage + 0.4 * jaccard;
+  return 0.7 * coverage + 0.3 * jaccard;
 }
 
 /**
- * Drop empty intersection; for |Q| >= 3 also require coverage >= 0.2.
+ * Drop empty intersection.
+ * |Q| <= 2: require full query coverage (cuts weak bigram noise).
+ * |Q| >= 3: require coverage >= 0.2.
  */
 export function passesTokenMatchFloor(
   queryTokens: Set<string>,
@@ -46,10 +48,85 @@ export function passesTokenMatchFloor(
   if (intersection === 0) {
     return false;
   }
-  if (queryTokens.size >= 3) {
-    return scoreQueryCoverage(queryTokens, candidateTokens) >= 0.2;
+  const coverage = scoreQueryCoverage(queryTokens, candidateTokens);
+  if (queryTokens.size <= 2) {
+    return coverage >= 1;
   }
-  return true;
+  return coverage >= 0.2;
+}
+
+/**
+ * Whether a floor surface token is evidenced in candidate similarity tokens
+ * (exact hit, or enough CJK char-bigrams present).
+ */
+export function floorTokenMatched(
+  token: string,
+  candidateTokens: Set<string>,
+): boolean {
+  if (candidateTokens.has(token)) {
+    return true;
+  }
+  if (token.length < 2) {
+    return false;
+  }
+  const hasLatin = /[a-z0-9]/i.test(token);
+  if (hasLatin) {
+    return false;
+  }
+  let hits = 0;
+  let total = 0;
+  for (let i = 0; i < token.length - 1; i++) {
+    total += 1;
+    if (candidateTokens.has(token.slice(i, i + 2))) {
+      hits += 1;
+    }
+  }
+  if (total === 0) {
+    return false;
+  }
+  // Short content (2–3 chars): any bigram. Longer: at least half the bigrams.
+  if (token.length <= 3) {
+    return hits >= 1;
+  }
+  return hits / total >= 0.5;
+}
+
+/** Floor coverage using surface query tokens against candidate similarity tokens. */
+export function scoreFloorCoverage(
+  floorQueryTokens: Set<string>,
+  candidateTokens: Set<string>,
+): number {
+  if (floorQueryTokens.size === 0) {
+    return 0;
+  }
+  let matched = 0;
+  for (const t of floorQueryTokens) {
+    if (floorTokenMatched(t, candidateTokens)) {
+      matched += 1;
+    }
+  }
+  return matched / floorQueryTokens.size;
+}
+
+/**
+ * Floor gate for user/search queries: surface tokens on the query side
+ * (see tokenizeQueryForFloor), similarity tokens on the candidate side.
+ */
+export function passesQueryFloor(
+  floorQueryTokens: Set<string>,
+  candidateTokens: Set<string>,
+): boolean {
+  if (floorQueryTokens.size === 0) {
+    return false;
+  }
+  const coverage = scoreFloorCoverage(floorQueryTokens, candidateTokens);
+  if (coverage <= 0) {
+    return false;
+  }
+  if (floorQueryTokens.size <= 2) {
+    return coverage >= 1;
+  }
+  return coverage >= 0.2;
 }
 
 function countIntersection(a: Set<string>, b: Set<string>): number {

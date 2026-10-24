@@ -9,7 +9,7 @@ export type StoryRow = {
 
 export async function listByCreatedAtDesc(
   db: D1Database,
-  limit = 50,
+  limit = 100,
 ): Promise<StoryRow[]> {
   const result = await db
     .prepare(
