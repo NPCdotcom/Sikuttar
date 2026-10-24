@@ -97,6 +97,8 @@ Workers Paid / Vectorize / 生成 LLM は **次ゲート**（契約・オンし�
 
 | 用途 | 場所 |
 |------|------|
+| 発表スライド（Reveal.js） | [docs/slides/](docs/slides/) · Pages: [npcdotcom.github.io/Sikuttar/slides/](https://npcdotcom.github.io/Sikuttar/slides/) |
+| Wiki（詳細） | [Wiki](https://github.com/NPCdotcom/Sikuttar/wiki) |
 | 製品チャーター | [docs/design/product/charter.md](docs/design/product/charter.md) |
 | 要求・要件 | [docs/requirements/failure-share/](docs/requirements/failure-share/) |
 | 設計（H0–H4） | [docs/design/README.md](docs/design/README.md) |
