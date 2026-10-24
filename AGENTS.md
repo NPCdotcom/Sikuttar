@@ -79,7 +79,7 @@ User chat: **Japanese** · Kit canon: **English** — [LANGUAGE_POLICY.md](.agen
 - 配布形態 Fact: Web アプリ・利用者はブラウザのみ。スタック Assumption: TypeScript / React / Hono / Cloudflare
 - MVP は投稿・閲覧；投稿者は自分の投稿を削除できる。確定リアクションは「わかる」「参考になる」。BAD は非可視化・システム用（プロフィール掲載投稿にも載せない）
 - UI/IA は laratter 風（フィード／作成／詳細・カード）を借り、Laravel 構成には寄せない
-- Wave2（agreed）: GitHub OAuth、個人ブックマーク、Twitter 風の可変ハッシュタグ（フィード固定タグ一覧ではない）。検索品質は A（無料計測・Jaccard/テンプレ）→ B（Vectorize）→ C（生成 LLM）の順；初回 CF は Free 最小構成で、B/C はゲート付き後段。ローカルで足りる間は頻繁に上げない
+- Wave2（agreed）: GitHub OAuth、個人ブックマーク、Twitter 風の可変ハッシュタグ（フィード固定タグ一覧ではない）。検索品質は A（無料計測・Jaccard/テンプレ）→ B（Vectorize）→ C（生成 LLM）の順で進め、B 実施時に C は同時開放しない；初回 CF は Free 最小構成で、B/C はゲート付き後段。ローカルで足りる間は頻繁に上げない
 - AI「質問」Q&A（旧称・秘書）は投稿＆類似検索への付加機能；自由質問は専用タブ、投稿起点は特定アクション。根拠は失敗談・ブックマーク・タグ；属性提示は話題関連投稿の 1/3 以上のみ
 - 個人ダッシュボードは軽いプロフィール＋自分の投稿＋ブックマークに加え、件数・最近の投稿や話題トピック（24h／週／月）などマーケ寄りコンテンツ（X プロフィール欄イメージ）
 - 発表資料は GitHub Wiki（`github.com/NPCdotcom/Sikuttar/wiki`）；構成は Topa'z プロジェクトページを参考
