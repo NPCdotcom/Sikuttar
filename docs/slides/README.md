@@ -14,6 +14,6 @@ PowerPoint ではなく、ブラウザで全画面発表する HTML デッキで
 ## 構成
 
 - `index.html` — スライド本体
-- `vendor/reveal.js/` — Reveal.js 5.1（CDN 非依存 · 会場オフライン向け）
+- `vendor/reveal/` — Reveal.js 5.1（CDN 非依存 · 会場オフライン向け）
 
 詳細な製品説明は [Wiki](https://github.com/NPCdotcom/Sikuttar/wiki) を参照。
