@@ -24,6 +24,9 @@
         word-break: keep-all;
         overflow-wrap: normal;
       }
+      .reveal .nowrap {
+        white-space: nowrap;
+      }
       .reveal .slides {
         text-align: left;
       }
@@ -74,8 +77,8 @@
       }
       .reveal .lead {
         font-size: 1.15em;
-        line-height: 1.5;
-        max-width: 34em;
+        line-height: 1.55;
+        max-width: none;
       }
       .reveal .muted {
         color: var(--sik-muted);
@@ -96,18 +99,21 @@
       .reveal ul,
       .reveal ol {
         margin: 0.2em 0 0 1.05em;
-        max-width: 36em;
+        max-width: none;
       }
       .reveal li {
         margin: 0.4em 0;
         font-size: 0.95em;
       }
+      .reveal li .nowrap {
+        display: inline;
+      }
       .reveal a {
         color: var(--sik-accent);
       }
       .reveal blockquote {
-        width: auto;
-        max-width: 32em;
+        width: fit-content;
+        max-width: none;
         margin: 0 0 0.85em;
         padding: 0;
         background: transparent;
@@ -146,10 +152,16 @@
         color: var(--sik-muted);
       }
       .reveal .note {
-        margin-top: 0.9em;
-        font-size: 0.78em;
+        margin-top: 0.75em;
+        font-size: 0.82em;
         color: var(--sik-muted);
-        max-width: 36em;
+        max-width: none;
+        width: fit-content;
+        white-space: nowrap;
+      }
+      .reveal .center-slide .note {
+        margin-left: auto;
+        margin-right: auto;
       }
       .reveal .demo-url {
         font-size: 1.05em;
@@ -159,7 +171,7 @@
       .reveal .flow {
         list-style: none;
         margin-left: 0;
-        max-width: 36em;
+        max-width: none;
       }
       .reveal .flow li {
         position: relative;
@@ -223,21 +235,21 @@
           <h2>一行でいうと</h2>
           <p class="lead">
             愚痴感覚で失敗談を投稿し、<br />
-            他人のしくじりから学べる Web アプリ。
+            <span class="nowrap">他人のしくじりから学べる Web アプリ。</span>
           </p>
-          <p class="note">ダメ出しされない、学習向けの SNS 的プロダクト。</p>
+          <p class="note">ダメ出しなし · 学習向けの SNS</p>
         </section>
 
         <!-- 3: なぜ + 違い を統合 -->
         <section>
           <h2>普通の SNS と違うところ</h2>
-          <blockquote>
+          <blockquote class="nowrap">
             失敗無き学習は、失敗を防ぐことに寄与しない。
           </blockquote>
           <ul>
-            <li><strong>ダメ出ししない</strong> — わかる / 参考になる だけ</li>
-            <li><strong>晒さない</strong> — 匿名フィード · BAD 件数は出さない</li>
-            <li><strong>学びを取り出す</strong> — 検索と質問で集合知を戻す</li>
+            <li class="nowrap"><strong>ダメ出ししない</strong> — わかる / 参考になる だけ</li>
+            <li class="nowrap"><strong>晒さない</strong> — 匿名フィード · BAD 件数は出さない</li>
+            <li class="nowrap"><strong>学びを取り出す</strong> — 検索と質問で集合知を戻す</li>
           </ul>
         </section>
 
@@ -250,10 +262,10 @@
             >
           </p>
           <ol class="flow">
-            <li data-n="1">フィード — 失敗談カード</li>
-            <li data-n="2">検索 — 言い換えでも近い投稿</li>
-            <li data-n="3">質問 — テンプレ + 根拠（生成ではない）</li>
-            <li data-n="4">余力 — 無関係クエリは根拠が空</li>
+            <li class="nowrap" data-n="1">フィード — 失敗談カード</li>
+            <li class="nowrap" data-n="2">検索 — 言い換えでも近い投稿</li>
+            <li class="nowrap" data-n="3">質問 — テンプレ + 根拠（生成ではない）</li>
+            <li class="nowrap" data-n="4">余力 — 無関係クエリは根拠が空</li>
           </ol>
         </section>
 
@@ -270,31 +282,27 @@
               <span>GitHub OAuth</span>
             </div>
           </div>
-          <p class="note">質問応答に生成 LLM は載せない。検索（Retriever）が先。</p>
+          <p class="note">生成 LLM は載せない · 検索（Retriever）が先</p>
         </section>
 
         <!-- 6: 見どころ統合 -->
         <section>
           <h2>見どころ</h2>
           <ul>
-            <li><strong>心理安全性</strong> — 自由コメントなし · 「書いてよい」をルールで支える</li>
-            <li>
-              <strong>品質は段階</strong> — A 計測 → B Vectorize → C 生成（未搭載）
-            </li>
-            <li><strong>費用</strong> — 埋め込み検索のみ本番オン · 障害時は簡易類似へ</li>
+            <li class="nowrap"><strong>心理安全性</strong> — 自由コメントなし · 「書いてよい」をルールで支える</li>
+            <li class="nowrap"><strong>品質は段階</strong> — A 計測 → B Vectorize → C 生成は後段</li>
+            <li class="nowrap"><strong>費用</strong> — 埋め込み検索のみ本番 · 障害時は簡易類似へ</li>
           </ul>
-          <p class="note">測ってから載せる。B のとき C は同時に開かない。</p>
+          <p class="note">測ってから載せる · B のとき C は同時に開かない</p>
         </section>
 
         <!-- 7 -->
         <section class="center-slide">
           <h2>一番見てほしいこと</h2>
-          <p class="lead" style="margin: 0.9em auto; max-width: 22em">
+          <p class="lead nowrap" style="margin: 0.9em auto">
             「失敗を書いてよい」を、<span class="accent">ルールと検索</span>で支えていること。
           </p>
-          <p class="note" style="margin-left: auto; margin-right: auto">
-            心理安全性 → 計測可能な Retriever →（必要なら）生成
-          </p>
+          <p class="note">心理安全性 → Retriever →（必要なら）生成</p>
         </section>
 
         <!-- 8 -->
