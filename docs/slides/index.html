@@ -9,212 +9,315 @@
     <style>
       :root {
         --sik-bg: #12141a;
-        --sik-fg: #f2efe8;
-        --sik-muted: #a8a29a;
+        --sik-fg: #f4f1ea;
+        --sik-muted: #b5aea3;
         --sik-accent: #e8a54b;
-        --sik-line: #2a2f3a;
+        --sik-accent-dim: #c4893a;
+        --sik-line: #2e3440;
+        --sik-panel: #1a1e28;
+        --r-background-color: #12141a;
+        --r-main-font-size: 42px;
+        --r-heading-color: #f4f1ea;
+        --r-main-color: #f4f1ea;
         --r-link-color: #e8a54b;
         --r-selection-background-color: #e8a54b;
       }
+
+      html,
+      body {
+        background: var(--sik-bg);
+      }
+
       .reveal {
-        font-family: "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+        font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI",
+          "Segoe UI", "Noto Sans JP", sans-serif;
         color: var(--sik-fg);
-        font-size: 34px;
+        font-size: 42px;
+        font-weight: 500;
         line-break: strict;
         word-break: keep-all;
         overflow-wrap: normal;
+        background: radial-gradient(
+          120% 90% at 12% 8%,
+          #1b2030 0%,
+          #12141a 42%,
+          #0d0f14 100%
+        );
       }
+
       .reveal .nowrap {
         white-space: nowrap;
       }
+
       .reveal .slides {
         text-align: left;
       }
+
       .reveal .slides section {
-        padding: 0 4%;
+        padding: 0 7%;
       }
+
       .reveal .controls {
         color: var(--sik-accent);
       }
+
       .reveal .progress {
         color: var(--sik-accent);
-        height: 3px;
+        height: 4px;
       }
+
       .reveal .slide-number {
         color: var(--sik-muted);
         background: transparent;
-        font-size: 14px;
+        font-size: 16px;
+        right: 18px;
+        bottom: 14px;
       }
+
       .reveal h1,
       .reveal h2,
       .reveal h3 {
         text-transform: none;
         font-weight: 700;
-        letter-spacing: 0.01em;
+        letter-spacing: 0.02em;
         color: var(--sik-fg);
+        text-shadow: none;
       }
+
       .reveal h1 {
-        font-size: 2.35em;
-        margin-bottom: 0.25em;
+        font-size: 2.5em;
+        margin: 0 0 0.2em;
+        line-height: 1.15;
       }
+
       .reveal h2 {
-        font-size: 1.4em;
-        border-bottom: 2px solid var(--sik-accent);
-        padding-bottom: 0.18em;
-        margin: 0 0 0.65em;
+        font-size: 1.55em;
+        margin: 0 0 0.75em;
+        padding: 0 0 0.22em;
         display: block;
         width: fit-content;
         max-width: 100%;
+        border-bottom: 3px solid var(--sik-accent);
+        line-height: 1.25;
       }
+
       .reveal p,
       .reveal li {
         color: var(--sik-fg);
-        line-height: 1.5;
+        line-height: 1.55;
       }
+
       .reveal p {
-        margin: 0.35em 0;
+        margin: 0.3em 0;
         font-size: 1.05em;
       }
+
       .reveal .lead {
-        font-size: 1.15em;
+        font-size: 1.28em;
+        font-weight: 600;
         line-height: 1.55;
-        max-width: none;
+        letter-spacing: 0.01em;
       }
+
       .reveal .muted {
         color: var(--sik-muted);
       }
+
       .reveal .accent {
         color: var(--sik-accent);
       }
+
       .reveal .tagline {
-        font-size: 1.25em;
-        margin-top: 0.55em;
+        font-size: 1.35em;
+        font-weight: 600;
+        margin-top: 0.45em;
+        letter-spacing: 0.04em;
       }
+
       .reveal .brand {
-        font-size: 0.78em;
-        letter-spacing: 0.12em;
+        font-size: 0.72em;
+        font-weight: 700;
+        letter-spacing: 0.22em;
         color: var(--sik-accent);
-        margin-bottom: 0.35em;
+        margin-bottom: 0.45em;
       }
+
       .reveal ul,
       .reveal ol {
-        margin: 0.2em 0 0 1.05em;
+        margin: 0.15em 0 0;
+        padding: 0;
+        list-style: none;
         max-width: none;
       }
+
       .reveal li {
-        margin: 0.4em 0;
-        font-size: 0.95em;
+        position: relative;
+        margin: 0.55em 0;
+        padding-left: 1.15em;
+        font-size: 1.02em;
+        font-weight: 500;
       }
-      .reveal li .nowrap {
-        display: inline;
+
+      .reveal ul > li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.55em;
+        width: 0.38em;
+        height: 0.38em;
+        border-radius: 50%;
+        background: var(--sik-accent);
       }
+
+      .reveal li strong {
+        font-weight: 700;
+        color: var(--sik-fg);
+      }
+
+      .reveal li .desc {
+        color: var(--sik-muted);
+        font-weight: 500;
+      }
+
       .reveal a {
         color: var(--sik-accent);
+        text-decoration: none;
       }
+
+      .reveal a:hover {
+        color: #f0bc6e;
+      }
+
       .reveal blockquote {
         width: fit-content;
         max-width: none;
-        margin: 0 0 0.85em;
-        padding: 0;
+        margin: 0 0 0.95em;
+        padding: 0.15em 0 0.15em 0.7em;
         background: transparent;
         box-shadow: none;
         border: none;
+        border-left: 3px solid var(--sik-accent);
         font-style: normal;
         font-size: 1.12em;
+        font-weight: 600;
         line-height: 1.5;
         color: var(--sik-accent);
       }
-      .reveal table {
-        font-size: 0.82em;
-        margin: 0;
-        width: auto;
-      }
-      .reveal th,
-      .reveal td {
-        border-bottom: 1px solid var(--sik-line);
-        padding: 0.4em 0.85em 0.4em 0;
-        text-align: left;
-      }
-      .reveal th {
-        color: var(--sik-muted);
-        font-weight: 600;
-      }
+
       .reveal .center-slide {
         text-align: center;
       }
+
       .reveal .center-slide h2 {
         margin-left: auto;
         margin-right: auto;
       }
+
       .reveal .foot {
-        margin-top: 1.5em;
-        font-size: 0.65em;
+        margin-top: 1.6em;
+        font-size: 0.68em;
+        font-weight: 500;
         color: var(--sik-muted);
+        letter-spacing: 0.04em;
       }
+
       .reveal .note {
-        margin-top: 0.75em;
-        font-size: 0.82em;
+        margin-top: 1em;
+        padding-top: 0.55em;
+        font-size: 0.84em;
+        font-weight: 500;
         color: var(--sik-muted);
         max-width: none;
         width: fit-content;
         white-space: nowrap;
+        border-top: 1px solid var(--sik-line);
       }
+
       .reveal .center-slide .note {
         margin-left: auto;
         margin-right: auto;
       }
+
       .reveal .demo-url {
-        font-size: 1.05em;
-        margin-bottom: 0.55em;
+        font-size: 1.12em;
+        font-weight: 600;
+        margin: 0 0 0.7em;
         white-space: nowrap;
+        letter-spacing: 0.01em;
       }
+
       .reveal .flow {
         list-style: none;
-        margin-left: 0;
-        max-width: none;
+        margin: 0;
+        padding: 0;
       }
+
       .reveal .flow li {
         position: relative;
-        padding-left: 1.5em;
-        margin: 0.55em 0;
+        padding-left: 1.7em;
+        margin: 0.62em 0;
+        font-size: 1.05em;
       }
+
       .reveal .flow li::before {
         content: attr(data-n);
         position: absolute;
         left: 0;
+        top: 0;
+        width: auto;
+        height: auto;
+        border-radius: 0;
+        background: transparent;
         color: var(--sik-accent);
         font-weight: 700;
+        font-variant-numeric: tabular-nums;
       }
+
       .reveal .arch {
         display: grid;
-        gap: 0.35em;
-        margin: 0.2em 0 0.7em;
-        font-size: 0.9em;
-        max-width: 34em;
+        gap: 0.4em;
+        margin: 0.15em 0 0.85em;
+        font-size: 0.95em;
+        max-width: 28em;
       }
+
       .reveal .arch .box {
         border: 1px solid var(--sik-line);
-        background: #1a1e28;
-        padding: 0.45em 0.7em;
-        border-radius: 4px;
+        background: linear-gradient(180deg, #1e2430 0%, var(--sik-panel) 100%);
+        padding: 0.5em 0.85em;
+        border-radius: 6px;
+        font-weight: 600;
       }
+
       .reveal .arch .kids {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.35em;
-        margin-left: 0.6em;
+        gap: 0.4em;
+        margin-left: 0.35em;
       }
+
       .reveal .arch .kids span {
         border: 1px solid var(--sik-line);
-        background: #1a1e28;
-        padding: 0.3em 0.55em;
-        border-radius: 4px;
-        font-size: 0.9em;
-      }
-      .reveal .arch .arrow {
+        background: var(--sik-panel);
+        padding: 0.35em 0.7em;
+        border-radius: 6px;
+        font-size: 0.92em;
+        font-weight: 600;
         color: var(--sik-muted);
-        font-size: 0.85em;
-        margin-left: 0.4em;
+      }
+
+      .reveal .arch .arrow {
+        color: var(--sik-accent-dim);
+        font-size: 0.8em;
+        margin-left: 0.55em;
+        line-height: 1;
+      }
+
+      .reveal .title-sub {
+        margin-top: 0.35em;
+        font-size: 0.95em;
+        color: var(--sik-muted);
+        letter-spacing: 0.06em;
       }
     </style>
   </head>
@@ -226,7 +329,7 @@
           <p class="brand">SIKUTTAR</p>
           <h1>シクッター</h1>
           <p class="tagline accent">しくじったら、シクッター。</p>
-          <p class="muted">失敗談共有 × 集合知</p>
+          <p class="title-sub">失敗談共有 × 集合知</p>
           <p class="foot">NPC · rako · hiroto</p>
         </section>
 
@@ -240,20 +343,29 @@
           <p class="note">ダメ出しなし · 学習向けの SNS</p>
         </section>
 
-        <!-- 3: なぜ + 違い を統合 -->
+        <!-- 3 -->
         <section>
           <h2>普通の SNS と違うところ</h2>
           <blockquote class="nowrap">
             失敗無き学習は、失敗を防ぐことに寄与しない。
           </blockquote>
           <ul>
-            <li class="nowrap"><strong>ダメ出ししない</strong> — わかる / 参考になる だけ</li>
-            <li class="nowrap"><strong>晒さない</strong> — 匿名フィード · BAD 件数は出さない</li>
-            <li class="nowrap"><strong>学びを取り出す</strong> — 検索と質問で集合知を戻す</li>
+            <li class="nowrap">
+              <strong>ダメ出ししない</strong
+              ><span class="desc"> — わかる / 参考になる だけ</span>
+            </li>
+            <li class="nowrap">
+              <strong>晒さない</strong
+              ><span class="desc"> — 匿名フィード · BAD 件数は出さない</span>
+            </li>
+            <li class="nowrap">
+              <strong>学びを取り出す</strong
+              ><span class="desc"> — 検索と質問で集合知を戻す</span>
+            </li>
           </ul>
         </section>
 
-        <!-- 4: デモ（できることはここに吸収） -->
+        <!-- 4 -->
         <section>
           <h2>ライブデモ</h2>
           <p class="demo-url">
@@ -269,7 +381,7 @@
           </ol>
         </section>
 
-        <!-- 5: スタック + アーキ 統合 -->
+        <!-- 5 -->
         <section>
           <h2>どう作っているか</h2>
           <div class="arch">
@@ -285,13 +397,22 @@
           <p class="note">生成 LLM は載せない · 検索（Retriever）が先</p>
         </section>
 
-        <!-- 6: 見どころ統合 -->
+        <!-- 6 -->
         <section>
           <h2>見どころ</h2>
           <ul>
-            <li class="nowrap"><strong>心理安全性</strong> — 自由コメントなし · 「書いてよい」をルールで支える</li>
-            <li class="nowrap"><strong>品質は段階</strong> — A 計測 → B Vectorize → C 生成は後段</li>
-            <li class="nowrap"><strong>費用</strong> — 埋め込み検索のみ本番 · 障害時は簡易類似へ</li>
+            <li class="nowrap">
+              <strong>心理安全性</strong
+              ><span class="desc"> — 自由コメントなし · 「書いてよい」をルールで支える</span>
+            </li>
+            <li class="nowrap">
+              <strong>品質は段階</strong
+              ><span class="desc"> — A 計測 → B Vectorize → C 生成は後段</span>
+            </li>
+            <li class="nowrap">
+              <strong>費用</strong
+              ><span class="desc"> — 埋め込み検索のみ本番 · 障害時は簡易類似へ</span>
+            </li>
           </ul>
           <p class="note">測ってから載せる · B のとき C は同時に開かない</p>
         </section>
@@ -299,7 +420,7 @@
         <!-- 7 -->
         <section class="center-slide">
           <h2>一番見てほしいこと</h2>
-          <p class="lead nowrap" style="margin: 0.9em auto">
+          <p class="lead nowrap" style="margin: 0.95em auto">
             「失敗を書いてよい」を、<span class="accent">ルールと検索</span>で支えていること。
           </p>
           <p class="note">心理安全性 → Retriever →（必要なら）生成</p>
@@ -308,7 +429,7 @@
         <!-- 8 -->
         <section class="center-slide">
           <p class="brand">SIKUTTAR</p>
-          <h1 style="font-size: 1.9em">ありがとうございました</h1>
+          <h1 style="font-size: 2em">ありがとうございました</h1>
           <p class="tagline accent">しくじったら、シクッター。</p>
           <p class="foot">
             デモ
@@ -335,10 +456,9 @@
         center: true,
         transition: "fade",
         backgroundTransition: "fade",
-        /* Wider than 16:9 so JP phrases wrap less mid-clause */
         width: 1600,
         height: 800,
-        margin: 0.06,
+        margin: 0.05,
       });
     </script>
   </body>
