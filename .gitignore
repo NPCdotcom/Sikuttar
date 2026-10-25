@@ -1,6 +1,7 @@
 # --- Local AI / agent kit (not published) ---
 AGENTS.md
 .agents/
+.agent/
 .cursor/
 
 # Secrets
